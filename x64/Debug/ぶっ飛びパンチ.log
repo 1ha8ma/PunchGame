@@ -1,26 +1,8 @@
-﻿  Camera.cpp
-C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  GameManager.cpp
-C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  GameScene.cpp
-C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  Main.cpp
+﻿  Main.cpp
 C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
   Player.cpp
 C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  SceneBase.cpp
-C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  SkyDome.cpp
-C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  WoodBoard.cpp
-C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-C:\Users\hamar\Desktop\PunchGame\WoodBoard.cpp(44,27): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\hamar\Desktop\PunchGame\WoodBoard.cpp(48,27): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\hamar\Desktop\PunchGame\WoodBoard.cpp(52,27): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\hamar\Desktop\PunchGame\WoodBoard.cpp(56,27): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\hamar\Desktop\PunchGame\WoodBoard.cpp(61,26): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\hamar\Desktop\PunchGame\WoodBoard.cpp(65,26): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\hamar\Desktop\PunchGame\WoodBoard.cpp(69,26): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\hamar\Desktop\PunchGame\WoodBoard.cpp(73,26): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Player.cpp(13,43): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Player.cpp(206,43): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
   コードを生成中...
   ぶっ飛びパンチ.vcxproj -> C:\Users\hamar\Desktop\PunchGame\x64\Debug\ぶっ飛びパンチ.exe

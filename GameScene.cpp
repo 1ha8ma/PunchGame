@@ -3,6 +3,7 @@
 #include"Player.h"
 #include"WoodBoard.h"
 #include"SkyDome.h"
+#include"InputManager.h"
 #include"GameScene.h"
 
 /// <summary>
@@ -15,6 +16,7 @@ GameScene::GameScene()
 	camera = new Camera();
 	player = new Player();
 	skydome = new SkyDome();
+	input = new InputManager();
 }
 
 /// <summary>
@@ -41,6 +43,8 @@ void GameScene::Initialize()
 SceneBase* GameScene::Update()
 {
 	camera->Update();
+	player->Update(input->GetInputState());
+
 	//‚à‚µI—¹ðŒ‚ð–ž‚½‚µ‚Ä‚¢‚È‚©‚Á‚½‚ç
 	return this;
 }
@@ -52,4 +56,5 @@ void GameScene::Draw()
 {
 	skydome->Draw();
 	wood->Draw();
+	player->Draw();
 }
