@@ -27,7 +27,7 @@ private:
 	//ポジション
 	VECTOR position;//ポジション
 	VECTOR moveVec;//入力があってからの動く方向
-	VECTOR targetMoveDirection;//モデルが向くべき方向のベクトル
+	VECTOR targetDirection;//モデルが向くべき方向のベクトル
 	float angle;//現在のプレイヤー角度
 
 	//攻撃
@@ -55,4 +55,7 @@ public:
 	void Update(int inputstate);
 	//描画
 	void Draw();
+
+	VECTOR GetPos() { return position; }
+	float GetAngle() { return angle; }
 };

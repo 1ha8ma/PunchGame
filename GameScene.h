@@ -6,6 +6,7 @@ class Player;
 class WoodBoard;
 class SkyDome;
 class InputManager;
+class Shield;
 
 class GameScene :public SceneBase
 {
@@ -15,6 +16,7 @@ private:
 	Player* player;
 	SkyDome* skydome;
 	InputManager* input;
+	Shield* shield;
 
 public:
 	//コンストラクタ

@@ -38,7 +38,7 @@ void Player::Initialize()
 	isanimflg = false;
 	angle = 0.0f;
 	moveVec = VGet(0, 0, 0);
-	targetMoveDirection = VGet(1.0f, 0.0f, 1.0f);
+	targetDirection = VGet(1.0f, 0.0f, 1.0f);
 	attackflg = false;
 
 	//ポジション初期化
@@ -127,10 +127,10 @@ void Player::InputMoveProcess(const int inputstate)
 	{
 		//移動ベクトルを正規化したものをプレイヤーが向くべき方向として保存
 		//targetMoveDirection = VNorm(moveVec);
-		targetMoveDirection = moveVec;
+		targetDirection = moveVec;
 
 		//正規化したベクトルにスピード倍したものを移動ベクトルとする
-		moveVec = VScale(targetMoveDirection, Speed);
+		moveVec = VScale(targetDirection, Speed);
 	}
 
 	//ポジションに適用
@@ -147,7 +147,7 @@ void Player::UpdateAngle()
 	float difference;//目標角度と現在の角度の差
 
 	//目標の方向ベクトルから角度値を算出する
-	targetAngle = static_cast<float>(atan2(targetMoveDirection.x, targetMoveDirection.z));
+	targetAngle = static_cast<float>(atan2(targetDirection.x, targetDirection.z));
 
 	//目標の角度と現在の角度との差を割り出す
 	//最初は引き算

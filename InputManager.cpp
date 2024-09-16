@@ -7,7 +7,7 @@
 /// <returns>入力状態</returns>
 int InputManager::GetInputState()
 {
-	int inputstate;
+	int inputstate = 0;
 
 	if ((GetJoypadInputState(DX_INPUT_PAD1) & PAD_INPUT_RIGHT) || (CheckHitKey(KEY_INPUT_RIGHT)))//右
 	{

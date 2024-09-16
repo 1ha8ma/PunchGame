@@ -16,6 +16,9 @@
     <Filter Include="GameSystem">
       <UniqueIdentifier>{74b6b446-a82a-4e22-8458-dc315591ae02}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{6f470436-bc87-46b9-8db5-4164d165d950}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -45,6 +48,9 @@
     <ClCompile Include="InputManager.cpp">
       <Filter>GameSystem</Filter>
     </ClCompile>
+    <ClCompile Include="Shield.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utility.h">
@@ -73,6 +79,9 @@
     </ClInclude>
     <ClInclude Include="InputManager.h">
       <Filter>GameSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Shield.h">
+      <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
