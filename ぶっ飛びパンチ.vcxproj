@@ -134,6 +134,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CharacterBase.cpp" />
+    <ClCompile Include="Fist.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="InputManager.cpp" />
@@ -146,6 +148,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CharacterBase.h" />
+    <ClInclude Include="Fist.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="InputManager.h" />

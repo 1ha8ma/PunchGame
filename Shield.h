@@ -4,15 +4,15 @@ class Shield
 {
 private:
 	const float DistanceWithCharacter = 330.0f;//キャラクターと盾の距離
-	const float AngleSpeed = 0.2f;//角度変更速度
+	const float CapsuleRadius = 50.0f;//カプセル半径
 
-	int model;//モデル
+	int model;//モデルハンドル
 	VECTOR position;//ポジション
 	float angle;//角度
 
-	bool o;
-	float anglecopy;
-
+	//カプセル
+	VECTOR capTop;
+	VECTOR capBottom;
 	
 	//角度更新
 	void UpdateAngle(float characterAngle);

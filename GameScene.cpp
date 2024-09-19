@@ -5,6 +5,7 @@
 #include"SkyDome.h"
 #include"Shield.h"
 #include"InputManager.h"
+#include"Fist.h"
 #include"GameScene.h"
 
 /// <summary>
@@ -19,6 +20,7 @@ GameScene::GameScene()
 	skydome = new SkyDome();
 	input = new InputManager();
 	shield = new Shield();
+	fist = new Fist();
 }
 
 /// <summary>
@@ -37,6 +39,7 @@ void GameScene::Initialize()
 	camera->Initialize();
 	player->Initialize();
 	shield->Initialize();
+	fist->Initialize();
 }
 
 /// <summary>
@@ -48,6 +51,7 @@ SceneBase* GameScene::Update()
 	camera->Update();
 	player->Update(input->GetInputState());
 	shield->Update(player->GetPos(), player->GetAngle());
+	fist->Update(player->GetPos(),player->GetAngle(),player->GetAttackflg());
 
 	//‚à‚µI—¹ðŒ‚ð–ž‚½‚µ‚Ä‚¢‚È‚©‚Á‚½‚ç
 	return this;
@@ -62,4 +66,5 @@ void GameScene::Draw()
 	wood->Draw();
 	player->Draw();
 	shield->Draw();
+	fist->Draw();
 }

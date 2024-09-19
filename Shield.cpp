@@ -1,5 +1,6 @@
 #include<math.h>
 #include"DxLib.h"
+#include"Utility.h"
 #include"Shield.h"
 
 /// <summary>
@@ -28,7 +29,8 @@ void Shield::Initialize()
 	position = VGet(0.0f, 100.0f, 0.0f);
 	angle = 0.0f;
 
-	o = false;
+	capTop = VAdd(position, VGet(0, 50, 0));
+	capBottom = VAdd(position, VGet(0, -50, 0));
 
 	MV1SetPosition(model, position);
 }
@@ -47,6 +49,10 @@ void Shield::Update(VECTOR characterPosition,float characterangle)
 	//角度更新
 	UpdateAngle(characterangle);
 
+	//当たり判定カプセル
+	capTop = VAdd(position, VGet(0, 350, 0));
+	capBottom = VAdd(position, VGet(0, -50, 0));
+
 	//ポジションに反映
 	position = tentativepos;
 	MV1SetPosition(model, position);
@@ -57,7 +63,10 @@ void Shield::Update(VECTOR characterPosition,float characterangle)
 /// </summary>
 void Shield::Draw()
 {
+	//当たり判定カプセル
+	DrawCapsule3D(capTop, capBottom, CapsuleRadius, 8, GetColor(127, 255, 0), GetColor(0, 255, 255), FALSE);
 	MV1DrawModel(model);
+
 }
 
 /// <summary>

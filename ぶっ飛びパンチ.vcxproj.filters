@@ -51,6 +51,12 @@
     <ClCompile Include="Shield.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="Fist.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterBase.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utility.h">
@@ -82,6 +88,12 @@
     </ClInclude>
     <ClInclude Include="Shield.h">
       <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Fist.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterBase.h">
+      <Filter>Character</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
