@@ -13,7 +13,7 @@ void CharacterBase::UpdateAngle()
 	float difference;//目標角度と現在の角度の差
 
 	//目標の方向ベクトルから角度値を算出する
-	targetAngle = static_cast<float>(atan2(targetDirection.x, targetDirection.z));
+	targetAngle = static_cast<float>(atan2(targetLookDirection.x, targetLookDirection.z));
 
 	//目標の角度と現在の角度との差を割り出す
 	//最初は引き算
@@ -90,7 +90,7 @@ void CharacterBase::PlayAnimation()
 		animplaytime += 0.5f;
 	}
 
-	//アニメーションがトータル時間に達したら
+	//アニメーションが総再生時間に達したら
 	if (animplaytime >= animtotaltime)
 	{
 		if (nowPlayAnimKind == static_cast<int>(AnimKind::Punch))//攻撃モーションが終わった場合

@@ -25,7 +25,7 @@ protected:
 	//ポジション
 	VECTOR position;//ポジション
 	VECTOR moveVec;//入力があってからの動く方向
-	VECTOR targetDirection;//モデルが向くべき方向のベクトル
+	VECTOR targetLookDirection;//モデルが向くべき方向のベクトル
 	float angle;//現在のプレイヤー角度
 
 	//攻撃

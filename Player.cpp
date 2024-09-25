@@ -35,11 +35,12 @@ void Player::Initialize()
 	nowPlayAnimKind = static_cast<int>(AnimKind::Run);
 	nowPlayAnim = static_cast<int>(AnimKind::Run);
 	prevPlayAnim = -1;
+	//animtotaltime = MV1GetAttachAnimTotalTime(model, nowPlayAnim);
 
 	isanimflg = false;
 	angle = 0.0f;
 	moveVec = VGet(0, 0, 0);
-	targetDirection = VGet(1.0f, 0.0f, 1.0f);
+	targetLookDirection = VGet(1.0f, 0.0f, 1.0f);
 	attackflg = false;
 
 	//ポジション初期化
@@ -116,10 +117,10 @@ void Player::InputProcess(const int inputstate)
 	{
 		//移動ベクトルを正規化したものをプレイヤーが向くべき方向として保存
 		//targetMoveDirection = VNorm(moveVec);
-		targetDirection = moveVec;
+		targetLookDirection = moveVec;
 
 		//正規化したベクトルにスピード倍したものを移動ベクトルとする
-		moveVec = VScale(targetDirection, Speed);
+		moveVec = VScale(targetLookDirection, Speed);
 	}
 
 	//ポジションに適用

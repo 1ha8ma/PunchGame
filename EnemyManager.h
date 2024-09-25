@@ -16,7 +16,7 @@ public:
 	//‰Šú‰»
 	void Initialize();
 	//XV
-	void Update();
+	void Update(VECTOR playerpos);
 	//•`‰æ
 	void Draw();
 

@@ -5,9 +5,14 @@ class Enemy :public CharacterBase
 {
 private:
 	float targetdistance;//2キャラの距離
+	float targetCharaAngle;//目標のキャラとの角度
 	VECTOR targetCharaPos;//追いかける目標のポジション
+	float vx;
+	float vz;
 
 	//移動処理
+	void Move();
+
 	//攻撃開始処理
 public:
 	//コンストラクタ
@@ -21,4 +26,5 @@ public:
 	//更新
 	void Update();
 
+	VECTOR GetPosition() { return position; }
 };

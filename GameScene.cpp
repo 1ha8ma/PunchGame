@@ -53,7 +53,7 @@ SceneBase* GameScene::Update()
 {
 	camera->Update();
 	player->Update(input->GetInputState());
-	enemy->Update();
+	enemy->Update(player->GetPos());
 	shield->Update(player->GetPos(), player->GetAngle());
 	fist->Update(player->GetPos(),player->GetAngle(),player->GetAttackflg());
 

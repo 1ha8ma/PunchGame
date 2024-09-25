@@ -36,9 +36,22 @@ void EnemyManager::Initialize()
 /// <summary>
 /// 更新
 /// </summary>
-void EnemyManager::Update()
+void EnemyManager::Update(VECTOR playerpos)
 {
-	for (int i = 0; i < enemy.size(); i++)
+	//近くのキャラ更新
+	for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
+	{
+		enemy[i]->CheckNearCharacter(playerpos);
+	}
+	enemy[0]->CheckNearCharacter(enemy[1]->GetPosition());
+	enemy[0]->CheckNearCharacter(enemy[2]->GetPosition());
+	enemy[1]->CheckNearCharacter(enemy[2]->GetPosition());
+	enemy[1]->CheckNearCharacter(enemy[0]->GetPosition());
+	enemy[2]->CheckNearCharacter(enemy[0]->GetPosition());
+	enemy[2]->CheckNearCharacter(enemy[1]->GetPosition());
+
+	//更新
+	for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
 	{
 		enemy[i]->Update();
 	}
@@ -49,7 +62,7 @@ void EnemyManager::Update()
 /// </summary>
 void EnemyManager::Draw()
 {
-	for (int i = 0; i < enemy.size(); i++)
+	for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
 	{
 		enemy[i]->Draw();
 	}
