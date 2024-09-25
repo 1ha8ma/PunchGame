@@ -8,6 +8,7 @@ class SkyDome;
 class InputManager;
 class Shield;
 class Fist;
+class EnemyManager;
 
 class GameScene :public SceneBase
 {
@@ -19,6 +20,7 @@ private:
 	InputManager* input;
 	Shield* shield;
 	Fist* fist;
+	EnemyManager* enemy;
 
 public:
 	//コンストラクタ

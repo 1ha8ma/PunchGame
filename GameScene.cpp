@@ -6,6 +6,7 @@
 #include"Shield.h"
 #include"InputManager.h"
 #include"Fist.h"
+#include"EnemyManager.h"
 #include"GameScene.h"
 
 /// <summary>
@@ -21,6 +22,7 @@ GameScene::GameScene()
 	input = new InputManager();
 	shield = new Shield();
 	fist = new Fist();
+	enemy = new EnemyManager();
 }
 
 /// <summary>
@@ -40,6 +42,7 @@ void GameScene::Initialize()
 	player->Initialize();
 	shield->Initialize();
 	fist->Initialize();
+	enemy->Initialize();
 }
 
 /// <summary>
@@ -50,6 +53,7 @@ SceneBase* GameScene::Update()
 {
 	camera->Update();
 	player->Update(input->GetInputState());
+	enemy->Update();
 	shield->Update(player->GetPos(), player->GetAngle());
 	fist->Update(player->GetPos(),player->GetAngle(),player->GetAttackflg());
 
@@ -67,4 +71,5 @@ void GameScene::Draw()
 	player->Draw();
 	shield->Draw();
 	fist->Draw();
+	enemy->Draw();
 }
