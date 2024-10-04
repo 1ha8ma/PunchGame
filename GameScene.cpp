@@ -1,11 +1,10 @@
 #include"DxLib.h"
+#include"Utility.h"
 #include"Camera.h"
 #include"Player.h"
 #include"WoodBoard.h"
 #include"SkyDome.h"
-#include"Shield.h"
 #include"InputManager.h"
-#include"Fist.h"
 #include"EnemyManager.h"
 #include"GameScene.h"
 
@@ -15,14 +14,15 @@
 GameScene::GameScene()
 {
 	//インスタンス化
-	wood = new WoodBoard();
 	camera = new Camera();
-	player = new Player();
-	skydome = new SkyDome();
 	input = new InputManager();
-	shield = new Shield();
-	fist = new Fist();
+	skydome = new SkyDome();
+	wood = new WoodBoard();
+	player = new Player();
 	enemy = new EnemyManager();
+
+	shieldhit = false;
+	outchara.push_back(-1);
 }
 
 /// <summary>
@@ -40,9 +40,10 @@ void GameScene::Initialize()
 {
 	camera->Initialize();
 	player->Initialize();
-	shield->Initialize();
-	fist->Initialize();
 	enemy->Initialize();
+
+	shieldhit = false;
+	outchara.push_back(-1);
 }
 
 /// <summary>
@@ -51,11 +52,74 @@ void GameScene::Initialize()
 /// <returns>次のシーン</returns>
 SceneBase* GameScene::Update()
 {
+	//更新
 	camera->Update();
-	player->Update(input->GetInputState());
-	enemy->Update(player->GetPos());
-	shield->Update(player->GetPos(), player->GetAngle());
-	fist->Update(player->GetPos(),player->GetAngle(),player->GetAttackflg());
+	player->Update(input->GetInputState(), shieldhit);
+	enemy->Update(player->GetPosition(), player->GetPositioncapsuleTop(), player->GetPositioncapsuleBotoom(),player->GetShieldLeft(),player->GetShieldRight(), player->GetOutflg(), outchara);
+
+	//当たり判定
+	for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
+	{
+		bool characterhit;
+		characterhit = player->FistWithCharacter(enemy->GetCapsuleTop(i), enemy->GetCapsuleBottom(i), 120.0f, enemy->GetOutflg(i));
+		enemy->CheckOut(i, characterhit);
+	}
+
+	//盾との当たり判定
+	for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
+	{
+		shieldhit = false;
+		if (player->FistWithShield(enemy->GetShieldLeft(i), enemy->GetShieldRight(i), 20.0f))
+		{
+			shieldhit = true;
+			break;
+		}
+	}
+
+	//脱落確認
+	if (player->GetOutflg())
+	{
+		outchara.push_back(0);
+	}
+	for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
+	{
+		if (enemy->GetOutflg(i))
+		{
+			bool sumi = false;
+			for (int j = 0; j < outchara.size(); j++)
+			{
+				if (outchara[j] == i)//すでに脱落している場合
+				{
+					sumi = true;
+				}
+			}
+			if (sumi == false)
+			{
+				outchara.push_back(i);
+			}
+		}
+	}
+
+	//CPUターゲットポジション設定
+	for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
+	{
+		if (enemy->GetTargetNumber(i) == static_cast<int>(CharaNumber::CPU0))
+		{
+			enemy->SetTargetPosition(i, enemy->GetPosition(static_cast<int>(CharaNumber::CPU0)));
+		}
+		if (enemy->GetTargetNumber(i) == static_cast<int>(CharaNumber::CPU1))
+		{
+			enemy->SetTargetPosition(i, enemy->GetPosition(static_cast<int>(CharaNumber::CPU1)));
+		}
+		if (enemy->GetTargetNumber(i) == static_cast<int>(CharaNumber::CPU2))
+		{
+			enemy->SetTargetPosition(i, enemy->GetPosition(static_cast<int>(CharaNumber::CPU2)));
+		}
+		if (enemy->GetTargetNumber(i) == static_cast<int>(CharaNumber::Player))
+		{
+			enemy->SetTargetPosition(i, player->GetPosition());
+		}
+	}
 
 	//もし終了条件を満たしていなかったら
 	return this;
@@ -69,7 +133,5 @@ void GameScene::Draw()
 	skydome->Draw();
 	wood->Draw();
 	player->Draw();
-	shield->Draw();
-	fist->Draw();
 	enemy->Draw();
 }

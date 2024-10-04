@@ -29,8 +29,8 @@ void Shield::Initialize()
 	position = VGet(0.0f, 100.0f, 0.0f);
 	angle = 0.0f;
 
-	capTop = VAdd(position, VGet(0, 50, 0));
-	capBottom = VAdd(position, VGet(0, -50, 0));
+	//capTop = VAdd(position, VGet(0, 50, 0));
+	//capBottom = VAdd(position, VGet(0, -50, 0));
 
 	MV1SetPosition(model, position);
 }
@@ -46,12 +46,12 @@ void Shield::Update(VECTOR characterPosition,float characterangle)
 	tentativepos.x += sin(characterangle) * DistanceWithCharacter;
 	tentativepos.z += cos(characterangle) * DistanceWithCharacter;
 
-	//角度更新
+	//モデル角度更新
 	UpdateAngle(characterangle);
 
-	//当たり判定カプセル
-	capTop = VAdd(position, VGet(0, 350, 0));
-	capBottom = VAdd(position, VGet(0, -50, 0));
+	//カプセル角度更新
+	capRight = VAdd(position, VGet(-sin(characterangle - 1.5f) * 150, 200, -cos(characterangle - 1.5f) * 150));
+	capLeft = VAdd(position, VGet(sin(characterangle - 1.5f) * 150, 200, cos(characterangle - 1.5f) * 150));
 
 	//ポジションに反映
 	position = tentativepos;
@@ -64,7 +64,7 @@ void Shield::Update(VECTOR characterPosition,float characterangle)
 void Shield::Draw()
 {
 	//当たり判定カプセル
-	DrawCapsule3D(capTop, capBottom, CapsuleRadius, 8, GetColor(127, 255, 0), GetColor(0, 255, 255), FALSE);
+	//DrawCapsule3D(capLeft, capRight, CapsuleRadius, 20, GetColor(127, 255, 0), GetColor(0, 255, 255), FALSE);
 	MV1DrawModel(model);
 
 }

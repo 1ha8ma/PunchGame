@@ -22,7 +22,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	////////////////////////
 	ClearDrawScreen();
 	SetFontSize(64);
-	DrawString(600, SCREEN_H / 2, "NowLoading・・・", GetColor(0, 124, 98), TRUE);
+	//DrawString(600, SCREEN_H / 2, "NowLoading・・・", GetColor(0, 124, 98), TRUE);
 	ScreenFlip();
 	//ゲームマネージャーインスタンス化
 	GameManager* game = new GameManager();

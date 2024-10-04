@@ -4,7 +4,6 @@ class Fist
 {
 private:
 	const float PunchSpeed = 10.5f;
-	const float CapsuleRadius = 120.0f;
 
 	int model;
 	float modelangle;
@@ -19,12 +18,17 @@ private:
 	VECTOR capBack;//Œã‚ë
 
 
-	void PunchMove(bool punchflg,float charaangle,VECTOR charapos);
+	void PunchMove(bool punchflg,float charaangle,VECTOR charapos,bool shieldhit);
 	void UpdateAngle(float charaangle);
 public:
+	static const float FistCapsuleRadius;
+
 	Fist();
 	~Fist();
 	void Initialize();
-	void Update(VECTOR charapos, float charaangle,bool punchflg);
+	void Update(VECTOR charapos, float charaangle,bool punchflg,bool shieldhit);
 	void Draw();
+
+	VECTOR GetcapFront() { return capFront; }
+	VECTOR GetcapBack() { return capBack; }
 };

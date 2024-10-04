@@ -11,8 +11,8 @@ private:
 	float angle;//角度
 
 	//カプセル
-	VECTOR capTop;
-	VECTOR capBottom;
+	VECTOR capLeft;
+	VECTOR capRight;
 	
 	//角度更新
 	void UpdateAngle(float characterAngle);
@@ -28,4 +28,7 @@ public:
 	void Update(VECTOR characterPosition,float characterangle);
 	//描画
 	void Draw();
+
+	VECTOR GetcapLeft() { return capLeft; }
+	VECTOR GetcapRight() { return capRight; }
 };

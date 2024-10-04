@@ -15,9 +15,9 @@ public:
 	//‰Šú‰»
 	void Initialize();
 	//XV
-	void Update(int inputstate);
+	void Update(int inputstate,bool shieldhit);
 
-	VECTOR GetPos() { return position; }
+	VECTOR GetPosition() { return position; }
 	float GetAngle() { return angle; }
 	bool GetAttackflg() { return attackflg; }
 };

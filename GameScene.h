@@ -1,4 +1,5 @@
 #pragma once
+#include<vector>
 #include"SceneBase.h"
 
 class Camera;
@@ -6,8 +7,6 @@ class Player;
 class WoodBoard;
 class SkyDome;
 class InputManager;
-class Shield;
-class Fist;
 class EnemyManager;
 
 class GameScene :public SceneBase
@@ -18,9 +17,10 @@ private:
 	Player* player;
 	SkyDome* skydome;
 	InputManager* input;
-	Shield* shield;
-	Fist* fist;
 	EnemyManager* enemy;
+
+	bool shieldhit;//盾に当たっているか
+	std::vector<int> outchara;//脱落したキャラ
 
 public:
 	//コンストラクタ

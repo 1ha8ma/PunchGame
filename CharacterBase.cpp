@@ -1,7 +1,18 @@
 #include<math.h>
 #include"DxLib.h"
 #include"Utility.h"
+#include"Shield.h"
+#include"Fist.h"
 #include"CharacterBase.h"
+
+/// <summary>
+/// コンストラクタ
+/// </summary>
+CharacterBase::CharacterBase()
+{
+	shield = new Shield();
+	fist = new Fist();
+}
 
 /// <summary>
 /// 角度更新
@@ -122,9 +133,144 @@ void CharacterBase::Attack()
 }
 
 /// <summary>
+///　他クラス初期化
+/// </summary>
+void CharacterBase::OtherClassInitialize()
+{
+	if (outflg == false)
+	{
+		fist->Initialize();
+	}
+	shield->Initialize();
+}
+
+/// <summary>
+/// 他クラスの更新
+/// </summary>
+void CharacterBase::OtherClassUpdate(bool shieldhit)
+{
+	fist->Update(position, angle, attackflg,shieldhit);
+	shield->Update(position, angle);
+}
+
+/// <summary>
+/// 拳とキャラクターの当たり判定
+/// </summary>
+/// <param name="charatop">キャラ上</param>
+/// <param name="charabottom">キャラ下</param>
+/// <param name="charaR">キャラ半径</param>
+bool CharacterBase::FistWithCharacter(VECTOR charatop, VECTOR charabottom, float charaR,bool charaout)
+{
+	float len;
+	bool hit = false;//攻撃が当たった
+
+	//2つの線分の最短距離を求める
+	len = Segment_Segment_MinLength(fist->GetcapFront(), fist->GetcapBack(), charatop, charabottom);
+
+  	if (len < Fist::FistCapsuleRadius + charaR)
+	{
+		hit = true;
+	}
+	else
+	{
+		hit = false;
+	}
+
+	//if (hit && charaout == false)
+	//{
+	//	//printfDx("hit");
+	//}
+
+	return hit;
+}
+
+/// <summary>
+/// 拳と盾の当たり判定
+/// </summary>
+/// <param name="ShieldLeft">盾左</param>
+/// <param name="ShieldRight">盾右</param>
+/// <param name="shieldR">盾半径</param>
+/// <returns>当たっているか</returns>
+bool CharacterBase::FistWithShield(VECTOR ShieldLeft, VECTOR ShieldRight, float shieldR)
+{
+	float len;
+	bool hit = false;//盾に当たった
+
+	//2つの線分の最短距離を求める
+	len = Segment_Segment_MinLength(fist->GetcapFront(), fist->GetcapBack(), ShieldLeft, ShieldRight);
+
+	if (len < Fist::FistCapsuleRadius + shieldR)
+	{
+		hit = true;
+	}
+	else
+	{
+		hit = false;
+	}
+
+	if (hit)
+	{
+		//printfDx("shieldhit");
+	}
+
+	return hit;
+}
+
+/// <summary>
+/// 攻撃に当たったか
+/// </summary>
+/// <param name="hit">当たったか</param>
+void CharacterBase::CheckOut(bool hit)
+{
+	if (outflg == false && hit)
+	{
+ 		outflg = true;
+	}
+}
+
+/// <summary>
+/// キャラの吹っ飛び動作
+/// </summary>
+void CharacterBase::Blow()
+{
+	if (outflg && position.y < 2000)
+	{
+		position = VAdd(position, VGet(0, 100, 0));
+		//ポジション反映
+		MV1SetPosition(model, position);
+	}
+}
+
+/// <summary>
+/// カプセル更新
+/// </summary>
+void CharacterBase::UpdateCapsule()
+{
+	//当たり判定カプセル
+	capsuleTop = VAdd(position, VGet(0, 600, 0));
+	capsuleBottom = VAdd(position, VGet(0, 0, 0));
+}
+
+VECTOR CharacterBase::GetShieldLeft()
+{
+	return shield->GetcapLeft();
+}
+
+VECTOR CharacterBase::GetShieldRight()
+{
+	return shield->GetcapRight();
+}
+
+/// <summary>
 /// 描画
 /// </summary>
 void CharacterBase::Draw()
 {
+	//DrawCapsule3D(capsuleTop, capsuleBottom, CharacterR, 8, GetColor(127, 255, 0), GetColor(0, 255, 255), FALSE);
 	MV1DrawModel(model);
+	shield->Draw();
+	if (outflg == false)
+	{
+		fist->Draw();
+	}
 }

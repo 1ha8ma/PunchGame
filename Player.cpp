@@ -10,8 +10,6 @@ Player::Player()
 {
 	//モデルロード・アニメーション設定
 	model = MV1LoadModel("3D/player.mv1");
-	nowPlayAnim = MV1AttachAnim(model, static_cast<int>(AnimKind::Run));
-	animtotaltime = MV1GetAttachAnimTotalTime(model, nowPlayAnim);
 
 	//初期化処理
 	Initialize();
@@ -30,18 +28,22 @@ Player::~Player()
 /// </summary>
 void Player::Initialize()
 {
+	OtherClassInitialize();
+
 	//アニメーション初期化
 	animplaytime = 0.0f;
 	nowPlayAnimKind = static_cast<int>(AnimKind::Run);
-	nowPlayAnim = static_cast<int>(AnimKind::Run);
+	nowPlayAnim = MV1AttachAnim(model, static_cast<int>(AnimKind::Run));
+	animtotaltime = MV1GetAttachAnimTotalTime(model, nowPlayAnim);
 	prevPlayAnim = -1;
-	//animtotaltime = MV1GetAttachAnimTotalTime(model, nowPlayAnim);
 
 	isanimflg = false;
 	angle = 0.0f;
 	moveVec = VGet(0, 0, 0);
 	targetLookDirection = VGet(1.0f, 0.0f, 1.0f);
 	attackflg = false;
+	shieldhit = false;
+	outflg = false;
 
 	//ポジション初期化
 	position = VGet(-1000.0f, 100.0f, -700.0f);
@@ -51,7 +53,7 @@ void Player::Initialize()
 /// <summary>
 /// 更新
 /// </summary>
-void Player::Update(int inputstate)
+void Player::Update(int inputstate,bool shieldhit)
 {
 	//入力処理
 	InputProcess(inputstate);
@@ -61,6 +63,14 @@ void Player::Update(int inputstate)
 	
 	//向き設定
 	UpdateAngle();
+
+	//他クラスの処理
+	OtherClassUpdate(shieldhit);
+
+	//カプセル更新
+	UpdateCapsule();
+
+	Blow();
 
 	//モデルポジション更新
 	MV1SetPosition(model, position);

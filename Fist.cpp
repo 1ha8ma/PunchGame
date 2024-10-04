@@ -3,6 +3,8 @@
 #include"Utility.h"
 #include"Fist.h"
 
+const float Fist::FistCapsuleRadius = 120.0f;
+
 /// <summary>
 /// コンストラクタ
 /// </summary>
@@ -32,16 +34,16 @@ void Fist::Initialize()
 	punchingflg = false;
 
 	//当たり判定カプセル
-	capFront = VAdd(position, VGet(0, 0, 0));
-	capBack = VAdd(position, VGet(0, 0, 0));
+	//capFront = VAdd(position, VGet(0, 0, 0));
+	//capBack = VAdd(position, VGet(0, 0, 0));
 }
 
 /// <summary>
 /// 更新
 /// </summary>
-void Fist::Update(VECTOR charapos,float charaangle,bool punchflg)
+void Fist::Update(VECTOR charapos,float charaangle,bool punchflg,bool shieldhit)
 {
-	PunchMove(punchflg, charaangle, charapos);
+	PunchMove(punchflg, charaangle, charapos,shieldhit);
 
 	UpdateAngle(charaangle);
 
@@ -55,7 +57,7 @@ void Fist::Draw()
 {
 	if (punchingflg)
 	{
-		DrawCapsule3D(capFront, capBack, CapsuleRadius, 8, GetColor(127, 255, 0), GetColor(0, 255, 255), FALSE);
+		//DrawCapsule3D(capFront, capBack, FistCapsuleRadius, 8, GetColor(127, 255, 0), GetColor(0, 255, 255), FALSE);
 		MV1DrawModel(model);
 	}
 }
@@ -63,7 +65,7 @@ void Fist::Draw()
 /// <summary>
 /// パンチの動き
 /// </summary>
-void Fist::PunchMove(bool punchflg,float charaangle,VECTOR charapos)
+void Fist::PunchMove(bool punchflg,float charaangle,VECTOR charapos,bool shieldhit)
 {
 	//パンチしたとき
 	if (punchflg && punchingflg == false)
@@ -89,14 +91,22 @@ void Fist::PunchMove(bool punchflg,float charaangle,VECTOR charapos)
 		capBack = VAdd(position, VGet(-sin(punchangle) * 100, 0, -cos(punchangle) * 100));
 
 		//進ませる
-		position.x += vx;
-		position.z += vz;
+		if (shieldhit==false)
+		{
+			position.x += vx;
+			position.z += vz;
+		}
 
 		//モーションが終わるとフラグ変更
 		if (punchflg == false)
 		{
 			punchingflg = false;
 		}
+	}
+	//パンチ中でなければポジションを消す
+	else
+	{
+		position = VGet(NULL, NULL, NULL);
 	}
 }
 
