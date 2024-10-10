@@ -1,1 +1,2 @@
 C:\Users\hamar\Desktop\ぶっ飛びパンチ\x64\Debug\ぶっ飛びパンチ.exe
+C:\Users\hamar\Desktop\PunchGame\x64\Debug\ぶっ飛びパンチ.exe

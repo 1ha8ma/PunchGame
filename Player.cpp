@@ -43,7 +43,7 @@ void Player::Initialize()
 /// <summary>
 /// 更新
 /// </summary>
-void Player::Update(int inputstate,bool shieldhit)
+void Player::Update(int inputstate)
 {
 	//入力処理
 	InputProcess(inputstate);
@@ -57,16 +57,20 @@ void Player::Update(int inputstate,bool shieldhit)
 	//向き設定
 	UpdateAngle();
 
+
+	//モデルポジション更新
+	MV1SetPosition(model, position);
+}
+
+void Player::ForeverUpdate(bool playerattackshieldhit)
+{
 	//他クラスの処理
-	OtherClassUpdate(shieldhit);
+	OtherClassUpdate(playerattackshieldhit);
 
 	//カプセル更新
 	UpdateCapsule();
 
 	Blow();
-
-	//モデルポジション更新
-	MV1SetPosition(model, position);
 }
 
 /// <summary>

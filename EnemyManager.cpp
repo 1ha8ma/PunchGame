@@ -17,6 +17,8 @@ EnemyManager::EnemyManager()
 	enemy[static_cast<int>(CharaNumber::CPU1)] = new Enemy("3D/Enemy2.mv1", ModelSize, InitialPosition1, InitialTargetDir1, static_cast<int>(CharaNumber::CPU1));
 	enemy.push_back(NULL);
 	enemy[static_cast<int>(CharaNumber::CPU2)] = new Enemy("3D/Enemy3.mv1", ModelSize, InitialPosition2, InitialTargetDir2, static_cast<int>(CharaNumber::CPU2));
+
+	playerhit = false;
 }
 
 /// <summary>
@@ -32,7 +34,7 @@ EnemyManager::~EnemyManager()
 /// </summary>
 void EnemyManager::Initialize()
 {
-
+	playerhit = false;
 }
 
 /// <summary>
@@ -49,12 +51,33 @@ void EnemyManager::Update(VECTOR playerpos, VECTOR playerTop, VECTOR playerBotto
 		}
 	}
 
-	//脱落後も必要な更新
+
+	//CPUと盾の当たり判定
 	for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
 	{
-		enemy[i]->OtherClassUpdate(enemy[i]->GetShieldHit());
-		enemy[i]->Blow();
-		enemy[i]->UpdateEffect();
+		bool hit = false;
+
+		for (int j = 0; j < EnemyManager::NumberofEnemy - 1; j++)//CPUどうし
+		{
+			bool withenemyjudge = false;
+			int checkenemy = i + j + 1;
+			if (checkenemy > EnemyManager::NumberofEnemy - 1)
+			{
+				checkenemy -= EnemyManager::NumberofEnemy;
+			}
+			withenemyjudge = enemy[i]->FistWithShield(enemy[checkenemy]->GetShieldLeft(), enemy[checkenemy]->GetShieldRight(), 20.0f);
+			if (withenemyjudge)
+			{
+				hit = true;
+			}
+		}
+		bool withplayerjudge = enemy[i]->FistWithShield(playershieldLeft, playershieldRight, 20.0f);//プレイヤーと
+		if (withplayerjudge)
+		{
+			hit = true;
+		}
+
+		enemy[i]->SetShieldHit(hit);
 	}
 
 	//プレイヤーとの当たり判定
@@ -62,72 +85,44 @@ void EnemyManager::Update(VECTOR playerpos, VECTOR playerTop, VECTOR playerBotto
 	{
 		if (enemy[i]->GetOutflg() == false)
 		{
-			enemy[i]->FistWithCharacter(playerTop, playerBottom, 120.0f, playerout);
+			playerhit = enemy[i]->FistWithCharacter(playerTop, playerBottom, 120.0f, playerout);
+			if (playerhit)
+			{
+				break;
+			}
 		}
 	}
+	//CPUどうしの当たり判定
+	for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
+	{
+		for (int j = 0; j < EnemyManager::NumberofEnemy - 1; j++)
+		{
+			if (enemy[i]->GetOutflg() == false && enemy[i]->GetAttackflg())//脱落しておらず、攻撃していたら
+			{
+				//確認するCPUを設定
+				int checkenemy = i + j + 1;
+				if (checkenemy > EnemyManager::NumberofEnemy - 1)
+				{
+					checkenemy -= EnemyManager::NumberofEnemy;
+				}
+				enemy[checkenemy]->CheckOut(enemy[i]->FistWithCharacter(enemy[checkenemy]->GetPositioncapsuleTop(), enemy[checkenemy]->GetPositioncapsuleBotoom(), 120.0f, enemy[checkenemy]->GetOutflg()));
+			}
+		}
+	}
+}
 
-	//CPUと盾の当たり判定
-	if (enemy[static_cast<int>(CharaNumber::CPU0)]->GetOutflg() == false)//0と他CPUの盾の当たり判定
+/// <summary>
+/// 終了後、脱落後も続く更新
+/// </summary>
+void EnemyManager::ForeverUpdate()
+{
+	//脱落後も必要な更新
+	for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
 	{
-		bool judge1 = enemy[static_cast<int>(CharaNumber::CPU0)]->FistWithShield(enemy[static_cast<int>(CharaNumber::CPU1)]->GetShieldLeft(), enemy[static_cast<int>(CharaNumber::CPU1)]->GetShieldRight(), 20);
-		bool judge2 = enemy[static_cast<int>(CharaNumber::CPU0)]->FistWithShield(enemy[static_cast<int>(CharaNumber::CPU2)]->GetShieldLeft(), enemy[static_cast<int>(CharaNumber::CPU2)]->GetShieldRight(), 20);
-		bool judge3 = enemy[static_cast<int>(CharaNumber::CPU0)]->FistWithShield(playershieldLeft, playershieldRight, 20);
-		if (judge1 || judge2 || judge3)
-		{
-			enemy[static_cast<int>(CharaNumber::CPU0)]->SetShieldHit(true);
-		}
-		else
-		{
-			enemy[static_cast<int>(CharaNumber::CPU0)]->SetShieldHit(false);
-		}
-	}
-	if (enemy[static_cast<int>(CharaNumber::CPU1)]->GetOutflg() == false)//1と他
-	{
-		bool judge1 = enemy[static_cast<int>(CharaNumber::CPU1)]->FistWithShield(enemy[static_cast<int>(CharaNumber::CPU2)]->GetShieldLeft(), enemy[static_cast<int>(CharaNumber::CPU2)]->GetShieldRight(), 20);
-		bool judge2 = enemy[static_cast<int>(CharaNumber::CPU1)]->FistWithShield(enemy[static_cast<int>(CharaNumber::CPU0)]->GetShieldLeft(), enemy[static_cast<int>(CharaNumber::CPU0)]->GetShieldRight(), 20);
-		bool judge3 = enemy[static_cast<int>(CharaNumber::CPU1)]->FistWithShield(playershieldLeft, playershieldRight, 20);
-		if (judge1 || judge2 || judge3)
-		{
-			enemy[static_cast<int>(CharaNumber::CPU1)]->SetShieldHit(true);
-		}
-		else
-		{
-			enemy[static_cast<int>(CharaNumber::CPU1)]->SetShieldHit(false);
-		}
-	}
-	if (enemy[static_cast<int>(CharaNumber::CPU2)]->GetOutflg() == false)//2と他
-	{
-		bool judge1 = enemy[static_cast<int>(CharaNumber::CPU2)]->FistWithShield(enemy[static_cast<int>(CharaNumber::CPU0)]->GetShieldLeft(), enemy[static_cast<int>(CharaNumber::CPU0)]->GetShieldRight(), 20);
-		bool judge2 = enemy[static_cast<int>(CharaNumber::CPU2)]->FistWithShield(enemy[static_cast<int>(CharaNumber::CPU1)]->GetShieldLeft(), enemy[static_cast<int>(CharaNumber::CPU1)]->GetShieldRight(), 20);
-		bool judge3 = enemy[static_cast<int>(CharaNumber::CPU2)]->FistWithShield(playershieldLeft, playershieldRight, 20);
-		if (judge1 || judge2 || judge3)
-		{
-			enemy[static_cast<int>(CharaNumber::CPU2)]->SetShieldHit(true);
-		}
-		else
-		{
-			enemy[static_cast<int>(CharaNumber::CPU2)]->SetShieldHit(false);
-		}
-	}
-
-	//CPUとの当たり判定
-	if (enemy[static_cast<int>(CharaNumber::CPU0)]->GetOutflg() == false && enemy[static_cast<int>(CharaNumber::CPU0)]->GetAttackflg())//0と他CPUの当たり判定
-	{
-		enemy[static_cast<int>(CharaNumber::CPU1)]->CheckOut(enemy[static_cast<int>(CharaNumber::CPU0)]->FistWithCharacter(enemy[static_cast<int>(CharaNumber::CPU1)]->GetPositioncapsuleTop(), enemy[static_cast<int>(CharaNumber::CPU1)]->GetPositioncapsuleBotoom(), 120.0f, enemy[static_cast<int>(CharaNumber::CPU1)]->GetOutflg()));
-
-		enemy[static_cast<int>(CharaNumber::CPU2)]->CheckOut(enemy[static_cast<int>(CharaNumber::CPU0)]->FistWithCharacter(enemy[static_cast<int>(CharaNumber::CPU2)]->GetPositioncapsuleTop(), enemy[static_cast<int>(CharaNumber::CPU2)]->GetPositioncapsuleBotoom(), 120.0f, enemy[static_cast<int>(CharaNumber::CPU2)]->GetOutflg()));
-	}
-	if (enemy[static_cast<int>(CharaNumber::CPU1)]->GetOutflg() == false && enemy[static_cast<int>(CharaNumber::CPU1)]->GetAttackflg())//1と他
-	{
-
-		enemy[static_cast<int>(CharaNumber::CPU2)]->CheckOut(enemy[static_cast<int>(CharaNumber::CPU1)]->FistWithCharacter(enemy[static_cast<int>(CharaNumber::CPU2)]->GetPositioncapsuleTop(), enemy[static_cast<int>(CharaNumber::CPU2)]->GetPositioncapsuleBotoom(), 120.0f, enemy[static_cast<int>(CharaNumber::CPU2)]->GetOutflg()));
-		enemy[static_cast<int>(CharaNumber::CPU0)]->CheckOut(enemy[static_cast<int>(CharaNumber::CPU1)]->FistWithCharacter(enemy[static_cast<int>(CharaNumber::CPU0)]->GetPositioncapsuleTop(), enemy[static_cast<int>(CharaNumber::CPU0)]->GetPositioncapsuleBotoom(), 120.0f, enemy[static_cast<int>(CharaNumber::CPU0)]->GetOutflg()));
-
-	}
-	if (enemy[static_cast<int>(CharaNumber::CPU2)]->GetOutflg() == false && enemy[static_cast<int>(CharaNumber::CPU2)]->GetAttackflg())//2と他
-	{
-		enemy[static_cast<int>(CharaNumber::CPU0)]->CheckOut(enemy[static_cast<int>(CharaNumber::CPU2)]->FistWithCharacter(enemy[static_cast<int>(CharaNumber::CPU0)]->GetPositioncapsuleTop(), enemy[static_cast<int>(CharaNumber::CPU0)]->GetPositioncapsuleBotoom(), 120.0f, enemy[static_cast<int>(CharaNumber::CPU0)]->GetOutflg()));
-		enemy[static_cast<int>(CharaNumber::CPU1)]->CheckOut(enemy[static_cast<int>(CharaNumber::CPU2)]->FistWithCharacter(enemy[static_cast<int>(CharaNumber::CPU1)]->GetPositioncapsuleTop(), enemy[static_cast<int>(CharaNumber::CPU1)]->GetPositioncapsuleBotoom(), 120.0f, enemy[static_cast<int>(CharaNumber::CPU1)]->GetOutflg()));
+		enemy[i]->OtherClassUpdate(enemy[i]->GetShieldHit());
+		enemy[i]->UpdateCapsule();
+		enemy[i]->Blow();
+		enemy[i]->UpdateEffect();
 	}
 }
 

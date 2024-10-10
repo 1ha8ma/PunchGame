@@ -15,6 +15,8 @@ private:
 	const VECTOR InitialPosition2 = VGet(1000.0f, 100.0f, -700.0f);
 	const VECTOR InitialTargetDir2 = VGet(-1.0f, 0.0f, 1.0f);
 
+	bool playerhit;
+
 public:
 	//コンストラクタ
 	EnemyManager();
@@ -24,6 +26,8 @@ public:
 	void Initialize();
 	//更新
 	void Update(VECTOR playerpos, VECTOR playerTop, VECTOR playerBottom, VECTOR playershieldLeft, VECTOR playershieldRight, bool playeroutflg, std::vector<int> outchara);
+	//終了後、脱落後も続く更新
+	void ForeverUpdate();
 	//描画
 	void Draw();
 
@@ -40,4 +44,5 @@ public:
 	bool GetOutflg(int i);
 	int GetTargetNumber(int i);
 	void SetTargetPosition(int i, VECTOR targetpos);
+	bool GetPlayerhit() { return playerhit; }
 };

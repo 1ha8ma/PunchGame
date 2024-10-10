@@ -262,13 +262,12 @@ bool CharacterBase::FistWithShield(VECTOR ShieldLeft, VECTOR ShieldRight, float 
 	//2Ç¬ÇÃê¸ï™ÇÃç≈íZãóó£ÇãÅÇﬂÇÈ
 	len = Segment_Segment_MinLength(fist->GetcapFront(), fist->GetcapBack(), ShieldLeft, ShieldRight);
 
-	if (len < Fist::FistCapsuleRadius + shieldR)
+	if (len < Fist::FistCapsuleRadius + shieldR && attackflg)
 	{
 		hit = true;
 
 		if (Playshieldhiteffectflg == false)
 		{
-			printfDx("update");
 			//É|ÉWÉVÉáÉìê›íË
 			shieldhiteffectposition = fist->GetcapFront();
 
@@ -284,17 +283,17 @@ bool CharacterBase::FistWithShield(VECTOR ShieldLeft, VECTOR ShieldRight, float 
 	{
 		hit = false;
 			
-		if (PlayingEffectKind == static_cast<int>(EffectKind::HitShield) && IsEffekseer3DEffectPlaying(PlayingEffecthandle) == -1)
+		int a = IsEffekseer3DEffectPlaying(PlayingEffecthandle);
+		if (a == -1&&Playshieldhiteffectflg)
 		{
-			PlayingEffectKind = static_cast<int>(EffectKind::None);
+			int aaa = 0;
+		}
+
+		if (/*PlayingEffectKind == static_cast<int>(EffectKind::HitShield) && */IsEffekseer3DEffectPlaying(PlayingEffecthandle) == -1)
+		{
+			//PlayingEffectKind = static_cast<int>(EffectKind::None);
 			Playshieldhiteffectflg = false;
 		}
-	}
-
-	//çUåÇÇµÇƒÇ¢Ç»Ç©Ç¡ÇΩÇÁ
-	if (attackflg == false)
-	{
-		hit = false;
 	}
 
 	return hit;
@@ -350,7 +349,7 @@ VECTOR CharacterBase::GetShieldRight()
 /// </summary>
 void CharacterBase::Draw()
 {
-	//DrawCapsule3D(capsuleTop, capsuleBottom, CharacterR, 8, GetColor(127, 255, 0), GetColor(0, 255, 255), FALSE);
+	DrawCapsule3D(capsuleTop, capsuleBottom, CharacterR, 8, GetColor(127, 255, 0), GetColor(0, 255, 255), FALSE);
 	MV1DrawModel(model);
 	shield->Draw();
 	if (outflg == false)

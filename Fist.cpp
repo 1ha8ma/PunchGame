@@ -69,7 +69,7 @@ void Fist::Draw()
 {
 	if (punchingflg)
 	{
-		//DrawCapsule3D(capFront, capBack, FistCapsuleRadius, 8, GetColor(127, 255, 0), GetColor(0, 255, 255), FALSE);
+		DrawCapsule3D(capFront, capBack, FistCapsuleRadius, 8, GetColor(127, 255, 0), GetColor(0, 255, 255), FALSE);
 		MV1DrawModel(model);
 		DrawEffekseer3D();
 	}

@@ -22,7 +22,7 @@ GameScene::GameScene()
 	player = new Player();
 	enemy = new EnemyManager();
 
-	shieldhit = false;
+	playerattackshieldhit = false;
 	outchara.push_back(-1);
 }
 
@@ -43,7 +43,9 @@ void GameScene::Initialize()
 	player->Initialize();
 	enemy->Initialize();
 
-	shieldhit = false;
+	gameendflg = false;
+	playeroutcheck = false;
+	playerattackshieldhit = false;
 	outchara.clear();
 	outchara.push_back(-1);
 }
@@ -55,82 +57,106 @@ void GameScene::Initialize()
 SceneBase* GameScene::Update()
 {
 	//更新
-	camera->Update();
-	player->Update(input->GetInputState(), shieldhit);
-	enemy->Update(player->GetPosition(), player->GetPositioncapsuleTop(), player->GetPositioncapsuleBotoom(),player->GetShieldLeft(),player->GetShieldRight(), player->GetOutflg(), outchara);
-
-	//盾との当たり判定
-	for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
+	if (gameendflg == false)
 	{
-		shieldhit = false;
-		if (player->FistWithShield(enemy->GetShieldLeft(i), enemy->GetShieldRight(i), 20.0f))
+		player->Update(input->GetInputState());
+		enemy->Update(player->GetPosition(), player->GetPositioncapsuleTop(), player->GetPositioncapsuleBotoom(), player->GetShieldLeft(), player->GetShieldRight(), player->GetOutflg(), outchara);
+
+		//盾との当たり判定
+		for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
 		{
-			shieldhit = true;
-			break;
-		}
-	}
-
-	//当たり判定
-	for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
-	{
-		if (player->GetAttackflg())
-		{
-			bool characterhit;
-			characterhit = player->FistWithCharacter(enemy->GetCapsuleTop(i), enemy->GetCapsuleBottom(i), 120.0f, enemy->GetOutflg(i));
-			enemy->CheckOut(i, characterhit);
-		}
-	}
-
-
-	//脱落確認
-	if (player->GetOutflg())
-	{
-		outchara.push_back(0);
-	}
-	for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
-	{
-		if (enemy->GetOutflg(i))
-		{
-			bool sumi = false;
-			for (int j = 0; j < outchara.size(); j++)
+			playerattackshieldhit = false;
+			if (player->FistWithShield(enemy->GetShieldLeft(i), enemy->GetShieldRight(i), 20.0f))
 			{
-				if (outchara[j] == i)//すでに脱落している場合
+				playerattackshieldhit = true;
+				break;
+			}
+		}
+
+		//当たり判定
+		for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
+		{
+			if (player->GetAttackflg())
+			{
+				bool characterhit;
+				characterhit = player->FistWithCharacter(enemy->GetCapsuleTop(i), enemy->GetCapsuleBottom(i), 120.0f, enemy->GetOutflg(i));
+				enemy->CheckOut(i, characterhit);
+			}
+		}
+
+		//敵からのフラグ
+		player->CheckOut(enemy->GetPlayerhit());
+
+		//脱落確認
+		if (player->GetOutflg() && playeroutcheck == false)
+		{
+			outchara.push_back(static_cast<int>(CharaNumber::Player));
+		}
+		if (enemy->GetPlayerhit() == true)
+		{
+			playeroutcheck = true;
+		}
+		for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
+		{
+			if (enemy->GetOutflg(i))
+			{
+				bool sumi = false;
+				for (int j = 0; j < outchara.size(); j++)
 				{
-					sumi = true;
+					if (outchara[j] == i)//すでに脱落している場合
+					{
+						sumi = true;
+					}
+				}
+				if (sumi == false)
+				{
+					outchara.push_back(i);
 				}
 			}
-			if (sumi == false)
+		}
+
+		//CPUターゲットポジション設定
+		for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
+		{
+			if (enemy->GetTargetNumber(i) == static_cast<int>(CharaNumber::CPU0))
 			{
-				outchara.push_back(i);
+				enemy->SetTargetPosition(i, enemy->GetPosition(static_cast<int>(CharaNumber::CPU0)));
+			}
+			if (enemy->GetTargetNumber(i) == static_cast<int>(CharaNumber::CPU1))
+			{
+				enemy->SetTargetPosition(i, enemy->GetPosition(static_cast<int>(CharaNumber::CPU1)));
+			}
+			if (enemy->GetTargetNumber(i) == static_cast<int>(CharaNumber::CPU2))
+			{
+				enemy->SetTargetPosition(i, enemy->GetPosition(static_cast<int>(CharaNumber::CPU2)));
+			}
+			if (enemy->GetTargetNumber(i) == static_cast<int>(CharaNumber::Player))
+			{
+				enemy->SetTargetPosition(i, player->GetPosition());
 			}
 		}
 	}
 
-	//CPUターゲットポジション設定
-	for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
+	player->ForeverUpdate(playerattackshieldhit);
+	enemy->ForeverUpdate();
+
+	//終了条件を満たしていたらフラグ変更
+	if (outchara.size() == 4)//1人残った場合
 	{
-		if (enemy->GetTargetNumber(i) == static_cast<int>(CharaNumber::CPU0))
+		if (gameendflg == false)
 		{
-			enemy->SetTargetPosition(i, enemy->GetPosition(static_cast<int>(CharaNumber::CPU0)));
-		}
-		if (enemy->GetTargetNumber(i) == static_cast<int>(CharaNumber::CPU1))
-		{
-			enemy->SetTargetPosition(i, enemy->GetPosition(static_cast<int>(CharaNumber::CPU1)));
-		}
-		if (enemy->GetTargetNumber(i) == static_cast<int>(CharaNumber::CPU2))
-		{
-			enemy->SetTargetPosition(i, enemy->GetPosition(static_cast<int>(CharaNumber::CPU2)));
-		}
-		if (enemy->GetTargetNumber(i) == static_cast<int>(CharaNumber::Player))
-		{
-			enemy->SetTargetPosition(i, player->GetPosition());
+			gameendflg = true;
 		}
 	}
-
-	//終了条件を満たしていたらresurtに遷移
-	if (outchara.size() == 4)
+	//終了後の時間
+	if (gameendflg)
 	{
-		return new ResultScene();
+		gameendflame++;
+
+		if (gameendflame == 200)
+		{
+			return new ResultScene();
+		}
 	}
 
 	//もし終了条件を満たしていなかったら

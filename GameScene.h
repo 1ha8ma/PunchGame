@@ -19,7 +19,10 @@ private:
 	InputManager* input;
 	EnemyManager* enemy;
 
-	bool shieldhit;//盾に当たっているか
+	bool gameendflg;//ゲーム決着フラグ
+	int gameendflame;//ゲーム終了後フレーム
+	bool playeroutcheck;//プレイヤーが攻撃に当たった
+	bool playerattackshieldhit;//盾に当たっているか
 	std::vector<int> outchara;//脱落したキャラ
 
 public:

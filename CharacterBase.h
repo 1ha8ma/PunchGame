@@ -77,8 +77,6 @@ protected:
 	void PlayAnimation();
 	//他クラスの初期化
 	void OtherClassInitialize();
-	//カプセルの更新
-	void UpdateCapsule();
 	//攻撃処理
 	void Attack();
 
@@ -91,6 +89,8 @@ public:
 	CharacterBase();
 	//初期化
 	void BaseInitialize();
+	//カプセルの更新
+	void UpdateCapsule();
 	//他クラスの更新
 	void OtherClassUpdate(bool shieldhit);
 	//エフェクト更新
