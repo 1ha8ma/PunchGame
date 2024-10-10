@@ -1,5 +1,5 @@
 #include"DxLib.h"
-#include"GameScene.h"
+#include"TitleScene.h"
 #include"SceneBase.h"
 
 /// <summary>
@@ -16,5 +16,5 @@ SceneBase::SceneBase()
 /// <returns>ç≈èâÇ…ÇµÇΩÇ¢ÉVÅ[Éì</returns>
 SceneBase* SceneBase::InitializeBase()
 {
-	return new GameScene();
+	return new TitleScene();
 }

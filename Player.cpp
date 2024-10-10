@@ -28,22 +28,12 @@ Player::~Player()
 /// </summary>
 void Player::Initialize()
 {
+	BaseInitialize();
 	OtherClassInitialize();
 
-	//アニメーション初期化
-	animplaytime = 0.0f;
-	nowPlayAnimKind = static_cast<int>(AnimKind::Run);
-	nowPlayAnim = MV1AttachAnim(model, static_cast<int>(AnimKind::Run));
-	animtotaltime = MV1GetAttachAnimTotalTime(model, nowPlayAnim);
-	prevPlayAnim = -1;
-
-	isanimflg = false;
-	angle = 0.0f;
+	//移動角度設定
 	moveVec = VGet(0, 0, 0);
 	targetLookDirection = VGet(1.0f, 0.0f, 1.0f);
-	attackflg = false;
-	shieldhit = false;
-	outflg = false;
 
 	//ポジション初期化
 	position = VGet(-1000.0f, 100.0f, -700.0f);
@@ -60,6 +50,9 @@ void Player::Update(int inputstate,bool shieldhit)
 	
 	//アニメーション
 	PlayAnimation();
+
+	//エフェクト更新
+	UpdateEffect();
 	
 	//向き設定
 	UpdateAngle();
@@ -89,19 +82,19 @@ void Player::InputProcess(const int inputstate)
 	//移動
 	if (attackflg == false)
 	{
-		if ((4 & inputstate) == 4)//右
+		if (position.x <= 1600 && (4 & inputstate) == 4)//右
 		{
 			moveVec = VAdd(moveVec, VGet(1.0f, 0.0f, 0.0f));
 		}
-		if ((2 & inputstate) == 2)//左
+		if (position.x >= -1500 && (2 & inputstate) == 2)//左
 		{
 			moveVec = VAdd(moveVec, VGet(-1.0f, 0.0f, 0.0f));
 		}
-		if ((8 & inputstate) == 8)//上
+		if (position.z<=1500&&(8 & inputstate) == 8)//上
 		{
 			moveVec = VAdd(moveVec, VGet(0.0f, 0.0f, 1.0f));
 		}
-		if ((1 & inputstate) == 1)//下
+		if (position.z >= -1000 && (1 & inputstate) == 1)//下
 		{
 			moveVec = VAdd(moveVec, VGet(0.0f, 0.0f, -1.0f));
 		}

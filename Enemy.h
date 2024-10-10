@@ -13,9 +13,8 @@ private:
 	int chaseflame;//追いかけているフレーム
 	float vx;
 	float vz;
-	bool in;
 
-	bool attackaftercharachange;
+	bool attackaftercharachange;//攻撃後目標キャラを交代
 
 	//攻撃のクールタイム
 	bool cooltimeflg;
@@ -28,7 +27,6 @@ private:
 	//移動処理
 	void Move(std::vector<int> outchara);
 
-	//攻撃開始処理
 public:
 	//コンストラクタ
 	Enemy(const TCHAR *modelhandle,float modelsize,VECTOR position,VECTOR targetDir,int cpunumber);
@@ -45,4 +43,5 @@ public:
 	bool GetOutflg() { return outflg; }
 	void SetShieldHit(bool hit) { shieldhit = hit; }
 	bool GetShieldHit() { return shieldhit; }
+	bool GetAttackflg() { return attackflg; }
 };

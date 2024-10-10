@@ -1,5 +1,6 @@
 #include<math.h>
 #include"DxLib.h"
+#include"EffekseerForDXLib.h"
 #include"Utility.h"
 #include"Fist.h"
 
@@ -12,6 +13,8 @@ Fist::Fist()
 {
 	//モデルロード
 	model = MV1LoadModel("3D/fist.mv1");
+	//エフェクトロード
+	firingeffecthandle = LoadEffekseerEffect("Effect/punchfiring.efkefc", 20.0f);
 
 	Initialize();
 }
@@ -29,13 +32,14 @@ Fist::~Fist()
 /// </summary>
 void Fist::Initialize()
 {
+	//モデル関係
 	modelangle = 0.0f;
 	position = VGet(0, 400, 0);
 	punchingflg = false;
 
-	//当たり判定カプセル
-	//capFront = VAdd(position, VGet(0, 0, 0));
-	//capBack = VAdd(position, VGet(0, 0, 0));
+	//エフェクト関係
+	PlayingEffect = -1;
+	playfiringefectflg = false;
 }
 
 /// <summary>
@@ -43,9 +47,17 @@ void Fist::Initialize()
 /// </summary>
 void Fist::Update(VECTOR charapos,float charaangle,bool punchflg,bool shieldhit)
 {
+	//エフェクトカメラ同期
+	Effekseer_Sync3DSetting();
+	//エフェクト速度設定
+	SetSpeedPlayingEffekseer3DEffect(PlayingEffect, 0.05f);
+
 	PunchMove(punchflg, charaangle, charapos,shieldhit);
 
 	UpdateAngle(charaangle);
+
+	//エフェクト更新
+	UpdateEffekseer3D();
 
 	MV1SetPosition(model, position);
 }
@@ -59,6 +71,7 @@ void Fist::Draw()
 	{
 		//DrawCapsule3D(capFront, capBack, FistCapsuleRadius, 8, GetColor(127, 255, 0), GetColor(0, 255, 255), FALSE);
 		MV1DrawModel(model);
+		DrawEffekseer3D();
 	}
 }
 
@@ -79,8 +92,14 @@ void Fist::PunchMove(bool punchflg,float charaangle,VECTOR charapos,bool shieldh
 		vz = cos(punchangle) * PunchSpeed;
 		position.x += sin(punchangle) * 250.0f;
 		position.z += cos(punchangle) * 250.0f;
+		//エフェクト設定
+		firingefectposition = charapos;
+		firingefectposition.x += sin(punchangle) * 250.0f;
+		firingefectposition.y = 400.0f;
+		firingefectposition.z += cos(punchangle) * 250.0f;
 		//フラグ変更
 		punchingflg = true;
+		playfiringefectflg = true;
 	}
 
 	//パンチ中
@@ -103,10 +122,18 @@ void Fist::PunchMove(bool punchflg,float charaangle,VECTOR charapos,bool shieldh
 			punchingflg = false;
 		}
 	}
-	//パンチ中でなければポジションを消す
 	else
 	{
-		position = VGet(NULL, NULL, NULL);
+		playfiringefectflg = false;
+	}
+
+	//エフェクト再生
+	if (playfiringefectflg)
+	{
+		PlayingEffect = PlayEffekseer3DEffect(firingeffecthandle);
+		SetPosPlayingEffekseer3DEffect(PlayingEffect, firingefectposition.x, firingefectposition.y, firingefectposition.z);
+		SetRotationPlayingEffekseer3DEffect(PlayingEffect, firingefectangle.x, firingefectangle.y, firingefectangle.z);
+		playfiringefectflg = false;
 	}
 }
 
@@ -153,4 +180,5 @@ void Fist::UpdateAngle(float charaangle)
 	modelangle = charaangle - difference;
 
 	MV1SetRotationXYZ(model, VGet(0.0f, modelangle + DX_PI_F, 0.0f));
+	firingefectangle = VGet(0.0f, modelangle + DX_PI_F, 0.0f);
 }

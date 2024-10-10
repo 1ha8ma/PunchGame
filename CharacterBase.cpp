@@ -1,5 +1,6 @@
 #include<math.h>
 #include"DxLib.h"
+#include"EffekseerForDXLib.h"
 #include"Utility.h"
 #include"Shield.h"
 #include"Fist.h"
@@ -12,6 +13,40 @@ CharacterBase::CharacterBase()
 {
 	shield = new Shield();
 	fist = new Fist();
+
+	//エフェクトロード
+	playerhiteffecthandle = LoadEffekseerEffect("Effect/playerhit.efkefc", 30.0f);
+	shieldhiteffecthandle = LoadEffekseerEffect("Effect/shieldhit.efkefc", 30.0f);
+}
+
+/// <summary>
+/// ベース初期化
+/// </summary>
+void CharacterBase::BaseInitialize()
+{
+	//アニメーション関係
+	isanimflg = false;
+	animplaytime = 0.0f;
+	nowPlayAnimKind = static_cast<int>(AnimKind::Run);
+	nowPlayAnim = MV1AttachAnim(model, static_cast<int>(AnimKind::Run));
+	animtotaltime = MV1GetAttachAnimTotalTime(model, nowPlayAnim);
+	prevPlayAnim = -1;
+
+	//モデル関係
+	angle = 0.0f;
+	outflg = false;
+
+	//攻撃関係
+	attackflg = false;
+
+	//盾関係
+	shieldhit = false;
+
+	//エフェクト関係
+	PlayingEffectKind = static_cast<int>(EffectKind::None);
+	PlayingEffecthandle = -1;
+	Playplayerhiteffectflg = false;
+	Playshieldhiteffectflg = false;
 }
 
 /// <summary>
@@ -62,6 +97,9 @@ void CharacterBase::UpdateAngle()
 	angle = targetAngle - difference;
 
 	MV1SetRotationXYZ(model, VGet(0.0f, angle + DX_PI_F, 0.0f));
+	shieldhiteffectangle = VGet(0.0f, angle + DX_PI_F, 0.0f);
+	playerhiteffectangle = VGet(0.0f, angle + DX_PI_F, 0.0f);
+
 }
 
 /// <summary>
@@ -145,6 +183,24 @@ void CharacterBase::OtherClassInitialize()
 }
 
 /// <summary>
+/// エフェクト更新
+/// </summary>
+void CharacterBase::UpdateEffect()
+{
+	//エフェクトカメラ同期
+	Effekseer_Sync3DSetting();
+	//エフェクト速度設定
+	SetSpeedPlayingEffekseer3DEffect(PlayingEffecthandle, 0.1f);
+	//エフェクト更新
+	UpdateEffekseer3D();
+
+	/*if (IsEffekseer3DEffectPlaying(PlayingEffecthandle) == false)
+	{
+		PlayingEffectKind = static_cast<int>(EffectKind::None);
+	}*/
+}
+
+/// <summary>
 /// 他クラスの更新
 /// </summary>
 void CharacterBase::OtherClassUpdate(bool shieldhit)
@@ -170,16 +226,23 @@ bool CharacterBase::FistWithCharacter(VECTOR charatop, VECTOR charabottom, float
   	if (len < Fist::FistCapsuleRadius + charaR)
 	{
 		hit = true;
+		if (Playplayerhiteffectflg == false)//エフェクト開始
+		{
+			//ポジション設定
+			playerhiteffectposition = fist->GetcapFront();
+
+			//再生処理
+			PlayingEffectKind = static_cast<int>(EffectKind::HitPlayer);
+			PlayingEffecthandle = PlayEffekseer3DEffect(playerhiteffecthandle);
+			SetPosPlayingEffekseer3DEffect(PlayingEffecthandle, playerhiteffectposition.x, playerhiteffectposition.y, playerhiteffectposition.z);
+			SetRotationPlayingEffekseer3DEffect(PlayingEffecthandle, playerhiteffectangle.x, playerhiteffectangle.y, playerhiteffectangle.z);
+			Playplayerhiteffectflg = true;
+		}
 	}
 	else
 	{
 		hit = false;
 	}
-
-	//if (hit && charaout == false)
-	//{
-	//	//printfDx("hit");
-	//}
 
 	return hit;
 }
@@ -202,22 +265,43 @@ bool CharacterBase::FistWithShield(VECTOR ShieldLeft, VECTOR ShieldRight, float 
 	if (len < Fist::FistCapsuleRadius + shieldR)
 	{
 		hit = true;
+
+		if (Playshieldhiteffectflg == false)
+		{
+			printfDx("update");
+			//ポジション設定
+			shieldhiteffectposition = fist->GetcapFront();
+
+			//再生処理
+			PlayingEffectKind = static_cast<int>(EffectKind::HitShield);
+			PlayingEffecthandle = PlayEffekseer3DEffect(shieldhiteffecthandle);
+			SetPosPlayingEffekseer3DEffect(PlayingEffecthandle, shieldhiteffectposition.x, shieldhiteffectposition.y, shieldhiteffectposition.z);
+			SetRotationPlayingEffekseer3DEffect(PlayingEffecthandle, shieldhiteffectangle.x, shieldhiteffectangle.y, shieldhiteffectangle.z);
+			Playshieldhiteffectflg = true;
+		}
 	}
 	else
 	{
 		hit = false;
+			
+		if (PlayingEffectKind == static_cast<int>(EffectKind::HitShield) && IsEffekseer3DEffectPlaying(PlayingEffecthandle) == -1)
+		{
+			PlayingEffectKind = static_cast<int>(EffectKind::None);
+			Playshieldhiteffectflg = false;
+		}
 	}
 
-	if (hit)
+	//攻撃していなかったら
+	if (attackflg == false)
 	{
-		//printfDx("shieldhit");
+		hit = false;
 	}
 
 	return hit;
 }
 
 /// <summary>
-/// 攻撃に当たったか
+/// 脱落になったか
 /// </summary>
 /// <param name="hit">当たったか</param>
 void CharacterBase::CheckOut(bool hit)
@@ -273,4 +357,5 @@ void CharacterBase::Draw()
 	{
 		fist->Draw();
 	}
+	DrawEffekseer3D();
 }

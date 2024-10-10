@@ -1,4 +1,5 @@
 #include"DxLib.h"
+#include"EffekseerForDXLib.h"
 #include"Utility.h"
 #include"GameManager.h"
 
@@ -11,7 +12,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetGraphMode(SCREEN_W, SCREEN_H, 32);
 	ChangeWindowMode(TRUE);//制作時：TRUE 本番：FALSE
 	//ライブラリ初期化
+	SetUseDirect3DVersion(DX_DIRECT3D_11);
 	DxLib_Init();
+	Effekseer_Init(8000);
+	SetChangeScreenModeGraphicsSystemResetFlag(FALSE);
+	Effekseer_SetGraphicsDeviceLostCallbackFunctions();
+	SetUseZBuffer3D(TRUE);
+
 	//ウィンドウモード命名変更
 	SetMainWindowText("ぶっ飛びパンチ");
 	//ダブルバッファリングを有効
@@ -20,10 +27,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	////////////////////////
 	// ゲーム初期化
 	////////////////////////
-	ClearDrawScreen();
-	SetFontSize(64);
-	//DrawString(600, SCREEN_H / 2, "NowLoading・・・", GetColor(0, 124, 98), TRUE);
-	ScreenFlip();
 	//ゲームマネージャーインスタンス化
 	GameManager* game = new GameManager();
 
@@ -52,6 +55,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 
 	//ゲーム終了
+	Effkseer_End();
 	DxLib_End();
 
 	return 0;

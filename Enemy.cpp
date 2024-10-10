@@ -36,35 +36,22 @@ Enemy::~Enemy()
 /// <param name="targetDirection">向く方向</param>
 void Enemy::Initialize(VECTOR position, VECTOR targetDirection)
 {
+	BaseInitialize();
 	OtherClassInitialize();
 
+	//乱数初期化
 	srand((unsigned int)time(NULL));
 
-	//アニメーション初期化
-	animplaytime = 0.0f;
-	nowPlayAnimKind = static_cast<int>(AnimKind::Run);
-	nowPlayAnim = MV1AttachAnim(model, static_cast<int>(AnimKind::Run));
-	animtotaltime = MV1GetAttachAnimTotalTime(model, nowPlayAnim);
-	prevPlayAnim = -1;
-
-	//ポジション、向き関係初期化
-	isanimflg = false;
-	attackflg = false;
-	angle = 0.0f;
+	//ポジション初期化
 	this->position = position;
 	this->targetLookDirection = targetDirection;
-
-	//判定フラグ初期化
-	in = false;
-	shieldhit = false;
-	outflg = false;
-	attackaftercharachange = false;
 
 	//攻撃クールタイム
 	cooltimeflg = false;
 	cooltimeflame = 0;
 
 	//追いかけ関係初期化
+	attackaftercharachange = false;
 	targetCharaAngle = 0.0f;
 	chaseflame = 0;
 	moveangle = 0;
@@ -96,6 +83,10 @@ void Enemy::SetTarget(std::vector<int> outchara)
 		{
 			if (target == outchara[i] || target == mynumber || attackaftercharachange)
 			{
+				if (attackaftercharachange)
+				{
+					int a = 0;
+				}
 				charachange = true;
 			}
 		}
@@ -160,7 +151,7 @@ void Enemy::Move(std::vector<int> outchara)
 	}
 
 	//射程に入り、差が一定以下でフラグが良ければ攻撃
-	if (targetdistance < 1000 && angledif ==0 && attackflg == false && cooltimeflg == false)
+	if (targetdistance < 1000 && angledif <0.2 && attackflg == false && cooltimeflg == false)
 	{
 		cooltimeflg = true;
 		cooltimeflame = 0;

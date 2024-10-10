@@ -18,6 +18,13 @@ protected:
 		Punch = 1,//パンチ
 	};
 
+	enum class EffectKind :int
+	{
+		None = -1,//無し
+		HitPlayer = 0,//プレイヤー衝突
+		HitShield = 1,//盾衝突
+	};
+
 	
 
 	//他クラス
@@ -32,6 +39,20 @@ protected:
 	int nowPlayAnimKind;//現在再生中のアニメーション
 	int nowPlayAnim;//現在のアニメーションアタッチ番号
 	int prevPlayAnim;//変更前のアニメーション
+
+	//エフェクト
+	int PlayingEffectKind;//再生中のエフェクトの種類
+	int PlayingEffecthandle;//再生中のエフェクト
+	int PlayingEffectSpeed;//再生中のエフェクト再生速度
+	int playerhiteffecthandle;//プレイヤー衝突エフェクトハンドル
+	bool Playplayerhiteffectflg;//プレイヤー衝突エフェクト再生フラグ
+	VECTOR playerhiteffectangle;//プレイヤー衝突エフェクト角度
+	VECTOR playerhiteffectposition;//プレイヤー衝突エフェクトポジション
+	int shieldhiteffecthandle;//盾衝突エフェクトハンドル
+	bool Playshieldhiteffectflg;//盾衝突エフェクトフラグ
+	VECTOR shieldhiteffectangle;//盾衝突エフェクト角度
+	VECTOR shieldhiteffectposition;//盾衝突エフェクトポジション
+
 
 	//ポジション
 	VECTOR position;//ポジション
@@ -68,8 +89,12 @@ public:
 	bool FistWithShield(VECTOR Shieldleft, VECTOR Shieldright, float shieldR);
 	//コンストラクタ
 	CharacterBase();
+	//初期化
+	void BaseInitialize();
 	//他クラスの更新
 	void OtherClassUpdate(bool shieldhit);
+	//エフェクト更新
+	void UpdateEffect();
 	//吹っ飛ぶ
 	void Blow();
 	//アウト確認
@@ -82,5 +107,4 @@ public:
 	VECTOR GetShieldLeft();
 	VECTOR GetShieldRight();
 	bool GetOutflg() { return outflg; }
-	bool GetAttackflg(){ return attackflg; }
 };

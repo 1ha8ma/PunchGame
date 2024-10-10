@@ -5,9 +5,16 @@ class Fist
 private:
 	const float PunchSpeed = 10.5f;
 
-	int model;
-	float modelangle;
-	VECTOR position;
+	int model;//モデル
+	float modelangle;//モデル角度
+	VECTOR position;//ポジション
+
+	//エフェクト関係
+	int PlayingEffect;//再生中のエフェクト
+	bool playfiringefectflg;//発射エフェクト再生フラグ
+	int firingeffecthandle;//発射エフェクトハンドル
+	VECTOR firingefectangle;//発射エフェクト角度
+	VECTOR firingefectposition;//発射エフェクトポジション
 
 	//パンチ関係
 	bool punchingflg;//パンチ中

@@ -6,6 +6,7 @@
 #include"SkyDome.h"
 #include"InputManager.h"
 #include"EnemyManager.h"
+#include"ResultScene.h"
 #include"GameScene.h"
 
 /// <summary>
@@ -43,6 +44,7 @@ void GameScene::Initialize()
 	enemy->Initialize();
 
 	shieldhit = false;
+	outchara.clear();
 	outchara.push_back(-1);
 }
 
@@ -57,14 +59,6 @@ SceneBase* GameScene::Update()
 	player->Update(input->GetInputState(), shieldhit);
 	enemy->Update(player->GetPosition(), player->GetPositioncapsuleTop(), player->GetPositioncapsuleBotoom(),player->GetShieldLeft(),player->GetShieldRight(), player->GetOutflg(), outchara);
 
-	//当たり判定
-	for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
-	{
-		bool characterhit;
-		characterhit = player->FistWithCharacter(enemy->GetCapsuleTop(i), enemy->GetCapsuleBottom(i), 120.0f, enemy->GetOutflg(i));
-		enemy->CheckOut(i, characterhit);
-	}
-
 	//盾との当たり判定
 	for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
 	{
@@ -75,6 +69,18 @@ SceneBase* GameScene::Update()
 			break;
 		}
 	}
+
+	//当たり判定
+	for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
+	{
+		if (player->GetAttackflg())
+		{
+			bool characterhit;
+			characterhit = player->FistWithCharacter(enemy->GetCapsuleTop(i), enemy->GetCapsuleBottom(i), 120.0f, enemy->GetOutflg(i));
+			enemy->CheckOut(i, characterhit);
+		}
+	}
+
 
 	//脱落確認
 	if (player->GetOutflg())
@@ -119,6 +125,12 @@ SceneBase* GameScene::Update()
 		{
 			enemy->SetTargetPosition(i, player->GetPosition());
 		}
+	}
+
+	//終了条件を満たしていたらresurtに遷移
+	if (outchara.size() == 4)
+	{
+		return new ResultScene();
 	}
 
 	//もし終了条件を満たしていなかったら
