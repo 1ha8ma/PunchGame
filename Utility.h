@@ -14,3 +14,5 @@ enum class CharaNumber :int
 };
 
 const float AngleSpeed = 0.2f;//角度変更速度
+
+const int OllCharaNum = 4;//総人数

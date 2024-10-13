@@ -16,6 +16,7 @@ private:
 	const VECTOR InitialTargetDir2 = VGet(-1.0f, 0.0f, 1.0f);
 
 	bool playerhit;
+	
 
 public:
 	//コンストラクタ

@@ -31,7 +31,7 @@ GameScene::GameScene()
 /// </summary>
 GameScene::~GameScene()
 {
-
+	int a = 0;
 }
 
 /// <summary>
@@ -59,28 +59,37 @@ SceneBase* GameScene::Update()
 	//更新
 	if (gameendflg == false)
 	{
-		player->Update(input->GetInputState());
+		if (player->GetOutflg() == false)
+		{
+			player->Update(input->GetInputState(), playerattackshieldhit);
+		}
 		enemy->Update(player->GetPosition(), player->GetPositioncapsuleTop(), player->GetPositioncapsuleBotoom(), player->GetShieldLeft(), player->GetShieldRight(), player->GetOutflg(), outchara);
 
 		//盾との当たり判定
-		for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
+		if (player->GetOutflg() == false)
 		{
-			playerattackshieldhit = false;
-			if (player->FistWithShield(enemy->GetShieldLeft(i), enemy->GetShieldRight(i), 20.0f))
+			for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
 			{
-				playerattackshieldhit = true;
-				break;
+				playerattackshieldhit = false;
+				if (player->FistWithShield(enemy->GetShieldLeft(i), enemy->GetShieldRight(i), 20.0f))
+				{
+					playerattackshieldhit = true;
+					break;
+				}
 			}
 		}
 
 		//当たり判定
-		for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
+		if (player->GetOutflg() == false)
 		{
-			if (player->GetAttackflg())
+			for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
 			{
-				bool characterhit;
-				characterhit = player->FistWithCharacter(enemy->GetCapsuleTop(i), enemy->GetCapsuleBottom(i), 120.0f, enemy->GetOutflg(i));
-				enemy->CheckOut(i, characterhit);
+				if (player->GetAttackflg())
+				{
+					bool characterhit;
+					characterhit = player->FistWithCharacter(enemy->GetCapsuleTop(i), enemy->GetCapsuleBottom(i), 120.0f, enemy->GetOutflg(i));
+					enemy->CheckOut(i, characterhit);
+				}
 			}
 		}
 
@@ -100,15 +109,15 @@ SceneBase* GameScene::Update()
 		{
 			if (enemy->GetOutflg(i))
 			{
-				bool sumi = false;
+				bool alreadyout = false;//既に脱落しているフラグ
 				for (int j = 0; j < outchara.size(); j++)
 				{
 					if (outchara[j] == i)//すでに脱落している場合
 					{
-						sumi = true;
+						alreadyout = true;
 					}
 				}
-				if (sumi == false)
+				if (alreadyout == false)
 				{
 					outchara.push_back(i);
 				}
@@ -118,21 +127,19 @@ SceneBase* GameScene::Update()
 		//CPUターゲットポジション設定
 		for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
 		{
-			if (enemy->GetTargetNumber(i) == static_cast<int>(CharaNumber::CPU0))
+			for (int j = 0; j < OllCharaNum; j++)
 			{
-				enemy->SetTargetPosition(i, enemy->GetPosition(static_cast<int>(CharaNumber::CPU0)));
-			}
-			if (enemy->GetTargetNumber(i) == static_cast<int>(CharaNumber::CPU1))
-			{
-				enemy->SetTargetPosition(i, enemy->GetPosition(static_cast<int>(CharaNumber::CPU1)));
-			}
-			if (enemy->GetTargetNumber(i) == static_cast<int>(CharaNumber::CPU2))
-			{
-				enemy->SetTargetPosition(i, enemy->GetPosition(static_cast<int>(CharaNumber::CPU2)));
-			}
-			if (enemy->GetTargetNumber(i) == static_cast<int>(CharaNumber::Player))
-			{
-				enemy->SetTargetPosition(i, player->GetPosition());
+				if (enemy->GetTargetNumber(i) == j)
+				{
+					if (j == static_cast<int>(CharaNumber::Player))
+					{
+						enemy->SetTargetPosition(i, player->GetPosition());
+					}
+					else
+					{
+						enemy->SetTargetPosition(i, enemy->GetPosition(j));
+					}
+				}
 			}
 		}
 	}

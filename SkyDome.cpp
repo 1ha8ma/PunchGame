@@ -13,6 +13,14 @@ SkyDome::SkyDome()
 	MV1SetPosition(model, VGet(0, 0, 0));
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
+SkyDome::~SkyDome()
+{
+	
+}
+
 void SkyDome::Draw()
 {
 	MV1DrawModel(model);

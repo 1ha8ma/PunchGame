@@ -1,5 +1,8 @@
 #include"DxLib.h"
 #include"InputManager.h"
+#include"Camera.h"
+#include"SkyDome.h"
+#include"WoodBoard.h"
 #include"GameScene.h"
 #include"TitleScene.h"
 
@@ -8,8 +11,13 @@
 /// </summary>
 TitleScene::TitleScene()
 {
+	//インスタンス化
 	input = new InputManager();
+	camera = new Camera();
+	skydome = new SkyDome();
+	woodboard = new WoodBoard();
 
+	titlelogo = LoadGraph("2D/titlelogo.png");
 	Initialize();
 }
 
@@ -26,6 +34,8 @@ TitleScene::~TitleScene()
 /// </summary>
 void TitleScene::Initialize()
 {
+	camera->Initialize();
+
 	inputpossibleflg = false;
 }
 
@@ -35,9 +45,9 @@ void TitleScene::Initialize()
 /// <returns>次のシーン</returns>
 SceneBase* TitleScene::Update()
 {
-	int inputstate = input->GetInputState();
+	int inputstate = input->GetInputState();//入力状態
 
-	if (inputstate == 0)
+	if (inputstate == 0)//入力が無ければ入力可能に変更
 	{
 		inputpossibleflg = true;
 	}
@@ -47,6 +57,10 @@ SceneBase* TitleScene::Update()
 		return new GameScene();
 	}
 
+	//クラス更新
+
+	camera->UpdateForTitle();
+
 	return this;
 }
 
@@ -55,6 +69,12 @@ SceneBase* TitleScene::Update()
 /// </summary>
 void TitleScene::Draw()
 {
-	SetFontSize(64);
-	DrawString(600, 500, "TITLE", GetColor(190, 155, 211));
+	skydome->Draw();
+	woodboard->Draw();
+
+	DrawExtendGraph(470, 0,1100,600, titlelogo, TRUE);
+
+	SetFontSize(80);
+	ChangeFont("851テガキカクット",DX_CHARSET_DEFAULT);
+	DrawString(600, 700, "スタート", GetColor(127, 255, 0));
 }

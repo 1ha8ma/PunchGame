@@ -94,7 +94,7 @@ public:
 	//他クラスの更新
 	void OtherClassUpdate(bool shieldhit);
 	//エフェクト更新
-	void UpdateEffect();
+	void UpdateEffect(bool shieldhit);
 	//吹っ飛ぶ
 	void Blow();
 	//アウト確認

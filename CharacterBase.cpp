@@ -11,6 +11,7 @@
 /// </summary>
 CharacterBase::CharacterBase()
 {
+	//他クラスインスタンス化
 	shield = new Shield();
 	fist = new Fist();
 
@@ -185,7 +186,7 @@ void CharacterBase::OtherClassInitialize()
 /// <summary>
 /// エフェクト更新
 /// </summary>
-void CharacterBase::UpdateEffect()
+void CharacterBase::UpdateEffect(bool shieldhit)
 {
 	//エフェクトカメラ同期
 	Effekseer_Sync3DSetting();
@@ -194,10 +195,10 @@ void CharacterBase::UpdateEffect()
 	//エフェクト更新
 	UpdateEffekseer3D();
 
-	/*if (IsEffekseer3DEffectPlaying(PlayingEffecthandle) == false)
+	if (Playshieldhiteffectflg && shieldhit == false)
 	{
-		PlayingEffectKind = static_cast<int>(EffectKind::None);
-	}*/
+		Playshieldhiteffectflg = false;
+	}
 }
 
 /// <summary>
@@ -282,18 +283,6 @@ bool CharacterBase::FistWithShield(VECTOR ShieldLeft, VECTOR ShieldRight, float 
 	else
 	{
 		hit = false;
-			
-		int a = IsEffekseer3DEffectPlaying(PlayingEffecthandle);
-		if (a == -1&&Playshieldhiteffectflg)
-		{
-			int aaa = 0;
-		}
-
-		if (/*PlayingEffectKind == static_cast<int>(EffectKind::HitShield) && */IsEffekseer3DEffectPlaying(PlayingEffecthandle) == -1)
-		{
-			//PlayingEffectKind = static_cast<int>(EffectKind::None);
-			Playshieldhiteffectflg = false;
-		}
 	}
 
 	return hit;

@@ -22,7 +22,7 @@ private:
 	bool cooltimeflg;
 	int cooltimeflame;
 
-	float moveangle;
+	float moveangle;//動く方向
 
 	//ターゲット設定
 	void SetTarget(std::vector<int> outchara);
@@ -38,6 +38,7 @@ public:
 	void Initialize(VECTOR position, VECTOR targetDir);
 	//更新
 	void Update(std::vector<int> outchara);
+
 
 	VECTOR GetPosition() { return position; }
 	int GetTarGetNumber() { return target; }

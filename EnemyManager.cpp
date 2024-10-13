@@ -122,7 +122,7 @@ void EnemyManager::ForeverUpdate()
 		enemy[i]->OtherClassUpdate(enemy[i]->GetShieldHit());
 		enemy[i]->UpdateCapsule();
 		enemy[i]->Blow();
-		enemy[i]->UpdateEffect();
+		enemy[i]->UpdateEffect(enemy[i]->GetShieldHit());
 	}
 }
 

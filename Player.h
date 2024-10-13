@@ -15,7 +15,7 @@ public:
 	//‰Šú‰»
 	void Initialize();
 	//XV
-	void Update(int inputstate);
+	void Update(int inputstate,bool shieldhit);
 
 	void ForeverUpdate(bool playerattackshieldhit);
 

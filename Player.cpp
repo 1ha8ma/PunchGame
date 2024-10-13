@@ -43,7 +43,7 @@ void Player::Initialize()
 /// <summary>
 /// 更新
 /// </summary>
-void Player::Update(int inputstate)
+void Player::Update(int inputstate,bool shieldhit)
 {
 	//入力処理
 	InputProcess(inputstate);
@@ -52,7 +52,7 @@ void Player::Update(int inputstate)
 	PlayAnimation();
 
 	//エフェクト更新
-	UpdateEffect();
+	UpdateEffect(shieldhit);
 	
 	//向き設定
 	UpdateAngle();
@@ -62,6 +62,10 @@ void Player::Update(int inputstate)
 	MV1SetPosition(model, position);
 }
 
+/// <summary>
+/// 終了、脱落後も続く更新
+/// </summary>
+/// <param name="playerattackshieldhit">プレイヤーの攻撃が盾に当たっているか</param>
 void Player::ForeverUpdate(bool playerattackshieldhit)
 {
 	//他クラスの処理

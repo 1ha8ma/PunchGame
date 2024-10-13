@@ -2,12 +2,20 @@
 #include"SceneBase.h"
 
 class InputManager;
+class Camera;
+class SkyDome;
+class WoodBoard;
 
 class TitleScene:public SceneBase
 {
 private:
 	InputManager* input;
-	bool inputpossibleflg;
+	Camera* camera;
+	SkyDome* skydome;
+	WoodBoard* woodboard;
+
+	int titlelogo;
+	bool inputpossibleflg;//“ü—Í‰Â”\
 
 public:
 	TitleScene();
