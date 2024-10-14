@@ -7,6 +7,7 @@
 #include"InputManager.h"
 #include"EnemyManager.h"
 #include"ResultScene.h"
+#include"TitleScene.h"
 #include"GameScene.h"
 
 /// <summary>
@@ -21,9 +22,9 @@ GameScene::GameScene()
 	wood = new WoodBoard();
 	player = new Player();
 	enemy = new EnemyManager();
+	resultscene = new ResultScene();
 
-	playerattackshieldhit = false;
-	outchara.push_back(-1);
+	Initialize();
 }
 
 /// <summary>
@@ -39,13 +40,10 @@ GameScene::~GameScene()
 /// </summary>
 void GameScene::Initialize()
 {
-	camera->Initialize();
-	player->Initialize();
-	enemy->Initialize();
-
 	gameendflg = false;
 	playeroutcheck = false;
 	playerattackshieldhit = false;
+	scenechange = false;
 	outchara.clear();
 	outchara.push_back(-1);
 }
@@ -59,6 +57,7 @@ SceneBase* GameScene::Update()
 	//XV
 	if (gameendflg == false)
 	{
+		camera->UpdateForGame();
 		if (player->GetOutflg() == false)
 		{
 			player->Update(input->GetInputState(), playerattackshieldhit);
@@ -152,17 +151,36 @@ SceneBase* GameScene::Update()
 	{
 		if (gameendflg == false)
 		{
+			//ŸŽÒ‚Ìî•ñ‚ðŽæ“¾
+			if (player->GetOutflg() == false)
+			{
+				winnerpos = player->GetPosition();
+				winnerangle = player->GetAngle();
+				winnernumber = static_cast<int>(CharaNumber::Player);
+			}
+			for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
+			{
+				if (enemy->GetOutflg(i) == false)
+				{
+					winnerpos = enemy->GetPosition(i);
+					winnerangle = enemy->GetAngle(i);
+					winnernumber = i;
+					break;
+				}
+			}
+			resultscene->Initialize(winnerpos, winnerangle);
 			gameendflg = true;
 		}
 	}
 	//I—¹Œã‚ÌŽžŠÔ
 	if (gameendflg)
 	{
-		gameendflame++;
+		camera->UpdateForResult(winnerpos, winnernumber);
+		scenechange = resultscene->Update(camera);
 
-		if (gameendflame == 200)
+		if (scenechange)
 		{
-			return new ResultScene();
+			return new TitleScene();
 		}
 	}
 
@@ -179,4 +197,9 @@ void GameScene::Draw()
 	wood->Draw();
 	player->Draw();
 	enemy->Draw();
+
+	if (gameendflg)
+	{
+		resultscene->Draw();
+	}
 }

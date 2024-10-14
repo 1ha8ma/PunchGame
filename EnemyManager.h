@@ -45,5 +45,6 @@ public:
 	bool GetOutflg(int i);
 	int GetTargetNumber(int i);
 	void SetTargetPosition(int i, VECTOR targetpos);
+	float GetAngle(int i);
 	bool GetPlayerhit() { return playerhit; }
 };

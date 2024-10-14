@@ -107,4 +107,5 @@ public:
 	VECTOR GetShieldLeft();
 	VECTOR GetShieldRight();
 	bool GetOutflg() { return outflg; }
+	float GetAngle() { return angle; }
 };

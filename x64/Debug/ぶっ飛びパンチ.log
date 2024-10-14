@@ -1,4 +1,6 @@
-﻿  GameScene.cpp
+﻿  ResultScene.cpp
 C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-C:\Users\hamar\Desktop\PunchGame\Utility.h(1,1): warning C4828: オフセット 0x119 から始まる、現在のソースの文字セット (コードページ 932) では使用できない文字がファイルに含まれています。
+C:\Users\hamar\Desktop\PunchGame\ResultScene.cpp(38,38): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\ResultScene.cpp(39,38): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\ResultScene.cpp(66,11): warning C4305: '+=': 'double' から 'float' へ切り詰めます。
   ぶっ飛びパンチ.vcxproj -> C:\Users\hamar\Desktop\PunchGame\x64\Debug\ぶっ飛びパンチ.exe

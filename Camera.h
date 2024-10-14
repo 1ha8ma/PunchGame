@@ -17,4 +17,9 @@ public:
 	void UpdateForGame();
 	//タイトル中更新
 	void UpdateForTitle();
+	//リザルト更新
+	void UpdateForResult(VECTOR winnerpos,int winnernumber);
+
+	VECTOR GetPosition() { return pos; }
+	void SetPosition(VECTOR newpos) { pos = newpos; }
 };

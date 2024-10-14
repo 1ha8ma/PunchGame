@@ -1,5 +1,6 @@
 #include<math.h>
 #include"DxLib.h"
+#include"Utility.h"
 #include"Camera.h"
 
 /// <summary>
@@ -25,15 +26,17 @@ void Camera::Initialize()
 }
 
 /// <summary>
-/// ゲーム中更新
+/// ゲーム中での更新
 /// </summary>
 void Camera::UpdateForGame()
 {
 	SetCameraPositionAndTarget_UpVecY(pos, lookpos);
 }
 
+
+
 /// <summary>
-/// タイトル時更新
+/// タイトルでの更新
 /// </summary>
 void Camera::UpdateForTitle()
 {
@@ -44,6 +47,32 @@ void Camera::UpdateForTitle()
 	if (angle > initangle + (DX_PI_F * 2))//一周したら角度を最初に戻す
 	{
 		angle = initangle;
+	}
+
+	SetCameraPositionAndTarget_UpVecY(pos, lookpos);
+}
+
+/// <summary>
+/// リザルトでの更新
+/// </summary>
+/// <param name="winnerpos">勝者ポジション</param>
+/// <param name="winnernumber">勝者のキャラナンバー</param>
+void Camera::UpdateForResult(VECTOR winnerpos,int winnernumber)
+{
+	lookpos = winnerpos;
+
+	//身長が違うから高さを変更
+	if (winnernumber == static_cast<int>(CharaNumber::CPU0))
+	{
+		lookpos.y = winnerpos.y + 300;
+	}
+	else if (winnernumber == static_cast<int>(CharaNumber::CPU1))
+	{
+		lookpos.y = winnerpos.y + 200;
+	}
+	else
+	{
+		lookpos.y = winnerpos.y + 100;
 	}
 
 	SetCameraPositionAndTarget_UpVecY(pos, lookpos);

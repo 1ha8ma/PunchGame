@@ -186,3 +186,8 @@ void EnemyManager::SetTargetPosition(int i, VECTOR targetPos)
 {
 	enemy[i]->SetTargetPosition(targetPos);
 }
+
+float EnemyManager::GetAngle(int i)
+{
+	return enemy[i]->GetAngle();
+}

@@ -8,6 +8,7 @@ class WoodBoard;
 class SkyDome;
 class InputManager;
 class EnemyManager;
+class ResultScene;
 
 class GameScene :public SceneBase
 {
@@ -18,12 +19,17 @@ private:
 	SkyDome* skydome;
 	InputManager* input;
 	EnemyManager* enemy;
+	ResultScene* resultscene;
 
 	bool gameendflg;//ゲーム決着フラグ
-	int gameendflame;//ゲーム終了後フレーム
 	bool playeroutcheck;//プレイヤーが攻撃に当たった
 	bool playerattackshieldhit;//盾に当たっているか
 	std::vector<int> outchara;//脱落したキャラ
+
+	VECTOR winnerpos;//勝者ポジション
+	float winnerangle;//勝者角度
+	bool scenechange;//シーン切り替えフラグ
+	int winnernumber;//勝者のキャラナンバー
 
 public:
 	//コンストラクタ

@@ -338,7 +338,7 @@ VECTOR CharacterBase::GetShieldRight()
 /// </summary>
 void CharacterBase::Draw()
 {
-	DrawCapsule3D(capsuleTop, capsuleBottom, CharacterR, 8, GetColor(127, 255, 0), GetColor(0, 255, 255), FALSE);
+	//DrawCapsule3D(capsuleTop, capsuleBottom, CharacterR, 8, GetColor(127, 255, 0), GetColor(0, 255, 255), FALSE);
 	MV1DrawModel(model);
 	shield->Draw();
 	if (outflg == false)
