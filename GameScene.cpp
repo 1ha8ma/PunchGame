@@ -8,6 +8,7 @@
 #include"EnemyManager.h"
 #include"ResultScene.h"
 #include"TitleScene.h"
+#include"StartScene.h"
 #include"GameScene.h"
 
 /// <summary>
@@ -23,6 +24,7 @@ GameScene::GameScene()
 	player = new Player();
 	enemy = new EnemyManager();
 	resultscene = new ResultScene();
+	startscene = new StartScene();
 
 	Initialize();
 }
@@ -32,7 +34,7 @@ GameScene::GameScene()
 /// </summary>
 GameScene::~GameScene()
 {
-	int a = 0;
+	
 }
 
 /// <summary>
@@ -40,6 +42,8 @@ GameScene::~GameScene()
 /// </summary>
 void GameScene::Initialize()
 {
+	camera->GamestartInitialize();
+	gamestartflg = false;
 	gameendflg = false;
 	playeroutcheck = false;
 	playerattackshieldhit = false;
@@ -54,13 +58,25 @@ void GameScene::Initialize()
 /// <returns>次のシーン</returns>
 SceneBase* GameScene::Update()
 {
+	//スタートシーン更新
+	if (gamestartflg == false)
+	{
+		gamestartflg = startscene->Update();
+		camera->UpdateForStart(startscene->GetCameraPos(), startscene->GetLookPos());
+
+		if (gamestartflg)
+		{
+			camera->Initialize();
+		}
+	}
+	
 	//更新
-	if (gameendflg == false)
+	if (gamestartflg && gameendflg == false)
 	{
 		camera->UpdateForGame();
 		if (player->GetOutflg() == false)
 		{
-			player->Update(input->GetInputState(), playerattackshieldhit);
+			player->Update(input->GetInputState());
 		}
 		enemy->Update(player->GetPosition(), player->GetPositioncapsuleTop(), player->GetPositioncapsuleBotoom(), player->GetShieldLeft(), player->GetShieldRight(), player->GetOutflg(), outchara);
 
@@ -143,8 +159,11 @@ SceneBase* GameScene::Update()
 		}
 	}
 
-	player->ForeverUpdate(playerattackshieldhit);
-	enemy->ForeverUpdate();
+	if (gamestartflg)
+	{
+		player->ForeverUpdate(playerattackshieldhit);
+		enemy->ForeverUpdate();
+	}
 
 	//終了条件を満たしていたらフラグ変更
 	if (outchara.size() == 4)//1人残った場合
@@ -198,6 +217,10 @@ void GameScene::Draw()
 	player->Draw();
 	enemy->Draw();
 
+	if (gamestartflg == false)
+	{
+		startscene->Draw();
+	}
 	if (gameendflg)
 	{
 		resultscene->Draw();

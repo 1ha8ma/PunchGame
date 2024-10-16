@@ -1,6 +1,7 @@
 #include"DxLib.h"
 #include"Enemy.h"
 #include"Utility.h"
+#include"Loader.h"
 #include"EnemyManager.h"
 
 //íËêîíËã`
@@ -11,13 +12,15 @@ const int EnemyManager::NumberofEnemy = 3;
 /// </summary>
 EnemyManager::EnemyManager()
 {
-	enemy.push_back(NULL);
-	enemy[static_cast<int>(CharaNumber::CPU0)] = new Enemy("3D/Enemy1.mv1", ModelSize, InitialPosition0, InitialTargetDir0, static_cast<int>(CharaNumber::CPU0));
-	enemy.push_back(NULL);
-	enemy[static_cast<int>(CharaNumber::CPU1)] = new Enemy("3D/Enemy2.mv1", ModelSize, InitialPosition1, InitialTargetDir1, static_cast<int>(CharaNumber::CPU1));
-	enemy.push_back(NULL);
-	enemy[static_cast<int>(CharaNumber::CPU2)] = new Enemy("3D/Enemy3.mv1", ModelSize, InitialPosition2, InitialTargetDir2, static_cast<int>(CharaNumber::CPU2));
+	Loader* loader = Loader::GetInstance();
 
+	enemy.push_back(NULL);
+	enemy[static_cast<int>(CharaNumber::CPU0)] = new Enemy(loader->GetHandle(Loader::Kind::Enemy1Model), ModelSize, InitialPosition0, InitialTargetDir0, static_cast<int>(CharaNumber::CPU0));
+	enemy.push_back(NULL);
+	enemy[static_cast<int>(CharaNumber::CPU1)] = new Enemy(loader->GetHandle(Loader::Kind::Enemy2Model), ModelSize, InitialPosition1, InitialTargetDir1, static_cast<int>(CharaNumber::CPU1));
+	enemy.push_back(NULL);
+	enemy[static_cast<int>(CharaNumber::CPU2)] = new Enemy(loader->GetHandle(Loader::Kind::Enemy3Model), ModelSize, InitialPosition2, InitialTargetDir2, static_cast<int>(CharaNumber::CPU2));
+	
 	playerhit = false;
 }
 

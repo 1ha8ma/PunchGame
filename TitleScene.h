@@ -14,7 +14,8 @@ private:
 	SkyDome* skydome;
 	WoodBoard* woodboard;
 
-	int titlelogo;
+	int gamepadimage;//ゲームパッド画像
+	int titlelogo;//タイトルロゴ
 	bool inputpossibleflg;//入力可能
 
 public:

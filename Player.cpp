@@ -2,6 +2,7 @@
 #include"DxLib.h"
 #include"Utility.h"
 #include"Player.h"
+#include"Loader.h"
 
 /// <summary>
 /// コンストラクタ
@@ -9,7 +10,8 @@
 Player::Player()
 {
 	//モデルロード・アニメーション設定
-	model = MV1LoadModel("3D/player.mv1");
+	Loader* loader = Loader::GetInstance();
+	model = loader->GetHandle(Loader::Kind::PlayerModel);
 
 	//初期化処理
 	Initialize();
@@ -29,30 +31,30 @@ Player::~Player()
 void Player::Initialize()
 {
 	BaseInitialize();
-	OtherClassInitialize();
+
+	//ポジション初期化
+	position = VGet(-1000.0f, 100.0f, -700.0f);
 
 	//移動角度設定
 	moveVec = VGet(0, 0, 0);
 	targetLookDirection = VGet(1.0f, 0.0f, 1.0f);
 
-	//ポジション初期化
-	position = VGet(-1000.0f, 100.0f, -700.0f);
+	InitializeAngle();
+	OtherClassInitialize();
+
 	MV1SetPosition(model, position);
 }
 
 /// <summary>
 /// 更新
 /// </summary>
-void Player::Update(int inputstate,bool shieldhit)
+void Player::Update(int inputstate)
 {
 	//入力処理
 	InputProcess(inputstate);
 	
 	//アニメーション
 	PlayAnimation();
-
-	//エフェクト更新
-	UpdateEffect(shieldhit);
 	
 	//向き設定
 	UpdateAngle();
@@ -73,6 +75,9 @@ void Player::ForeverUpdate(bool playerattackshieldhit)
 
 	//カプセル更新
 	UpdateCapsule();
+
+	//エフェクト更新
+	UpdateEffect(playerattackshieldhit);
 
 	Blow();
 }

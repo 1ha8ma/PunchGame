@@ -1,4 +1,5 @@
 #include"DxLib.h"
+#include"Loader.h"
 #include"WoodBoard.h"
 
 /// <summary>
@@ -6,7 +7,8 @@
 /// </summary>
 WoodBoard::WoodBoard()
 {
-	model = MV1LoadModel("3D/woodboard.mv1");
+	Loader* loader = loader->GetInstance();
+	model = loader->GetHandle(Loader::Kind::WoodBoardModel);
 
 	Initialize();
 }

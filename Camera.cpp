@@ -25,6 +25,17 @@ void Camera::Initialize()
 	SetCameraPositionAndTarget_UpVecY(pos, lookpos);
 }
 
+void Camera::GamestartInitialize()
+{
+	SetCameraNearFar(10.0f, 6000.0f);
+
+	pos = VGet(0, 600, 0);
+	lookpos = VGet(0, 0, 0);
+
+	angle = initangle;
+	SetCameraPositionAndTarget_UpVecY(pos, lookpos);
+}
+
 /// <summary>
 /// ゲーム中での更新
 /// </summary>
@@ -33,7 +44,15 @@ void Camera::UpdateForGame()
 	SetCameraPositionAndTarget_UpVecY(pos, lookpos);
 }
 
-
+/// <summary>
+/// スタート演出での更新
+/// </summary>
+/// <param name="position">ポジション</param>
+/// <param name="lookpos">注視点</param>
+void Camera::UpdateForStart(VECTOR position,VECTOR lookpos)
+{
+	SetCameraPositionAndTarget_UpVecY(position, lookpos);
+}
 
 /// <summary>
 /// タイトルでの更新
@@ -64,7 +83,7 @@ void Camera::UpdateForResult(VECTOR winnerpos,int winnernumber)
 	//身長が違うから高さを変更
 	if (winnernumber == static_cast<int>(CharaNumber::CPU0))
 	{
-		lookpos.y = winnerpos.y + 300;
+		lookpos.y = winnerpos.y + 350;
 	}
 	else if (winnernumber == static_cast<int>(CharaNumber::CPU1))
 	{

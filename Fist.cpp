@@ -2,6 +2,7 @@
 #include"DxLib.h"
 #include"EffekseerForDXLib.h"
 #include"Utility.h"
+#include"Loader.h"
 #include"Fist.h"
 
 const float Fist::FistCapsuleRadius = 120.0f;
@@ -12,9 +13,11 @@ const float Fist::FistCapsuleRadius = 120.0f;
 Fist::Fist()
 {
 	//モデルロード
-	model = MV1LoadModel("3D/fist.mv1");
+	Loader* loader = loader->GetInstance();
+	model = MV1DuplicateModel(loader->GetHandle(Loader::Kind::FistModel));
+
 	//エフェクトロード
-	firingeffecthandle = LoadEffekseerEffect("Effect/punchfiring.efkefc", 20.0f);
+	firingeffecthandle = loader->GetHandle(Loader::Kind::PunchfiringEffect);
 
 	Initialize();
 }

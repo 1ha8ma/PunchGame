@@ -4,6 +4,7 @@
 #include"SkyDome.h"
 #include"WoodBoard.h"
 #include"GameScene.h"
+#include"Loader.h"
 #include"TitleScene.h"
 
 /// <summary>
@@ -17,7 +18,8 @@ TitleScene::TitleScene()
 	skydome = new SkyDome();
 	woodboard = new WoodBoard();
 
-	titlelogo = LoadGraph("2D/titlelogo.png");
+	Loader* loader = loader->GetInstance();
+	titlelogo = loader->GetHandle(Loader::Kind::TitleLogo);
 	Initialize();
 }
 

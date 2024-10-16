@@ -2,6 +2,7 @@
 #include"DxLib.h"
 #include"Camera.h"
 #include"InputManager.h"
+#include"Loader.h"
 #include"ResultScene.h"
 
 /// <summary>
@@ -10,8 +11,9 @@
 ResultScene::ResultScene()
 {
 	input = new InputManager();
+	Loader* loader = loader->GetInstance();
 
-	ribbonimage = LoadGraph("2D/ribbon.png");
+	ribbonimage = loader->GetHandle(Loader::Kind::RibbonImage);
 }
 
 /// <summary>
@@ -63,7 +65,7 @@ bool ResultScene::Update(Camera*& camera)
 	camera->SetPosition(copypos);
 
 	//Lerp‚Ì•ªŠ„‚ÌŠ„‡‚ð–Ú•W‚É‹ß‚Ã‚¯‚é
-	t += 0.01;
+	t += 0.005;
 
 	if (t >= 1 && inputpossibleflg && inputstate && (16 & inputstate) == 16)
 	{
@@ -80,5 +82,5 @@ void ResultScene::Draw()
 {
 	DrawGraph(0, -100, ribbonimage, TRUE);
 	SetFontSize(64);
-	DrawString(130, 110, "WINNER", GetColor(255, 215, 0));
+	DrawString(135, 110, "WINNER", GetColor(255, 215, 0));
 }

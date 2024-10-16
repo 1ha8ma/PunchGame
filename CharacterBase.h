@@ -18,14 +18,13 @@ protected:
 		Punch = 1,//パンチ
 	};
 
+	//エフェクトの種類
 	enum class EffectKind :int
 	{
 		None = -1,//無し
 		HitPlayer = 0,//プレイヤー衝突
 		HitShield = 1,//盾衝突
 	};
-
-	
 
 	//他クラス
 	Shield* shield;
@@ -68,7 +67,6 @@ protected:
 	bool outflg;//脱落
 	bool shieldhit;//攻撃が盾に当たった
 
-
 	//角度更新
 	void UpdateAngle();
 	//アニメーション切り替え
@@ -87,8 +85,12 @@ public:
 	bool FistWithShield(VECTOR Shieldleft, VECTOR Shieldright, float shieldR);
 	//コンストラクタ
 	CharacterBase();
+	//デストラクタ
+	~CharacterBase();
 	//初期化
 	void BaseInitialize();
+	//角度初期化
+	void InitializeAngle();
 	//カプセルの更新
 	void UpdateCapsule();
 	//他クラスの更新

@@ -1,4 +1,5 @@
 #include"DxLib.h"
+#include"Loader.h"
 #include"SkyDome.h"
 
 /// <summary>
@@ -6,7 +7,8 @@
 /// </summary>
 SkyDome::SkyDome()
 {
-	model = MV1LoadModel("3D/Dome_X501.x");
+	Loader* loader = loader->GetInstance();
+	model = loader->GetHandle(Loader::Kind::DomeModel);
 
 	MV1SetScale(model, VGet(30, 30, 30));
 	MV1SetRotationXYZ(model, VGet(0.0f, 0, 0));

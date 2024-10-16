@@ -31,7 +31,7 @@ private:
 
 public:
 	//コンストラクタ
-	Enemy(const TCHAR *modelhandle,float modelsize,VECTOR position,VECTOR targetDir,int cpunumber);
+	Enemy(int handle,float modelsize,VECTOR position,VECTOR targetDir,int cpunumber);
 	//デストラクタ
 	~Enemy();
 	//初期化

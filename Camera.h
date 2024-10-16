@@ -13,6 +13,10 @@ public:
 	Camera();
 	//初期化
 	void Initialize();
+	//ゲーム開始時初期化
+	void GamestartInitialize();
+	//ゲームスタート更新
+	void UpdateForStart(VECTOR position, VECTOR lookpos);
 	//ゲーム中更新
 	void UpdateForGame();
 	//タイトル中更新

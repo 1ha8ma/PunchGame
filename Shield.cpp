@@ -1,6 +1,7 @@
 #include<math.h>
 #include"DxLib.h"
 #include"Utility.h"
+#include"Loader.h"
 #include"Shield.h"
 
 /// <summary>
@@ -8,9 +9,8 @@
 /// </summary>
 Shield::Shield()
 {
-	model = MV1LoadModel("3D/Shield.mv1");
-
-	Initialize();
+	Loader* loader = loader->GetInstance();
+	model = MV1DuplicateModel(loader->GetHandle(Loader::Kind::ShieldModel));
 }
 
 /// <summary>
@@ -24,14 +24,20 @@ Shield::~Shield()
 /// <summary>
 /// 初期化
 /// </summary>
-void Shield::Initialize()
+void Shield::Initialize(VECTOR charaposition,float characterangle)
 {
-	position = VGet(0.0f, 100.0f, 0.0f);
-	angle = 0.0f;
+	//ポジションコピー
+	position = charaposition;
 
-	//capTop = VAdd(position, VGet(0, 50, 0));
-	//capBottom = VAdd(position, VGet(0, -50, 0));
+	//ポジション設定
+	position.x += sin(characterangle) * DistanceWithCharacter;
+	position.z += cos(characterangle) * DistanceWithCharacter;
 
+	//角度設定
+	angle = characterangle;
+
+	//角度、ポジション反映
+	MV1SetRotationXYZ(model, VGet(0.0f, angle - 1.5f + DX_PI_F, 0.0f));
 	MV1SetPosition(model, position);
 }
 
@@ -40,7 +46,7 @@ void Shield::Initialize()
 /// </summary>
 void Shield::Update(VECTOR characterPosition,float characterangle)
 {
-	VECTOR tentativepos = characterPosition;//仮のポジション
+	VECTOR tentativepos = characterPosition;
 
 	//向きに追従
 	tentativepos.x += sin(characterangle) * DistanceWithCharacter;
@@ -66,6 +72,11 @@ void Shield::Draw()
 	//当たり判定カプセル
 	//DrawCapsule3D(capLeft, capRight, CapsuleRadius, 20, GetColor(127, 255, 0), GetColor(0, 255, 255), FALSE);
 	MV1DrawModel(model);
+}
+
+void Shield::InitializeAngle(float charaangle)
+{
+	
 }
 
 /// <summary>

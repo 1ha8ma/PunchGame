@@ -4,6 +4,7 @@
 #include"Utility.h"
 #include"Shield.h"
 #include"Fist.h"
+#include"Loader.h"
 #include"CharacterBase.h"
 
 /// <summary>
@@ -14,10 +15,23 @@ CharacterBase::CharacterBase()
 	//他クラスインスタンス化
 	shield = new Shield();
 	fist = new Fist();
+	Loader* loader = loader->GetInstance();
 
 	//エフェクトロード
-	playerhiteffecthandle = LoadEffekseerEffect("Effect/playerhit.efkefc", 30.0f);
-	shieldhiteffecthandle = LoadEffekseerEffect("Effect/shieldhit.efkefc", 30.0f);
+	playerhiteffecthandle = loader->GetHandle(Loader::Kind::PlayerhitEffect);
+	shieldhiteffecthandle = loader->GetHandle(Loader::Kind::ShieldhitEffect);
+}
+
+/// <summary>
+/// デストラクタ
+/// </summary>
+CharacterBase::~CharacterBase()
+{
+	//エフェクト終了
+	StopEffekseer3DEffect(PlayingEffecthandle);
+
+	delete shield;
+	delete fist;
 }
 
 /// <summary>
@@ -48,6 +62,22 @@ void CharacterBase::BaseInitialize()
 	PlayingEffecthandle = -1;
 	Playplayerhiteffectflg = false;
 	Playshieldhiteffectflg = false;
+}
+
+/// <summary>
+/// 角度初期化
+/// </summary>
+void CharacterBase::InitializeAngle()
+{
+	float targetAngle;
+	float difference;
+
+	//目標の方向ベクトル
+	targetAngle = static_cast<float>(atan2(targetLookDirection.x, targetLookDirection.z));
+
+	angle = targetAngle;
+
+	MV1SetRotationXYZ(model, VGet(0.0f, angle + DX_PI_F, 0.0f));
 }
 
 /// <summary>
@@ -100,7 +130,6 @@ void CharacterBase::UpdateAngle()
 	MV1SetRotationXYZ(model, VGet(0.0f, angle + DX_PI_F, 0.0f));
 	shieldhiteffectangle = VGet(0.0f, angle + DX_PI_F, 0.0f);
 	playerhiteffectangle = VGet(0.0f, angle + DX_PI_F, 0.0f);
-
 }
 
 /// <summary>
@@ -180,7 +209,7 @@ void CharacterBase::OtherClassInitialize()
 	{
 		fist->Initialize();
 	}
-	shield->Initialize();
+	shield->Initialize(position, angle);
 }
 
 /// <summary>
@@ -227,18 +256,6 @@ bool CharacterBase::FistWithCharacter(VECTOR charatop, VECTOR charabottom, float
   	if (len < Fist::FistCapsuleRadius + charaR)
 	{
 		hit = true;
-		if (Playplayerhiteffectflg == false)//エフェクト開始
-		{
-			//ポジション設定
-			playerhiteffectposition = fist->GetcapFront();
-
-			//再生処理
-			PlayingEffectKind = static_cast<int>(EffectKind::HitPlayer);
-			PlayingEffecthandle = PlayEffekseer3DEffect(playerhiteffecthandle);
-			SetPosPlayingEffekseer3DEffect(PlayingEffecthandle, playerhiteffectposition.x, playerhiteffectposition.y, playerhiteffectposition.z);
-			SetRotationPlayingEffekseer3DEffect(PlayingEffecthandle, playerhiteffectangle.x, playerhiteffectangle.y, playerhiteffectangle.z);
-			Playplayerhiteffectflg = true;
-		}
 	}
 	else
 	{
@@ -294,8 +311,21 @@ bool CharacterBase::FistWithShield(VECTOR ShieldLeft, VECTOR ShieldRight, float 
 /// <param name="hit">当たったか</param>
 void CharacterBase::CheckOut(bool hit)
 {
+	//脱落時
 	if (outflg == false && hit)
 	{
+		//エフェクト再生
+		//ポジション設定
+		playerhiteffectposition = position;
+
+		//再生処理
+		PlayingEffectKind = static_cast<int>(EffectKind::HitPlayer);
+		PlayingEffecthandle = PlayEffekseer3DEffect(playerhiteffecthandle);
+		SetPosPlayingEffekseer3DEffect(PlayingEffecthandle, playerhiteffectposition.x, playerhiteffectposition.y, playerhiteffectposition.z);
+		SetRotationPlayingEffekseer3DEffect(PlayingEffecthandle, playerhiteffectangle.x, playerhiteffectangle.y, playerhiteffectangle.z);
+		Playplayerhiteffectflg = true;
+
+		//フラグ変更
  		outflg = true;
 	}
 }

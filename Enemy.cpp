@@ -7,13 +7,13 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="modelhandle">モデルハンドル番号</param>
+/// <param name="handle">モデルハンドル</param>
 /// <param name="modelsize">モデルサイズ</param>
 /// <param name="position">ポジション</param>
 /// <param name="targetDirection">向く方向</param>
-Enemy::Enemy(const TCHAR *modelhandle,float modelsize,VECTOR position,VECTOR targetDirection,int cpunumber)
+Enemy::Enemy(int handle,float modelsize,VECTOR position,VECTOR targetDirection,int cpunumber)
 {
-	model = MV1LoadModel(modelhandle);
+	model = handle;
 	mynumber = cpunumber;
 
 	MV1SetScale(model, VGet(modelsize, modelsize, modelsize));
@@ -37,7 +37,6 @@ Enemy::~Enemy()
 void Enemy::Initialize(VECTOR position, VECTOR targetDirection)
 {
 	BaseInitialize();
-	OtherClassInitialize();
 
 	//乱数初期化
 	srand((unsigned int)time(NULL));
@@ -68,6 +67,8 @@ void Enemy::Initialize(VECTOR position, VECTOR targetDirection)
 		}
 	}
 
+	InitializeAngle();
+	OtherClassInitialize();
 	MV1SetPosition(model, this->position);
 }
 

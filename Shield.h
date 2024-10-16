@@ -16,6 +16,8 @@ private:
 	
 	//角度更新
 	void UpdateAngle(float characterAngle);
+	//角度初期化
+	void InitializeAngle(float charaangle);
 
 public:
 	//コンストラクタ
@@ -23,7 +25,7 @@ public:
 	//デストラクタ
 	~Shield();
 	//初期化
-	void Initialize();
+	void Initialize(VECTOR charaposition, float characterangle);
 	//更新
 	void Update(VECTOR characterPosition,float characterangle);
 	//描画

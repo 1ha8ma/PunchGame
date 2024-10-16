@@ -9,6 +9,7 @@ class SkyDome;
 class InputManager;
 class EnemyManager;
 class ResultScene;
+class StartScene;
 
 class GameScene :public SceneBase
 {
@@ -20,7 +21,9 @@ private:
 	InputManager* input;
 	EnemyManager* enemy;
 	ResultScene* resultscene;
+	StartScene* startscene;
 
+	bool gamestartflg;//ゲーム開始フラグ
 	bool gameendflg;//ゲーム決着フラグ
 	bool playeroutcheck;//プレイヤーが攻撃に当たった
 	bool playerattackshieldhit;//盾に当たっているか

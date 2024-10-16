@@ -1,6 +1,7 @@
 #include"DxLib.h"
 #include"EffekseerForDXLib.h"
 #include"Utility.h"
+#include"Loader.h"
 #include"GameManager.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -27,6 +28,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	////////////////////////
 	// ゲーム初期化
 	////////////////////////
+	Loader* loader = Loader::GetInstance();
+	loader->LoadModel();
+
 	//ゲームマネージャーインスタンス化
 	GameManager* game = new GameManager();
 
