@@ -5,6 +5,8 @@
 #include"WoodBoard.h"
 #include"GameScene.h"
 #include"Loader.h"
+#include"BGMManager.h"
+#include"SEManager.h"
 #include"TitleScene.h"
 
 /// <summary>
@@ -17,9 +19,12 @@ TitleScene::TitleScene()
 	camera = new Camera();
 	skydome = new SkyDome();
 	woodboard = new WoodBoard();
+	bgmmanager = new BGMManager();
+	semanager = new SEManager();
 
 	Loader* loader = loader->GetInstance();
 	titlelogo = loader->GetHandle(Loader::Kind::TitleLogo);
+	
 	Initialize();
 }
 
@@ -28,7 +33,7 @@ TitleScene::TitleScene()
 /// </summary>
 TitleScene::~TitleScene()
 {
-
+	bgmmanager->StopBGM();
 }
 
 /// <summary>
@@ -38,6 +43,9 @@ void TitleScene::Initialize()
 {
 	camera->Initialize();
 
+	fontsize = 80;
+	fontsizechangeflame = 0;
+	fontsizechangeflg = false;
 	inputpossibleflg = false;
 }
 
@@ -56,12 +64,41 @@ SceneBase* TitleScene::Update()
 
 	if (inputpossibleflg && (16 & inputstate) == 16)//Bボタン
 	{
+		semanager->PlaySE(SEManager::SEKind::CrickSE);
 		return new GameScene();
 	}
 
-	//クラス更新
+	//BGM再生
+	bgmmanager->PlayBGM(BGMManager::TitleBGM);
 
+	//カメラ更新
 	camera->UpdateForTitle();
+
+	//フォントサイズ更新
+	fontsizechangeflame++;
+
+	if (fontsizechangeflame != 0 && fontsizechangeflame % 30 == 0)
+	{
+		if (fontsizechangeflg)
+		{
+			fontsizechangeflg = false;
+		}
+		else
+		{
+			fontsizechangeflg = true;
+		}
+
+		fontsizechangeflame = 0;
+	}
+
+	if (fontsizechangeflg)
+	{
+		fontsize -= 1;
+	}
+	else
+	{
+		fontsize += 1;
+	}
 
 	return this;
 }
@@ -76,7 +113,7 @@ void TitleScene::Draw()
 
 	DrawExtendGraph(470, 0,1100,600, titlelogo, TRUE);
 
-	SetFontSize(80);
+	SetFontSize(fontsize);
 	ChangeFont("851テガキカクット",DX_CHARSET_DEFAULT);
 	DrawString(600, 700, "スタート", GetColor(127, 255, 0));
 }

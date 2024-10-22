@@ -6,6 +6,9 @@ class Loader
 public:
 	static Loader* GetInstance();//インスタンスゲット
 
+	/// <summary>
+	/// モデル等のデータの種類
+	/// </summary>
 	enum Kind
 	{
 		//3D
@@ -31,40 +34,30 @@ public:
 		PlayerhitEffect,//プレイヤー衝突エフェクト
 		PunchfiringEffect,//パンチしたときのエフェクト
 		ShieldhitEffect,//盾衝突時のエフェクト
+
+		//BGM
+		TitleBGM,//タイトルBGM
+		GameBGM,//ゲーム中BGM
+		ResultBGM,//リザルトBGM
+
+		//SE
+		StartSceneSE,//スタート演出SE
+		StartSE,//スタート表示のSE
+		CountSE,//カウントSE
+		ShieldHitSE,//盾衝突SE
+		CharacterHitSE,//キャラクターに当たった時のSE
+		AttackSE,//攻撃時SE
+		CrickSE,//決定SE
 	};
 
 	//ハンドルマップゲット
 	int GetHandle(Kind kind) { return handle[kind]; }
+	//モデル等をロード
 	void LoadModel();
-
 
 private:
 	static Loader* loader_;//ローダークラスインスタンス
 	//ハンドル持ちマップ
 	std::map<Kind, int> handle;
-
-	//3D
-	//static int PlayerModel;//プレイヤーモデル
-	//static int Enemy1Model;//敵1モデル
-	//static int Enemy2Model;//2
-	//static int Enemy3Model;//3
-	//static int ShieldModel;//盾モデル
-	//static int FistModel;//拳モデル
-	//static int WoodBoardModel;//木の板モデル
-	//static int DomeModel;//スカイドームモデル
-
-	//2D
-	/*static int TitleLogo;
-	static int RibbonImage;
-	static int GamePadImage;
-	static int StartImage;
-	static int NumImage1;
-	static int NumImage2;
-	static int NumImage3;*/
-
-	//エフェクト
-	/*static int PlayerhitEffect;
-	static int PunchfiringEffect;
-	static int ShieldhitEffect;*/
 
 };

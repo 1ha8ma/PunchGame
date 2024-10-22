@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BGMManager.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CharacterBase.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -140,12 +141,14 @@
     <ClCompile Include="Fist.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="GameUI.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Loader.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ResultScene.cpp" />
     <ClCompile Include="SceneBase.cpp" />
+    <ClCompile Include="SEManager.cpp" />
     <ClCompile Include="Shield.cpp" />
     <ClCompile Include="SkyDome.cpp" />
     <ClCompile Include="StartScene.cpp" />
@@ -153,6 +156,7 @@
     <ClCompile Include="WoodBoard.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BGMManager.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CharacterBase.h" />
     <ClInclude Include="Enemy.h" />
@@ -160,11 +164,13 @@
     <ClInclude Include="Fist.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="GameUI.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Loader.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ResultScene.h" />
     <ClInclude Include="SceneBase.h" />
+    <ClInclude Include="SEManager.h" />
     <ClInclude Include="Shield.h" />
     <ClInclude Include="SkyDome.h" />
     <ClInclude Include="StartScene.h" />

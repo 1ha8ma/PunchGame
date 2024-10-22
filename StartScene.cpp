@@ -2,6 +2,7 @@
 #include"DxLib.h"
 #include"Utility.h"
 #include"Loader.h"
+#include"SEManager.h"
 #include"StartScene.h"
 
 /// <summary>
@@ -16,6 +17,9 @@ StartScene::StartScene()
 	image.push_back(loader->GetHandle(Loader::Kind::NumImage2));
 	image.push_back(loader->GetHandle(Loader::Kind::NumImage3));
 	startimage = loader->GetHandle(Loader::Kind::StartImage);
+
+	semanager = new SEManager();
+	semanager->PlaySE(SEManager::SEKind::StartSceneSE);
 
 	Initialize();
 }
@@ -32,6 +36,7 @@ void StartScene::Initialize()
 	count = 3;
 	sizechangeflg = false;
 	sizechangeflame = 0;
+	startseflg = false;
 
 	//ポジション
 	numberlx = 800;
@@ -47,21 +52,24 @@ bool StartScene::Update()
 {
 	bool scenechange = false;
 
+	//見回す
 	if (countflg == false)
 	{
-		cameraangle += 0.008f;
+		cameraangle += 0.009f;
 		camerapos = VGet(0, 600, 0);
 		lookpos.x = sin(cameraangle);
 		lookpos.z = cos(cameraangle);
 	}
 
 
-
-	if (cameraangle >= DX_PI_F * 2)
+	//一周したら
+	if (cameraangle >= DX_PI_F * 2 && countflg == false)
 	{
+		semanager->PlaySE(SEManager::SEKind::StartCountSE);
 		countflg = true;
 	}
 
+	//カウントに入ったら
 	if (countflg)
 	{
 		cameraangle = 0.0f;
@@ -95,14 +103,20 @@ void StartScene::Draw()
 			numberly = 400;
 			numberrx = 859;
 			numberry = 480;
+			if (count >= 2)
+			{
+				semanager->PlaySE(SEManager::SEKind::StartCountSE);
+			}
 			count--;
 		}
 
+		//サイズの変更フラグ
 		if (sizechangeflame % 50 == 0 && sizechangeflame % 100 != 0)
 		{
 			sizechangeflg = true;
 		}
 
+		//数字のサイズ変更
 		if (sizechangeflg == false)
 		{
 			numberlx -= 1;
@@ -118,13 +132,20 @@ void StartScene::Draw()
 			numberry -= 1;
 		}	
 
+		//数字カウント
 		if (count >= 1)
 		{
 			DrawExtendGraph(numberlx, numberly, numberrx, numberry, image[count - 1], TRUE);
 		}
 
+		//スタート
 		if (300 < countflame && countflame <= 350)
 		{
+			if (startseflg == false)
+			{
+				semanager->PlaySE(SEManager::SEKind::StartSE);
+				startseflg = true;
+			}
 			DrawGraph(650, 370, startimage, TRUE);
 		}
 

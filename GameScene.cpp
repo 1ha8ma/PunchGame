@@ -6,6 +6,9 @@
 #include"SkyDome.h"
 #include"InputManager.h"
 #include"EnemyManager.h"
+#include"GameUI.h"
+#include"BGMManager.h"
+#include"SEManager.h"
 #include"ResultScene.h"
 #include"TitleScene.h"
 #include"StartScene.h"
@@ -23,8 +26,11 @@ GameScene::GameScene()
 	wood = new WoodBoard();
 	player = new Player();
 	enemy = new EnemyManager();
+	gameui = new GameUI();
 	resultscene = new ResultScene();
 	startscene = new StartScene();
+	bgmmanager = new BGMManager();
+	semanager = new SEManager();
 
 	Initialize();
 }
@@ -34,7 +40,17 @@ GameScene::GameScene()
 /// </summary>
 GameScene::~GameScene()
 {
-	
+	delete camera;
+	delete input;
+	delete skydome;
+	delete wood;
+	delete player;
+	delete enemy;
+	delete resultscene;
+	delete startscene;
+	delete gameui;
+
+	bgmmanager->StopBGM();
 }
 
 /// <summary>
@@ -73,6 +89,7 @@ SceneBase* GameScene::Update()
 	//更新
 	if (gamestartflg && gameendflg == false)
 	{
+		bgmmanager->PlayBGM(BGMManager::BGMKind::GameBGM);
 		camera->UpdateForGame();
 		if (player->GetOutflg() == false)
 		{
@@ -92,6 +109,7 @@ SceneBase* GameScene::Update()
 					break;
 				}
 			}
+			player->PlayShieldHitSE(playerattackshieldhit);
 		}
 
 		//当たり判定
@@ -187,6 +205,8 @@ SceneBase* GameScene::Update()
 					break;
 				}
 			}
+			//ゲームBGMストップ
+			bgmmanager->StopBGM();
 			resultscene->Initialize(winnerpos, winnerangle);
 			gameendflg = true;
 		}
@@ -199,6 +219,7 @@ SceneBase* GameScene::Update()
 
 		if (scenechange)
 		{
+			semanager->PlaySE(SEManager::SEKind::CrickSE);
 			return new TitleScene();
 		}
 	}
@@ -220,6 +241,10 @@ void GameScene::Draw()
 	if (gamestartflg == false)
 	{
 		startscene->Draw();
+	}
+	if (gamestartflg && gameendflg == false)
+	{
+		gameui->Draw();
 	}
 	if (gameendflg)
 	{

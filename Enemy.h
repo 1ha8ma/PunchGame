@@ -39,7 +39,6 @@ public:
 	//çXêV
 	void Update(std::vector<int> outchara);
 
-
 	VECTOR GetPosition() { return position; }
 	int GetTarGetNumber() { return target; }
 	void SetTargetPosition(VECTOR targetpos) { targetPosition = targetpos; }

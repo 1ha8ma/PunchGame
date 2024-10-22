@@ -1,8 +1,12 @@
 #pragma once
 
+class SEManager;
+
 class Fist
 {
 private:
+	SEManager* semanager;
+
 	const float PunchSpeed = 10.5f;
 
 	int model;//ƒ‚ƒfƒ‹

@@ -29,7 +29,10 @@ EnemyManager::EnemyManager()
 /// </summary>
 EnemyManager::~EnemyManager()
 {
-
+	for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
+	{
+		delete enemy[i];
+	}
 }
 
 /// <summary>
@@ -81,6 +84,7 @@ void EnemyManager::Update(VECTOR playerpos, VECTOR playerTop, VECTOR playerBotto
 		}
 
 		enemy[i]->SetShieldHit(hit);
+		enemy[i]->PlayShieldHitSE(hit);
 	}
 
 	//ƒvƒŒƒCƒ„[‚Æ‚Ì“–‚½‚è”»’è

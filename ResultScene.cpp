@@ -3,6 +3,7 @@
 #include"Camera.h"
 #include"InputManager.h"
 #include"Loader.h"
+#include"BGMManager.h"
 #include"ResultScene.h"
 
 /// <summary>
@@ -11,6 +12,7 @@
 ResultScene::ResultScene()
 {
 	input = new InputManager();
+	bgmmanager = new BGMManager();
 	Loader* loader = loader->GetInstance();
 
 	ribbonimage = loader->GetHandle(Loader::Kind::RibbonImage);
@@ -21,7 +23,7 @@ ResultScene::ResultScene()
 /// </summary>
 ResultScene::~ResultScene()
 {
-
+	bgmmanager->StopBGM();
 }
 
 /// <summary>
@@ -55,6 +57,9 @@ bool ResultScene::Update(Camera*& camera)
 		inputpossibleflg = true;
 	}
 
+	//BGMÄ¶
+	bgmmanager->PlayBGM(BGMManager::BGMKind::ResultBGM);
+
 	//ƒ|ƒWƒVƒ‡ƒ“‚ðŽæ‚é
 	VECTOR copypos = camera->GetPosition();
 
@@ -82,5 +87,5 @@ void ResultScene::Draw()
 {
 	DrawGraph(0, -100, ribbonimage, TRUE);
 	SetFontSize(64);
-	DrawString(135, 110, "WINNER", GetColor(255, 215, 0));
+	DrawString(150, 110, "WINNER", GetColor(255, 215, 0));
 }

@@ -1,12 +1,14 @@
 #pragma once
 
 class Camera;
+class BGMManager;
 
 class ResultScene
 {
 private:
 	InputManager* input;
 	Camera* camera;
+	BGMManager* bgmmanager;
 
 	int ribbonimage;//ƒŠƒ{ƒ“‰æ‘œ
 

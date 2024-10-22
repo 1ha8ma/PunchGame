@@ -15,7 +15,7 @@ private:
 	const VECTOR InitialPosition2 = VGet(1000.0f, 100.0f, -700.0f);
 	const VECTOR InitialTargetDir2 = VGet(-1.0f, 0.0f, 1.0f);
 
-	bool playerhit;
+	bool playerhit;//ƒvƒŒƒCƒ„[‚ÉUŒ‚‚ª“–‚½‚Á‚Ä‚¢‚é‚©
 	
 
 public:

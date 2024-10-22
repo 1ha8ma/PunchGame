@@ -5,6 +5,7 @@
 #include"Shield.h"
 #include"Fist.h"
 #include"Loader.h"
+#include"SEManager.h"
 #include"CharacterBase.h"
 
 /// <summary>
@@ -15,6 +16,7 @@ CharacterBase::CharacterBase()
 	//他クラスインスタンス化
 	shield = new Shield();
 	fist = new Fist();
+	semanager = new SEManager();
 	Loader* loader = loader->GetInstance();
 
 	//エフェクトロード
@@ -30,6 +32,9 @@ CharacterBase::~CharacterBase()
 	//エフェクト終了
 	StopEffekseer3DEffect(PlayingEffecthandle);
 
+	//アニメーションをデタッチ
+	MV1DetachAnim(model, nowPlayAnim);
+	
 	delete shield;
 	delete fist;
 }
@@ -62,6 +67,8 @@ void CharacterBase::BaseInitialize()
 	PlayingEffecthandle = -1;
 	Playplayerhiteffectflg = false;
 	Playshieldhiteffectflg = false;
+
+	shieldhitseflg = false;
 }
 
 /// <summary>
@@ -144,7 +151,7 @@ void CharacterBase::ChangeAnimation(AnimKind nextkind)
 		MV1DetachAnim(model, nowPlayAnim);
 		nowPlayAnim = -1;
 	}
-
+	
 	//新しくアニメーションをアタッチ
 	nowPlayAnimKind = static_cast<int>(nextkind);
 	nowPlayAnim = MV1AttachAnim(model, static_cast<int>(nextkind));
@@ -242,8 +249,8 @@ void CharacterBase::OtherClassUpdate(bool shieldhit)
 /// <summary>
 /// 拳とキャラクターの当たり判定
 /// </summary>
-/// <param name="charatop">キャラ上</param>
-/// <param name="charabottom">キャラ下</param>
+/// <param name="charatop">判定対象キャラ上</param>
+/// <param name="charabottom">判定対象キャラ下</param>
 /// <param name="charaR">キャラ半径</param>
 bool CharacterBase::FistWithCharacter(VECTOR charatop, VECTOR charabottom, float charaR,bool charaout)
 {
@@ -325,6 +332,9 @@ void CharacterBase::CheckOut(bool hit)
 		SetRotationPlayingEffekseer3DEffect(PlayingEffecthandle, playerhiteffectangle.x, playerhiteffectangle.y, playerhiteffectangle.z);
 		Playplayerhiteffectflg = true;
 
+		//se再生
+		semanager->PlaySE(SEManager::SEKind::CharahitSE);
+
 		//フラグ変更
  		outflg = true;
 	}
@@ -340,6 +350,19 @@ void CharacterBase::Blow()
 		position = VAdd(position, VGet(0, 100, 0));
 		//ポジション反映
 		MV1SetPosition(model, position);
+	}
+}
+
+void CharacterBase::PlayShieldHitSE(bool hit)
+{
+	if (hit && shieldhitseflg == false)
+	{
+		semanager->PlaySE(SEManager::SEKind::ShieldhitSE);
+		shieldhitseflg = true;
+	}
+	if (hit == false && shieldhitseflg)
+	{
+		shieldhitseflg = false;
 	}
 }
 

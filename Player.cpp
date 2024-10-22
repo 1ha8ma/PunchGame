@@ -22,7 +22,7 @@ Player::Player()
 /// </summary>
 Player::~Player()
 {
-
+	MV1DetachAnim(model, nowPlayAnim);
 }
 
 /// <summary>
@@ -34,6 +34,8 @@ void Player::Initialize()
 
 	//ポジション初期化
 	position = VGet(-1000.0f, 100.0f, -700.0f);
+	capsuleTop = VAdd(position, VGet(0, 600, 0));
+	capsuleBottom = VAdd(position, VGet(0, 0, 0));
 
 	//移動角度設定
 	moveVec = VGet(0, 0, 0);

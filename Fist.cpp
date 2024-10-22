@@ -3,6 +3,7 @@
 #include"EffekseerForDXLib.h"
 #include"Utility.h"
 #include"Loader.h"
+#include"SEManager.h"
 #include"Fist.h"
 
 const float Fist::FistCapsuleRadius = 120.0f;
@@ -12,6 +13,9 @@ const float Fist::FistCapsuleRadius = 120.0f;
 /// </summary>
 Fist::Fist()
 {
+	//他クラスインスタンス化
+	semanager = new SEManager();
+
 	//モデルロード
 	Loader* loader = loader->GetInstance();
 	model = MV1DuplicateModel(loader->GetHandle(Loader::Kind::FistModel));
@@ -37,7 +41,7 @@ void Fist::Initialize()
 {
 	//モデル関係
 	modelangle = 0.0f;
-	position = VGet(0, 400, 0);
+	//position = VGet(0, 400, 0);
 	punchingflg = false;
 
 	//エフェクト関係
@@ -100,6 +104,9 @@ void Fist::PunchMove(bool punchflg,float charaangle,VECTOR charapos,bool shieldh
 		firingefectposition.x += sin(punchangle) * 250.0f;
 		firingefectposition.y = 400.0f;
 		firingefectposition.z += cos(punchangle) * 250.0f;
+		//SE再生
+		semanager->PlaySE(SEManager::SEKind::AttackSE);
+
 		//フラグ変更
 		punchingflg = true;
 		playfiringefectflg = true;
@@ -125,8 +132,13 @@ void Fist::PunchMove(bool punchflg,float charaangle,VECTOR charapos,bool shieldh
 			punchingflg = false;
 		}
 	}
+	//パンチ中でないとき
 	else
 	{
+		//ポジションをキャラと同じにしてサイズを0にする
+		position = charapos;
+		capFront = VAdd(position, VGet(0, 0, 0));
+		capBack = VAdd(position, VGet(0, 0, 0));
 		playfiringefectflg = false;
 	}
 

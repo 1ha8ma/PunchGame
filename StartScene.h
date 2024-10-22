@@ -1,23 +1,27 @@
 #pragma once
 #include<vector>
 
+class SEManager;
+
 class StartScene
 {
 private:
+	SEManager* semanager;
 
+	//カウントダウン画像
 	std::vector<int> image;
-	/*int image1;
-	int image2;
-	int image3;*/
 	int startimage;
 
+	//カメラ関係
 	float cameraangle;
 	VECTOR lookpos;
 	VECTOR camerapos;
 
+	//カウント関係
 	int count;
 	bool countflg;
 	int countflame;
+	bool startseflg;
 
 	//数字画像位置
 	bool sizechangeflg;

@@ -3,6 +3,7 @@
 //他クラス
 class Shield;
 class Fist;
+class SEManager;
 
 class CharacterBase
 {
@@ -29,6 +30,7 @@ protected:
 	//他クラス
 	Shield* shield;
 	Fist* fist;
+	SEManager* semanager;
 
 	//モデル・アニメーション
 	int model;//モデル
@@ -52,7 +54,6 @@ protected:
 	VECTOR shieldhiteffectangle;//盾衝突エフェクト角度
 	VECTOR shieldhiteffectposition;//盾衝突エフェクトポジション
 
-
 	//ポジション
 	VECTOR position;//ポジション
 	VECTOR moveVec;//入力があってからの動く方向
@@ -67,6 +68,8 @@ protected:
 	bool outflg;//脱落
 	bool shieldhit;//攻撃が盾に当たった
 
+	bool shieldhitseflg;
+
 	//角度更新
 	void UpdateAngle();
 	//アニメーション切り替え
@@ -80,6 +83,8 @@ protected:
 
 
 public:
+	
+
 	//当たり判定
 	bool FistWithCharacter(VECTOR charatop, VECTOR charabottom,float charaR,bool charaout);
 	bool FistWithShield(VECTOR Shieldleft, VECTOR Shieldright, float shieldR);
@@ -101,6 +106,8 @@ public:
 	void Blow();
 	//アウト確認
 	void CheckOut(bool hit);
+	//盾衝突se再生
+	void PlayShieldHitSE(bool hit);
 	//描画
 	void Draw();
 

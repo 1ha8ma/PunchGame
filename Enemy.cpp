@@ -26,7 +26,7 @@ Enemy::Enemy(int handle,float modelsize,VECTOR position,VECTOR targetDirection,i
 /// </summary>
 Enemy::~Enemy()
 {
-
+	MV1DetachAnim(model, nowPlayAnim);
 }
 
 /// <summary>
@@ -43,6 +43,8 @@ void Enemy::Initialize(VECTOR position, VECTOR targetDirection)
 
 	//ポジション初期化
 	this->position = position;
+	capsuleTop = VAdd(this->position, VGet(0, 600, 0));
+	capsuleBottom = VAdd(this->position, VGet(0, 0, 0));
 	this->targetLookDirection = targetDirection;
 
 	//攻撃クールタイム

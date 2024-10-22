@@ -19,6 +19,12 @@
     <Filter Include="Object">
       <UniqueIdentifier>{6f470436-bc87-46b9-8db5-4164d165d950}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sound">
+      <UniqueIdentifier>{2f745967-6579-4cec-b7a1-6d1397a80a23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{61e2de2d-5c73-4e02-a0ea-8958a95aca7b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -75,6 +81,15 @@
     <ClCompile Include="Loader.cpp">
       <Filter>GameSystem</Filter>
     </ClCompile>
+    <ClCompile Include="BGMManager.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="SEManager.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utility.h">
@@ -130,6 +145,15 @@
     </ClInclude>
     <ClInclude Include="Loader.h">
       <Filter>GameSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="BGMManager.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="SEManager.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUI.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -8,8 +8,11 @@ class WoodBoard;
 class SkyDome;
 class InputManager;
 class EnemyManager;
+class GameUI;
 class ResultScene;
 class StartScene;
+class BGMManager;
+class SEManager;
 
 class GameScene :public SceneBase
 {
@@ -20,8 +23,11 @@ private:
 	SkyDome* skydome;
 	InputManager* input;
 	EnemyManager* enemy;
+	GameUI* gameui;
 	ResultScene* resultscene;
 	StartScene* startscene;
+	BGMManager* bgmmanager;
+	SEManager* semanager;
 
 	bool gamestartflg;//ゲーム開始フラグ
 	bool gameendflg;//ゲーム決着フラグ
