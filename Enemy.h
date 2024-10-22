@@ -14,8 +14,6 @@ private:
 	float vx;
 	float vz;
 
-	bool win;//勝利した場合
-
 	bool attackaftercharachange;//攻撃後目標キャラを交代
 
 	//攻撃のクールタイム

@@ -1,3 +1,12 @@
-﻿  GameUI.cpp
+﻿  Enemy.cpp
 C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\hamar\Desktop\PunchGame\Enemy.cpp(127,19): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Enemy.cpp(130,13): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Enemy.cpp(131,23): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Enemy.cpp(134,22): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Enemy.cpp(135,22): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+  EnemyManager.cpp
+C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\hamar\Desktop\PunchGame\Utility.h(1,1): warning C4828: オフセット 0x119 から始まる、現在のソースの文字セット (コードページ 932) では使用できない文字がファイルに含まれています。
+  コードを生成中...
   ぶっ飛びパンチ.vcxproj -> C:\Users\hamar\Desktop\PunchGame\x64\Debug\ぶっ飛びパンチ.exe

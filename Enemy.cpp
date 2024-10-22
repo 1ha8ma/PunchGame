@@ -57,8 +57,6 @@ void Enemy::Initialize(VECTOR position, VECTOR targetDirection)
 	chaseflame = 0;
 	moveangle = 0;
 
-	win = false;
-
 	//ターゲット設定
 	while (1)
 	{
@@ -83,16 +81,12 @@ void Enemy::SetTarget(std::vector<int> outchara)
 	while (1)
 	{
 		bool ok = true;//キャラ決定フラグ
-		bool charachange = false;//追う対象が脱落した場合
+		bool charachange = false;//キャラ交代フラグ
 
 		for (int i = 0; i < outchara.size(); i++)
 		{
 			if (target == outchara[i] || target == mynumber || attackaftercharachange)
 			{
-				if (attackaftercharachange)
-				{
-					int a = 0;
-				}
 				charachange = true;
 			}
 		}
@@ -126,74 +120,54 @@ void Enemy::SetTarget(std::vector<int> outchara)
 /// </summary>
 void Enemy::Move(std::vector<int> outchara)
 {
-	switch (win)
+	//ターゲット設定
+	SetTarget(outchara);
+
+	//角度設定
+	moveangle = atan2(targetPosition.z - position.z, targetPosition.x - position.x);
+
+	//ターゲットとの距離を取る
+	float calc = pow(targetPosition.x - position.x, 2) + pow(targetPosition.y - position.y, 2) + pow(targetPosition.z - position.z, 2);
+	targetdistance = sqrt(calc);
+
+	//速度設定
+	vx = cos(moveangle) * Speed;
+	vz = sin(moveangle) * Speed;
+
+	//角度設定
+	if (attackflg == false)
 	{
-	case false://勝利していない場合
-	{
-		//ターゲット設定
-		SetTarget(outchara);
-
-		if (outchara.size() == 4 && outflg == false)
-		{
-			win = true;
-			break;
-		}
-
-		//角度設定
-		moveangle = atan2(targetPosition.z - position.z, targetPosition.x - position.x);
-
-		//ターゲットとの距離を取る
-		float calc = pow(targetPosition.x - position.x, 2) + pow(targetPosition.y - position.y, 2) + pow(targetPosition.z - position.z, 2);
-		targetdistance = sqrt(calc);
-
-		//速度設定
-		vx = cos(moveangle) * Speed;
-		vz = sin(moveangle) * Speed;
-
-		//角度設定
-		if (attackflg == false)
-		{
-			targetLookDirection.x = targetPosition.x;
-			targetLookDirection.z = targetPosition.z;
-		}
-
-		//目標との角度の差を取る
-		float targetAngle = static_cast<float>(atan2(targetLookDirection.x, targetLookDirection.z));
-		float angledif = abs(targetAngle - angle);
-
-		if (angledif > 10)
-		{
-			int a = 0;
-		}
-
-		//射程に入り、差が一定以下でフラグが良ければ攻撃
-		if (targetdistance < 1000 && angledif < 0.2 && attackflg == false && cooltimeflg == false)
-		{
-			cooltimeflg = true;
-			cooltimeflame = 0;
-			Attack();
-		}
-
-		//進ませる
-		if (targetdistance > 1000 && attackflg == false)
-		{
-			isanimflg = true;
-			position.x += vx;
-			position.z += vz;
-		}
-		else
-		{
-			isanimflg = false;
-		}
+		targetLookDirection.x = targetPosition.x;
+		targetLookDirection.z = targetPosition.z;
 	}
-	break;
 
-	case true:
+	//目標との角度の差を取る
+	float targetAngle = static_cast<float>(atan2(targetLookDirection.x, targetLookDirection.z));
+	float angledif = abs(targetAngle - angle);
+
+	if (angledif > 10)
 	{
-
+		int a = 0;
 	}
-	break;
 
+	//射程に入り、差が一定以下でフラグが良ければ攻撃
+	if (targetdistance < 1000 && angledif < 0.2 && attackflg == false && cooltimeflg == false)
+	{
+		cooltimeflg = true;
+		cooltimeflame = 0;
+		Attack();
+	}
+
+	//進ませる
+	if (targetdistance > 1000 && attackflg == false)
+	{
+		isanimflg = true;
+		position.x += vx;
+		position.z += vz;
+	}
+	else
+	{
+		isanimflg = false;
 	}
 }
 
