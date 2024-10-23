@@ -41,7 +41,6 @@ void Fist::Initialize()
 {
 	//モデル関係
 	modelangle = 0.0f;
-	//position = VGet(0, 400, 0);
 	punchingflg = false;
 
 	//エフェクト関係
@@ -60,8 +59,6 @@ void Fist::Update(VECTOR charapos,float charaangle,bool punchflg,bool shieldhit)
 	SetSpeedPlayingEffekseer3DEffect(PlayingEffect, 0.05f);
 
 	PunchMove(punchflg, charaangle, charapos,shieldhit);
-
-	UpdateAngle(charaangle);
 
 	//エフェクト更新
 	UpdateEffekseer3D();
@@ -99,6 +96,8 @@ void Fist::PunchMove(bool punchflg,float charaangle,VECTOR charapos,bool shieldh
 		vz = cos(punchangle) * PunchSpeed;
 		position.x += sin(punchangle) * 250.0f;
 		position.z += cos(punchangle) * 250.0f;
+		modelangle = charaangle;
+		MV1SetRotationXYZ(model, VGet(0.0f, modelangle + DX_PI_F, 0.0f));
 		//エフェクト設定
 		firingefectposition = charapos;
 		firingefectposition.x += sin(punchangle) * 250.0f;
@@ -150,50 +149,4 @@ void Fist::PunchMove(bool punchflg,float charaangle,VECTOR charapos,bool shieldh
 		SetRotationPlayingEffekseer3DEffect(PlayingEffect, firingefectangle.x, firingefectangle.y, firingefectangle.z);
 		playfiringefectflg = false;
 	}
-}
-
-/// <summary>
-/// 角度更新
-/// </summary>
-/// <param name="charaangle"></param>
-void Fist::UpdateAngle(float charaangle)
-{
-	float difference;//目標角度と現在の角度の差
-
-	//差を出す
-	difference = charaangle - modelangle;
-
-	//ある方向からある方向の差が180度以上になることはないので差が180度以上になっていたら修正する
-	if (difference < -DX_PI_F)
-	{
-		difference += DX_TWO_PI_F;
-	}
-	else if (difference > DX_PI_F)
-	{
-		difference -= DX_TWO_PI_F;
-	}
-
-	//角度の差を0に近づける
-	if (difference > 0.0f)//差がマイナスの場合
-	{
-		difference -= AngleSpeed;
-		if (difference < 0.0f)
-		{
-			difference = 0.0f;
-		}
-	}
-	else//差がプラスの場合
-	{
-		difference += AngleSpeed;
-		if (difference > 0.0f)
-		{
-			difference = 0.0f;
-		}
-	}
-
-	//モデルの角度を更新
-	modelangle = charaangle - difference;
-
-	MV1SetRotationXYZ(model, VGet(0.0f, modelangle + DX_PI_F, 0.0f));
-	firingefectangle = VGet(0.0f, modelangle + DX_PI_F, 0.0f);
 }

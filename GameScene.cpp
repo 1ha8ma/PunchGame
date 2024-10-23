@@ -5,6 +5,7 @@
 #include"WoodBoard.h"
 #include"SkyDome.h"
 #include"InputManager.h"
+#include"Enemy.h"
 #include"EnemyManager.h"
 #include"GameUI.h"
 #include"BGMManager.h"
@@ -160,17 +161,20 @@ SceneBase* GameScene::Update()
 		//CPUターゲットポジション設定
 		for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
 		{
-			for (int j = 0; j < OllCharaNum; j++)
+			if (enemy->GetNowMoveKind(i) == Enemy::MoveKind::charachase)//キャラを追う状態だった場合
 			{
-				if (enemy->GetTargetNumber(i) == j)
+				for (int j = 0; j < OllCharaNum; j++)
 				{
-					if (j == static_cast<int>(CharaNumber::Player))
+					if (enemy->GetTargetNumber(i) == j)
 					{
-						enemy->SetTargetPosition(i, player->GetPosition());
-					}
-					else
-					{
-						enemy->SetTargetPosition(i, enemy->GetPosition(j));
+						if (j == static_cast<int>(CharaNumber::Player))
+						{
+							enemy->SetTargetPosition(i, player->GetPosition());
+						}
+						else
+						{
+							enemy->SetTargetPosition(i, enemy->GetPosition(j));
+						}
 					}
 				}
 			}

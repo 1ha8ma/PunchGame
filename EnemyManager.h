@@ -47,4 +47,5 @@ public:
 	void SetTargetPosition(int i, VECTOR targetpos);
 	float GetAngle(int i);
 	bool GetPlayerhit() { return playerhit; }
+	int GetNowMoveKind(int i);
 };

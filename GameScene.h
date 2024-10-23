@@ -28,7 +28,7 @@ private:
 	StartScene* startscene;
 	BGMManager* bgmmanager;
 	SEManager* semanager;
-
+	
 	bool gamestartflg;//ゲーム開始フラグ
 	bool gameendflg;//ゲーム決着フラグ
 	bool playeroutcheck;//プレイヤーが攻撃に当たった

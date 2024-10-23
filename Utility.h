@@ -16,3 +16,9 @@ enum class CharaNumber :int
 const float AngleSpeed = 0.2f;//角度変更速度
 
 const int OllCharaNum = 4;//総人数
+
+//ステージの各座標
+const float StageRight = 1600.0f;//右
+const float StageLeft = -1500.0f;//左
+const float StageTop = 1500.0f;//上
+const float StageBottom = -1000.0f;//下

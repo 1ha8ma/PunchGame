@@ -28,9 +28,9 @@ private:
 	VECTOR capFront;//‘O
 	VECTOR capBack;//Œã‚ë
 
-
+	//ƒpƒ“ƒ`‚Ì“®‚«
 	void PunchMove(bool punchflg,float charaangle,VECTOR charapos,bool shieldhit);
-	void UpdateAngle(float charaangle);
+
 public:
 	static const float FistCapsuleRadius;
 

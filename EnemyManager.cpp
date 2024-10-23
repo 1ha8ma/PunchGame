@@ -21,7 +21,7 @@ EnemyManager::EnemyManager()
 	enemy.push_back(NULL);
 	enemy[static_cast<int>(CharaNumber::CPU2)] = new Enemy(loader->GetHandle(Loader::Kind::Enemy3Model), ModelSize, InitialPosition2, InitialTargetDir2, static_cast<int>(CharaNumber::CPU2));
 	
-	playerhit = false;
+	Initialize();
 }
 
 /// <summary>
@@ -197,4 +197,9 @@ void EnemyManager::SetTargetPosition(int i, VECTOR targetPos)
 float EnemyManager::GetAngle(int i)
 {
 	return enemy[i]->GetAngle();
+}
+
+int EnemyManager::GetNowMoveKind(int i)
+{
+	return enemy[i]->GetNowMoveKind();
 }

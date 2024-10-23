@@ -108,11 +108,14 @@ SceneBase* TitleScene::Update()
 /// </summary>
 void TitleScene::Draw()
 {
+	//モデル
 	skydome->Draw();
 	woodboard->Draw();
 
+	//タイトルロゴ
 	DrawExtendGraph(470, 0,1100,600, titlelogo, TRUE);
 
+	//スタート
 	SetFontSize(fontsize);
 	ChangeFont("851テガキカクット",DX_CHARSET_DEFAULT);
 	DrawString(600, 700, "スタート", GetColor(127, 255, 0));

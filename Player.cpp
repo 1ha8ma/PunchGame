@@ -97,19 +97,19 @@ void Player::InputProcess(const int inputstate)
 	//à⁄ìÆ
 	if (attackflg == false)
 	{
-		if (position.x <= 1600 && (4 & inputstate) == 4)//âE
+		if (position.x <= StageRight && (4 & inputstate) == 4)//âE
 		{
 			moveVec = VAdd(moveVec, VGet(1.0f, 0.0f, 0.0f));
 		}
-		if (position.x >= -1500 && (2 & inputstate) == 2)//ç∂
+		if (position.x >= StageLeft && (2 & inputstate) == 2)//ç∂
 		{
 			moveVec = VAdd(moveVec, VGet(-1.0f, 0.0f, 0.0f));
 		}
-		if (position.z<=1500&&(8 & inputstate) == 8)//è„
+		if (position.z <= StageTop && (8 & inputstate) == 8)//è„
 		{
 			moveVec = VAdd(moveVec, VGet(0.0f, 0.0f, 1.0f));
 		}
-		if (position.z >= -1000 && (1 & inputstate) == 1)//â∫
+		if (position.z >= StageBottom && (1 & inputstate) == 1)//â∫
 		{
 			moveVec = VAdd(moveVec, VGet(0.0f, 0.0f, -1.0f));
 		}
