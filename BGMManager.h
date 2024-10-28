@@ -17,8 +17,6 @@ public:
 	//Ä¶
 	void PlayBGM(BGMKind kind);
 
-	void ChangeBGM(BGMKind nextkind);
-
 	//BGM‚ğ~‚ß‚é
 	void StopBGM();
 

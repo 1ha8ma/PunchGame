@@ -17,7 +17,7 @@ public:
 	//XV
 	void Update(int inputstate);
 
-	void ForeverUpdate(bool playerattackshieldhit);
+	void ForeverUpdate();
 
 	VECTOR GetPosition() { return position; }
 	float GetAngle() { return angle; }

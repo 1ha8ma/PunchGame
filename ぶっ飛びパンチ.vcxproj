@@ -136,6 +136,7 @@
     <ClCompile Include="BGMManager.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CharacterBase.cpp" />
+    <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="Fist.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="BGMManager.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CharacterBase.h" />
+    <ClInclude Include="Effect.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="Fist.h" />

@@ -4,7 +4,7 @@
 #include"Utility.h"
 #include"Shield.h"
 #include"Fist.h"
-#include"Loader.h"
+#include"Effect.h"
 #include"SEManager.h"
 #include"CharacterBase.h"
 
@@ -17,11 +17,7 @@ CharacterBase::CharacterBase()
 	shield = new Shield();
 	fist = new Fist();
 	semanager = new SEManager();
-	Loader* loader = loader->GetInstance();
-
-	//エフェクトロード
-	playerhiteffecthandle = loader->GetHandle(Loader::Kind::PlayerhitEffect);
-	shieldhiteffecthandle = loader->GetHandle(Loader::Kind::ShieldhitEffect);
+	effect = new Effect();
 }
 
 /// <summary>
@@ -29,14 +25,13 @@ CharacterBase::CharacterBase()
 /// </summary>
 CharacterBase::~CharacterBase()
 {
-	//エフェクト終了
-	StopEffekseer3DEffect(PlayingEffecthandle);
-
 	//アニメーションをデタッチ
 	MV1DetachAnim(model, nowPlayAnim);
 	
 	delete shield;
 	delete fist;
+	delete semanager;
+	delete effect;
 }
 
 /// <summary>
@@ -58,13 +53,12 @@ void CharacterBase::BaseInitialize()
 
 	//攻撃関係
 	attackflg = false;
+	attackOnCollision = false;
 
 	//盾関係
 	shieldhit = false;
 
 	//エフェクト関係
-	PlayingEffectKind = static_cast<int>(EffectKind::None);
-	PlayingEffecthandle = -1;
 	Playplayerhiteffectflg = false;
 	Playshieldhiteffectflg = false;
 
@@ -135,8 +129,6 @@ void CharacterBase::UpdateAngle()
 	angle = targetAngle - difference;
 
 	MV1SetRotationXYZ(model, VGet(0.0f, angle + DX_PI_F, 0.0f));
-	shieldhiteffectangle = VGet(0.0f, angle + DX_PI_F, 0.0f);
-	playerhiteffectangle = VGet(0.0f, angle + DX_PI_F, 0.0f);
 }
 
 /// <summary>
@@ -173,7 +165,14 @@ void CharacterBase::PlayAnimation()
 	//アニメーション再生
 	if (isanimflg)
 	{
-		animplaytime += 0.5f;
+		if (nowPlayAnimKind == static_cast<int>(AnimKind::Run))
+		{
+			animplaytime += 0.5f;
+		}
+		if (nowPlayAnimKind == static_cast<int>(AnimKind::Punch))
+		{
+			animplaytime += 0.7f;
+		}
 	}
 
 	//アニメーションが総再生時間に達したら
@@ -222,15 +221,11 @@ void CharacterBase::OtherClassInitialize()
 /// <summary>
 /// エフェクト更新
 /// </summary>
-void CharacterBase::UpdateEffect(bool shieldhit)
+void CharacterBase::UpdateEffect()
 {
-	//エフェクトカメラ同期
-	Effekseer_Sync3DSetting();
-	//エフェクト速度設定
-	SetSpeedPlayingEffekseer3DEffect(PlayingEffecthandle, 0.1f);
-	//エフェクト更新
-	UpdateEffekseer3D();
+	effect->Update();
 
+	//エフェクトフラグを戻す
 	if (Playshieldhiteffectflg && shieldhit == false)
 	{
 		Playshieldhiteffectflg = false;
@@ -240,10 +235,25 @@ void CharacterBase::UpdateEffect(bool shieldhit)
 /// <summary>
 /// 他クラスの更新
 /// </summary>
-void CharacterBase::OtherClassUpdate(bool shieldhit)
+void CharacterBase::OtherClassUpdate()
 {
 	fist->Update(position, angle, attackflg,shieldhit);
 	shield->Update(position, angle);
+}
+
+/// <summary>
+/// 攻撃に当たり判定を付けるか判断
+/// </summary>
+void CharacterBase::CheckAttackOnCollision()
+{
+	if (attackflg && fist->GetSize() == 1.0f)
+	{
+		attackOnCollision = true;
+	}
+	else
+	{
+		attackOnCollision = false;
+	}
 }
 
 /// <summary>
@@ -254,13 +264,13 @@ void CharacterBase::OtherClassUpdate(bool shieldhit)
 /// <param name="charaR">キャラ半径</param>
 bool CharacterBase::FistWithCharacter(VECTOR charatop, VECTOR charabottom, float charaR,bool charaout)
 {
-	float len;
+	float len;//2カプセルの距離
 	bool hit = false;//攻撃が当たった
 
 	//2つの線分の最短距離を求める
 	len = Segment_Segment_MinLength(fist->GetcapFront(), fist->GetcapBack(), charatop, charabottom);
 
-  	if (len < Fist::FistCapsuleRadius + charaR)
+	if (len < Fist::FistCapsuleRadius + charaR && attackOnCollision)
 	{
 		hit = true;
 	}
@@ -275,32 +285,26 @@ bool CharacterBase::FistWithCharacter(VECTOR charatop, VECTOR charabottom, float
 /// <summary>
 /// 拳と盾の当たり判定
 /// </summary>
-/// <param name="ShieldLeft">盾左</param>
-/// <param name="ShieldRight">盾右</param>
+/// <param name="ShieldLeft">判定対象キャラの盾左</param>
+/// <param name="ShieldRight">判定対象キャラの盾右</param>
 /// <param name="shieldR">盾半径</param>
 /// <returns>当たっているか</returns>
 bool CharacterBase::FistWithShield(VECTOR ShieldLeft, VECTOR ShieldRight, float shieldR)
 {
-	float len;
+	float len;//2カプセルの距離
 	bool hit = false;//盾に当たった
 
 	//2つの線分の最短距離を求める
 	len = Segment_Segment_MinLength(fist->GetcapFront(), fist->GetcapBack(), ShieldLeft, ShieldRight);
 
-	if (len < Fist::FistCapsuleRadius + shieldR && attackflg)
+	if (len < Fist::FistCapsuleRadius + shieldR && attackOnCollision)
 	{
 		hit = true;
 
+		//エフェクト再生
 		if (Playshieldhiteffectflg == false)
 		{
-			//ポジション設定
-			shieldhiteffectposition = fist->GetcapFront();
-
-			//再生処理
-			PlayingEffectKind = static_cast<int>(EffectKind::HitShield);
-			PlayingEffecthandle = PlayEffekseer3DEffect(shieldhiteffecthandle);
-			SetPosPlayingEffekseer3DEffect(PlayingEffecthandle, shieldhiteffectposition.x, shieldhiteffectposition.y, shieldhiteffectposition.z);
-			SetRotationPlayingEffekseer3DEffect(PlayingEffecthandle, shieldhiteffectangle.x, shieldhiteffectangle.y, shieldhiteffectangle.z);
+			effect->PlayEffect(Effect::EffectKind::ShieldHit, fist->GetcapFront(), VGet(1.0f, 1.0f, 1.0f), angle, 0.7f);
 			Playshieldhiteffectflg = true;
 		}
 	}
@@ -322,14 +326,7 @@ void CharacterBase::CheckOut(bool hit)
 	if (outflg == false && hit)
 	{
 		//エフェクト再生
-		//ポジション設定
-		playerhiteffectposition = position;
-
-		//再生処理
-		PlayingEffectKind = static_cast<int>(EffectKind::HitPlayer);
-		PlayingEffecthandle = PlayEffekseer3DEffect(playerhiteffecthandle);
-		SetPosPlayingEffekseer3DEffect(PlayingEffecthandle, playerhiteffectposition.x, playerhiteffectposition.y, playerhiteffectposition.z);
-		SetRotationPlayingEffekseer3DEffect(PlayingEffecthandle, playerhiteffectangle.x, playerhiteffectangle.y, playerhiteffectangle.z);
+		effect->PlayEffect(Effect::EffectKind::CharacterHit, position, VGet(1.0f, 1.0f, 1.0f), angle, 0.7f);
 		Playplayerhiteffectflg = true;
 
 		//se再生
@@ -353,6 +350,10 @@ void CharacterBase::Blow()
 	}
 }
 
+/// <summary>
+/// 盾衝突SE再生
+/// </summary>
+/// <param name="hit">衝突したか</param>
 void CharacterBase::PlayShieldHitSE(bool hit)
 {
 	if (hit && shieldhitseflg == false)
@@ -386,6 +387,11 @@ VECTOR CharacterBase::GetShieldRight()
 	return shield->GetcapRight();
 }
 
+void CharacterBase::SetShieldHit(bool hit)
+{
+	shieldhit = hit;
+}
+
 /// <summary>
 /// 描画
 /// </summary>
@@ -393,10 +399,10 @@ void CharacterBase::Draw()
 {
 	//DrawCapsule3D(capsuleTop, capsuleBottom, CharacterR, 8, GetColor(127, 255, 0), GetColor(0, 255, 255), FALSE);
 	MV1DrawModel(model);
-	shield->Draw();
 	if (outflg == false)
 	{
 		fist->Draw();
 	}
-	DrawEffekseer3D();
+	shield->Draw();
+	effect->Draw();
 }

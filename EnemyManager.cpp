@@ -104,7 +104,7 @@ void EnemyManager::Update(VECTOR playerpos, VECTOR playerTop, VECTOR playerBotto
 	{
 		for (int j = 0; j < EnemyManager::NumberofEnemy - 1; j++)
 		{
-			if (enemy[i]->GetOutflg() == false && enemy[i]->GetAttackflg())//脱落しておらず、攻撃していたら
+			if (enemy[i]->GetOutflg() == false)//脱落していなかったら
 			{
 				//確認するCPUを設定
 				int checkenemy = i + j + 1;
@@ -126,10 +126,7 @@ void EnemyManager::ForeverUpdate()
 	//脱落後も必要な更新
 	for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
 	{
-		enemy[i]->OtherClassUpdate(enemy[i]->GetShieldHit());
-		enemy[i]->UpdateCapsule();
-		enemy[i]->Blow();
-		enemy[i]->UpdateEffect(enemy[i]->GetShieldHit());
+		enemy[i]->ForeverUpdate();
 	}
 }
 

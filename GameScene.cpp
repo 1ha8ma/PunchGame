@@ -1,4 +1,5 @@
 #include"DxLib.h"
+#include"EffekseerForDXLib.h"
 #include"Utility.h"
 #include"Camera.h"
 #include"Player.h"
@@ -75,7 +76,9 @@ void GameScene::Initialize()
 /// <returns>次のシーン</returns>
 SceneBase* GameScene::Update()
 {
+	////////////////////////////////////////////
 	//スタートシーン更新
+	///////////////////////////////////////////
 	if (gamestartflg == false)
 	{
 		gamestartflg = startscene->Update();
@@ -87,9 +90,14 @@ SceneBase* GameScene::Update()
 		}
 	}
 	
-	//更新
+	//////////////////////////////////////////
+	//ゲーム中更新
+	//////////////////////////////////////////
 	if (gamestartflg && gameendflg == false)
 	{
+		//エフェクトカメラ同期
+		Effekseer_Sync3DSetting();
+
 		bgmmanager->PlayBGM(BGMManager::BGMKind::GameBGM);
 		camera->UpdateForGame();
 		if (player->GetOutflg() == false)
@@ -110,20 +118,18 @@ SceneBase* GameScene::Update()
 					break;
 				}
 			}
+			player->SetShieldHit(playerattackshieldhit);
 			player->PlayShieldHitSE(playerattackshieldhit);
 		}
 
-		//当たり判定
+		//攻撃当たり判定
 		if (player->GetOutflg() == false)
 		{
 			for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
 			{
-				if (player->GetAttackflg())
-				{
-					bool characterhit;
-					characterhit = player->FistWithCharacter(enemy->GetCapsuleTop(i), enemy->GetCapsuleBottom(i), 120.0f, enemy->GetOutflg(i));
-					enemy->CheckOut(i, characterhit);
-				}
+				bool characterhit;
+				characterhit = player->FistWithCharacter(enemy->GetCapsuleTop(i), enemy->GetCapsuleBottom(i), 120.0f, enemy->GetOutflg(i));
+				enemy->CheckOut(i, characterhit);
 			}
 		}
 
@@ -181,10 +187,13 @@ SceneBase* GameScene::Update()
 		}
 	}
 
+	//ゲーム中とリザルト更新
 	if (gamestartflg)
 	{
-		player->ForeverUpdate(playerattackshieldhit);
+		player->ForeverUpdate();
 		enemy->ForeverUpdate();
+
+		UpdateEffekseer3D();
 	}
 
 	//終了条件を満たしていたらフラグ変更
@@ -215,7 +224,10 @@ SceneBase* GameScene::Update()
 			gameendflg = true;
 		}
 	}
-	//終了後の時間
+
+	/////////////////////////////////////////
+	//リザルト
+	////////////////////////////////////////
 	if (gameendflg)
 	{
 		camera->UpdateForResult(winnerpos, winnernumber);

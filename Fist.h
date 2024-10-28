@@ -1,32 +1,31 @@
 #pragma once
 
 class SEManager;
+class Effect;
 
 class Fist
 {
 private:
 	SEManager* semanager;
+	Effect* effect;
 
-	const float PunchSpeed = 10.5f;
+	const float PunchSpeed = 10.0f;
 
 	int model;//モデル
 	float modelangle;//モデル角度
 	VECTOR position;//ポジション
+	float size;//モデルサイズ
 
 	//エフェクト関係
-	int PlayingEffect;//再生中のエフェクト
 	bool playfiringefectflg;//発射エフェクト再生フラグ
-	int firingeffecthandle;//発射エフェクトハンドル
-	VECTOR firingefectangle;//発射エフェクト角度
-	VECTOR firingefectposition;//発射エフェクトポジション
 
 	//パンチ関係
 	bool punchingflg;//パンチ中
 	float punchangle;//パンチの角度
-	float vx;//x方向に進む力
-	float vz;//z方向に進む力
+	VECTOR velocity;
 	VECTOR capFront;//前
 	VECTOR capBack;//後ろ
+	bool shieldhitflg;//盾に当たった
 
 	//パンチの動き
 	void PunchMove(bool punchflg,float charaangle,VECTOR charapos,bool shieldhit);
@@ -42,4 +41,5 @@ public:
 
 	VECTOR GetcapFront() { return capFront; }
 	VECTOR GetcapBack() { return capBack; }
+	float GetSize(){ return size; }
 };

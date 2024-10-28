@@ -29,6 +29,7 @@ public:
 		NumImage1,//1画像
 		NumImage2,//2
 		NumImage3,//3
+		TextBoxImage,//テキストボックス
 
 		//エフェクト
 		PlayerhitEffect,//プレイヤー衝突エフェクト

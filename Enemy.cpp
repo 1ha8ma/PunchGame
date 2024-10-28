@@ -241,15 +241,15 @@ void Enemy::Move(std::vector<int> outchara)
 	moveangle = atan2(targetPosition.z - position.z, targetPosition.x - position.x);
 
 	//速度設定
-	vx = cos(moveangle) * Speed;
-	vz = sin(moveangle) * Speed;
+	velocity.x = cos(moveangle) * Speed;
+	velocity.y = 0.0f;
+	velocity.z = sin(moveangle) * Speed;
 
 	//進ませる
 	if (moveonflg && attackflg == false)
 	{
 		isanimflg = true;
-		position.x += vx;
-		position.z += vz;
+		position = VAdd(position, velocity);
 	}
 	else
 	{
@@ -265,17 +265,32 @@ void Enemy::Update(std::vector<int> outchara)
 	//動く
 	Move(outchara);
 
+	//当たり判定を付けるか判断
+	CheckAttackOnCollision();
+
 	//アニメーション再生
 	PlayAnimation();
 
 	//角度更新
 	UpdateAngle();
 
-	//カプセル更新
-	UpdateCapsule();
-
 	//ポジション反映
 	MV1SetPosition(model, position);
 
 	moveflame++;
+}
+
+/// <summary>
+/// 永遠更新
+/// </summary>
+void Enemy::ForeverUpdate()
+{
+	//他クラス更新
+	OtherClassUpdate();
+	//カプセル更新
+	UpdateCapsule();
+	//エフェクト更新
+	UpdateEffect();
+	//吹っ飛び
+	Blow();
 }

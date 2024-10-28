@@ -12,6 +12,9 @@ private:
 	std::vector<int> image;
 	int startimage;
 
+	//テキストボックス画像
+	int textbox;
+
 	//カメラ関係
 	float cameraangle;
 	VECTOR lookpos;

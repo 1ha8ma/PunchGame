@@ -17,6 +17,7 @@ StartScene::StartScene()
 	image.push_back(loader->GetHandle(Loader::Kind::NumImage2));
 	image.push_back(loader->GetHandle(Loader::Kind::NumImage3));
 	startimage = loader->GetHandle(Loader::Kind::StartImage);
+	textbox = loader->GetHandle(Loader::Kind::TextBoxImage);
 
 	semanager = new SEManager();
 	semanager->PlaySE(SEManager::SEKind::StartSceneSE);
@@ -94,6 +95,11 @@ void StartScene::Draw()
 {
 	if (countflg)
 	{
+		//キャラの紹介のテキストボックス表示
+		DrawExtendGraph(50, 500, 300, 600, textbox, TRUE);//左下
+		SetFontSize(40);
+		DrawString(110, 530, "PLAYER", GetColor(0, 191, 255));
+
 		//100フレーム毎に画像切り替え
 		if (countflame != 0 && countflame % 100 == 0)
 		{

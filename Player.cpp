@@ -55,6 +55,9 @@ void Player::Update(int inputstate)
 	//入力処理
 	InputProcess(inputstate);
 	
+	//当たり判定を付けるか判断
+	CheckAttackOnCollision();
+
 	//アニメーション
 	PlayAnimation();
 	
@@ -69,18 +72,18 @@ void Player::Update(int inputstate)
 /// <summary>
 /// 終了、脱落後も続く更新
 /// </summary>
-/// <param name="playerattackshieldhit">プレイヤーの攻撃が盾に当たっているか</param>
-void Player::ForeverUpdate(bool playerattackshieldhit)
+void Player::ForeverUpdate()
 {
 	//他クラスの処理
-	OtherClassUpdate(playerattackshieldhit);
+	OtherClassUpdate();
 
 	//カプセル更新
 	UpdateCapsule();
 
 	//エフェクト更新
-	UpdateEffect(playerattackshieldhit);
+	UpdateEffect();
 
+	//吹っ飛び
 	Blow();
 }
 
@@ -138,6 +141,7 @@ void Player::InputProcess(const int inputstate)
 		targetLookDirection = moveVec;
 
 		//正規化したベクトルにスピード倍したものを移動ベクトルとする
+		moveVec = VNorm(moveVec);
 		moveVec = VScale(targetLookDirection, Speed);
 	}
 

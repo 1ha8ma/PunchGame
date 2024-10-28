@@ -11,11 +11,10 @@ private:
 	int NowMoveKind;//現在の動きかた
 	bool moveonflg;//動くかどうかフラグ
 	VECTOR targetPosition;//追いかける目標のポジション
-	int moveflame;//追いかけているフレーム
+	int moveflame;//移動開始からのフレーム
 	float moveangle;//動く方向
 	//移動速度
-	float vx;
-	float vz;
+	VECTOR velocity;
 
 	//キャラ追い関係
 	int target;//追いかける目標
@@ -34,6 +33,7 @@ private:
 	void Move(std::vector<int> outchara);
 
 public:
+	//cpuの動きの種類
 	enum MoveKind
 	{
 		charachase,//キャラを追う
@@ -48,13 +48,12 @@ public:
 	void Initialize(VECTOR position, VECTOR targetDir);
 	//更新
 	void Update(std::vector<int> outchara);
+	void ForeverUpdate();
 
 	VECTOR GetPosition() { return position; }
 	int GetTarGetNumber() { return target; }
 	void SetTargetPosition(VECTOR targetpos) { targetPosition = targetpos; }
 	bool GetOutflg() { return outflg; }
-	void SetShieldHit(bool hit) { shieldhit = hit; }
-	bool GetShieldHit() { return shieldhit; }
 	bool GetAttackflg() { return attackflg; }
 	int GetNowMoveKind() { return NowMoveKind; }
 };

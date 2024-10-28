@@ -4,6 +4,7 @@
 class Shield;
 class Fist;
 class SEManager;
+class Effect;
 
 class CharacterBase
 {
@@ -19,18 +20,11 @@ protected:
 		Punch = 1,//パンチ
 	};
 
-	//エフェクトの種類
-	enum class EffectKind :int
-	{
-		None = -1,//無し
-		HitPlayer = 0,//プレイヤー衝突
-		HitShield = 1,//盾衝突
-	};
-
 	//他クラス
 	Shield* shield;
 	Fist* fist;
 	SEManager* semanager;
+	Effect* effect;
 
 	//モデル・アニメーション
 	int model;//モデル
@@ -42,17 +36,8 @@ protected:
 	int prevPlayAnim;//変更前のアニメーション
 
 	//エフェクト
-	int PlayingEffectKind;//再生中のエフェクトの種類
-	int PlayingEffecthandle;//再生中のエフェクト
-	int PlayingEffectSpeed;//再生中のエフェクト再生速度
-	int playerhiteffecthandle;//プレイヤー衝突エフェクトハンドル
 	bool Playplayerhiteffectflg;//プレイヤー衝突エフェクト再生フラグ
-	VECTOR playerhiteffectangle;//プレイヤー衝突エフェクト角度
-	VECTOR playerhiteffectposition;//プレイヤー衝突エフェクトポジション
-	int shieldhiteffecthandle;//盾衝突エフェクトハンドル
 	bool Playshieldhiteffectflg;//盾衝突エフェクトフラグ
-	VECTOR shieldhiteffectangle;//盾衝突エフェクト角度
-	VECTOR shieldhiteffectposition;//盾衝突エフェクトポジション
 
 	//ポジション
 	VECTOR position;//ポジション
@@ -64,11 +49,12 @@ protected:
 
 	//攻撃
 	bool attackflg;//攻撃開始フラグ
+	bool attackOnCollision;//攻撃に当たり判定を付けるフラグ
 	
 	bool outflg;//脱落
 	bool shieldhit;//攻撃が盾に当たった
+	bool shieldhitseflg;//盾衝突seフラグ
 
-	bool shieldhitseflg;
 
 	//角度更新
 	void UpdateAngle();
@@ -81,10 +67,9 @@ protected:
 	//攻撃処理
 	void Attack();
 
-
 public:
-	
-
+	//攻撃に当たり判定を付けるか判断
+	void CheckAttackOnCollision();
 	//当たり判定
 	bool FistWithCharacter(VECTOR charatop, VECTOR charabottom,float charaR,bool charaout);
 	bool FistWithShield(VECTOR Shieldleft, VECTOR Shieldright, float shieldR);
@@ -99,9 +84,9 @@ public:
 	//カプセルの更新
 	void UpdateCapsule();
 	//他クラスの更新
-	void OtherClassUpdate(bool shieldhit);
+	void OtherClassUpdate();
 	//エフェクト更新
-	void UpdateEffect(bool shieldhit);
+	void UpdateEffect();
 	//吹っ飛ぶ
 	void Blow();
 	//アウト確認
@@ -115,6 +100,8 @@ public:
 	VECTOR GetPositioncapsuleBotoom() { return capsuleBottom; }
 	VECTOR GetShieldLeft();
 	VECTOR GetShieldRight();
+	void SetShieldHit(bool hit);
+	bool GetShieldHit() { return shieldhit; }
 	bool GetOutflg() { return outflg; }
 	float GetAngle() { return angle; }
 };
