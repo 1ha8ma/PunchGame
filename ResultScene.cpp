@@ -72,6 +72,7 @@ bool ResultScene::Update(Camera*& camera)
 	//Lerpの分割の割合を目標に近づける
 	t += 0.005;
 
+	//決定でシーン変更
 	if (t >= 1 && inputpossibleflg && inputstate && (16 & inputstate) == 16)
 	{
 		scenechange = true;

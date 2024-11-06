@@ -31,7 +31,7 @@ private:
 	void PunchMove(bool punchflg,float charaangle,VECTOR charapos,bool shieldhit);
 
 public:
-	static const float FistCapsuleRadius;
+	const float FistCapsuleRadius = 120.0f;
 
 	Fist();
 	~Fist();

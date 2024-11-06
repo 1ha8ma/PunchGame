@@ -10,7 +10,7 @@ class CharacterBase
 {
 protected:
 	const float Speed = 10.0f;//速さ
-	const float CharacterR = 120.0f;
+	const float CharacterCapsuleRadius = 120.0f;
 
 	//アニメーションの種類
 	enum class AnimKind : int
@@ -55,7 +55,6 @@ protected:
 	bool shieldhit;//攻撃が盾に当たった
 	bool shieldhitseflg;//盾衝突seフラグ
 
-
 	//角度更新
 	void UpdateAngle();
 	//アニメーション切り替え
@@ -71,8 +70,10 @@ public:
 	//攻撃に当たり判定を付けるか判断
 	void CheckAttackOnCollision();
 	//当たり判定
-	bool FistWithCharacter(VECTOR charatop, VECTOR charabottom,float charaR,bool charaout);
-	bool FistWithShield(VECTOR Shieldleft, VECTOR Shieldright, float shieldR);
+	bool FistWithCharacter(VECTOR charatop, VECTOR charabottom,bool charaout);
+	bool FistWithShield(VECTOR Shieldleft, VECTOR Shieldright);
+	bool ShieldWithShield(VECTOR myshieldleft, VECTOR myshieldright, VECTOR shieldleft, VECTOR shieldright);
+	void RemoveShield(VECTOR shieldleft, VECTOR shieldright);
 	//コンストラクタ
 	CharacterBase();
 	//デストラクタ
@@ -93,11 +94,14 @@ public:
 	void CheckOut(bool hit);
 	//盾衝突se再生
 	void PlayShieldHitSE(bool hit);
+	//ポジション反映
+	void ReflectPosition();
 	//描画
 	void Draw();
 
 	VECTOR GetPositioncapsuleTop() { return capsuleTop; }
 	VECTOR GetPositioncapsuleBotoom() { return capsuleBottom; }
+	VECTOR GetShieldPosition();
 	VECTOR GetShieldLeft();
 	VECTOR GetShieldRight();
 	void SetShieldHit(bool hit);

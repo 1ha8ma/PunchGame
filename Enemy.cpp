@@ -142,12 +142,12 @@ void Enemy::Move(std::vector<int> outchara)
 			targetLookDirection.z = targetPosition.z;
 		}
 
-		//射程に入り、差が一定以下でフラグが良ければ攻撃
-		if (targetdistance < 1000 && attackflg == false && cooltimeflg == false)
+		//射程に入り、フラグが良ければ攻撃
+		if (targetdistance < 1000 && !attackflg && !cooltimeflg)
 		{
 			cooltimeflg = true;
 			cooltimeflame = 0;
-			Attack();
+			//Attack();
 		}
 		//射程範囲外であれば進める
 		if (targetdistance > 1000)
@@ -192,7 +192,7 @@ void Enemy::Move(std::vector<int> outchara)
 		if (SetWalkTargetPositionflg == false)
 		{
 			targetPosition.x = (rand() % static_cast<int>((StageRight - StageLeft))) + StageLeft;
-			targetPosition.z = (rand() % static_cast<int>((StageTop - StageBottom)))+ StageBottom;
+			targetPosition.z = (rand() % static_cast<int>((StageTop - StageBottom))) + StageBottom;
 
 			targetLookDirection.x = targetPosition.x;
 			targetLookDirection.z = targetPosition.z;
@@ -241,18 +241,18 @@ void Enemy::Move(std::vector<int> outchara)
 	moveangle = atan2(targetPosition.z - position.z, targetPosition.x - position.x);
 
 	//速度設定
-	velocity.x = cos(moveangle) * Speed;
-	velocity.y = 0.0f;
-	velocity.z = sin(moveangle) * Speed;
+	moveVec.x = cos(moveangle) * Speed;
+	moveVec.y = 0.0f;
+	moveVec.z = sin(moveangle) * Speed;
 
 	//進ませる
 	if (moveonflg && attackflg == false)
 	{
 		isanimflg = true;
-		position = VAdd(position, velocity);
 	}
 	else
 	{
+		moveVec = VGet(0.0f, 0.0f, 0.0f);
 		isanimflg = false;
 	}
 }
@@ -277,7 +277,30 @@ void Enemy::Update(std::vector<int> outchara)
 	//ポジション反映
 	MV1SetPosition(model, position);
 
+	//フレーム加算
 	moveflame++;
+}
+
+/// <summary>
+/// 盾同士の当たり判定更新
+/// </summary>
+/// <param name="shieldleft">対象キャラの盾左</param>
+/// <param name="shieldright">対象キャラの盾右</param>
+void Enemy::UpdateShieldWithShield(VECTOR shieldleft, VECTOR shieldright)
+{
+	//当たっていたら
+	if (ShieldWithShield(GetShieldLeft(), GetShieldRight(), shieldleft, shieldright))
+	{
+		RemoveShield(shieldleft, shieldright);
+	}
+}
+
+/// <summary>
+/// ポジション更新
+/// </summary>
+void Enemy::UpdatePosition()
+{
+	ReflectPosition();
 }
 
 /// <summary>
@@ -285,10 +308,14 @@ void Enemy::Update(std::vector<int> outchara)
 /// </summary>
 void Enemy::ForeverUpdate()
 {
-	//他クラス更新
-	OtherClassUpdate();
-	//カプセル更新
-	UpdateCapsule();
+	if (outflg)
+	{
+		//他クラス更新
+		OtherClassUpdate();
+		//カプセル更新
+		UpdateCapsule();
+	}
+
 	//エフェクト更新
 	UpdateEffect();
 	//吹っ飛び

@@ -74,11 +74,14 @@ void Player::Update(int inputstate)
 /// </summary>
 void Player::ForeverUpdate()
 {
-	//他クラスの処理
-	OtherClassUpdate();
+	if (outflg)
+	{
+		//他クラスの処理
+		OtherClassUpdate();
 
-	//カプセル更新
-	UpdateCapsule();
+		//カプセル更新
+		UpdateCapsule();
+	}
 
 	//エフェクト更新
 	UpdateEffect();
@@ -136,15 +139,11 @@ void Player::InputProcess(const int inputstate)
 
 	if (inputstate != 0 && attackflg == false)
 	{
-		//移動ベクトルを正規化したものをプレイヤーが向くべき方向として保存
-		//targetMoveDirection = VNorm(moveVec);
+		//移動ベクトルをプレイヤーが向くべき方向として保存
 		targetLookDirection = moveVec;
 
 		//正規化したベクトルにスピード倍したものを移動ベクトルとする
 		moveVec = VNorm(moveVec);
 		moveVec = VScale(targetLookDirection, Speed);
 	}
-
-	//ポジションに適用
-	position = VAdd(position, moveVec);
 }

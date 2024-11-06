@@ -46,7 +46,7 @@ void EnemyManager::Initialize()
 /// <summary>
 /// 更新
 /// </summary>
-void EnemyManager::Update(VECTOR playerpos, VECTOR playerTop, VECTOR playerBottom, VECTOR playershieldLeft, VECTOR playershieldRight, bool playerout, std::vector<int> outchara)
+void EnemyManager::Update(std::vector<int> outchara)
 {
 	//更新
 	for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
@@ -56,9 +56,16 @@ void EnemyManager::Update(VECTOR playerpos, VECTOR playerTop, VECTOR playerBotto
 			enemy[i]->Update(outchara);
 		}
 	}
+}
 
-
-	//CPUと盾の当たり判定
+/// <summary>
+/// 拳と盾の更新
+/// </summary>
+/// <param name="playershieldleft">プレイヤー盾カプセル左</param>
+/// <param name="playershieldright">プレイヤー盾カプセル右</param>
+void EnemyManager::UpdateFistWithShield(VECTOR playershieldleft,VECTOR playershieldright)
+{
+	//CPUの拳と盾の当たり判定
 	for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
 	{
 		bool hit = false;
@@ -71,13 +78,13 @@ void EnemyManager::Update(VECTOR playerpos, VECTOR playerTop, VECTOR playerBotto
 			{
 				checkenemy -= EnemyManager::NumberofEnemy;
 			}
-			withenemyjudge = enemy[i]->FistWithShield(enemy[checkenemy]->GetShieldLeft(), enemy[checkenemy]->GetShieldRight(), 20.0f);
+			withenemyjudge = enemy[i]->FistWithShield(enemy[checkenemy]->GetShieldLeft(), enemy[checkenemy]->GetShieldRight());
 			if (withenemyjudge)
 			{
 				hit = true;
 			}
 		}
-		bool withplayerjudge = enemy[i]->FistWithShield(playershieldLeft, playershieldRight, 20.0f);//プレイヤーと
+		bool withplayerjudge = enemy[i]->FistWithShield(playershieldleft, playershieldright);//プレイヤーと
 		if (withplayerjudge)
 		{
 			hit = true;
@@ -86,13 +93,22 @@ void EnemyManager::Update(VECTOR playerpos, VECTOR playerTop, VECTOR playerBotto
 		enemy[i]->SetShieldHit(hit);
 		enemy[i]->PlayShieldHitSE(hit);
 	}
+}
 
+/// <summary>
+/// 拳とキャラクターの当たり判定更新
+/// </summary>
+/// <param name="playerTop">プレイヤーカプセル上</param>
+/// <param name="playerBottom">プレイヤーカプセル下</param>
+/// <param name="playerout">プレイヤーが脱落しているか</param>
+void EnemyManager::UpdateFistWithCharacter(VECTOR playerTop,VECTOR playerBottom,bool playerout)
+{
 	//プレイヤーとの当たり判定
 	for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
 	{
 		if (enemy[i]->GetOutflg() == false)
 		{
-			playerhit = enemy[i]->FistWithCharacter(playerTop, playerBottom, 120.0f, playerout);
+			playerhit = enemy[i]->FistWithCharacter(playerTop, playerBottom, playerout);
 			if (playerhit)
 			{
 				break;
@@ -112,9 +128,45 @@ void EnemyManager::Update(VECTOR playerpos, VECTOR playerTop, VECTOR playerBotto
 				{
 					checkenemy -= EnemyManager::NumberofEnemy;
 				}
-				enemy[checkenemy]->CheckOut(enemy[i]->FistWithCharacter(enemy[checkenemy]->GetPositioncapsuleTop(), enemy[checkenemy]->GetPositioncapsuleBotoom(), 120.0f, enemy[checkenemy]->GetOutflg()));
+				enemy[checkenemy]->CheckOut(enemy[i]->FistWithCharacter(enemy[checkenemy]->GetPositioncapsuleTop(), enemy[checkenemy]->GetPositioncapsuleBotoom(), enemy[checkenemy]->GetOutflg()));
 			}
 		}
+	}
+}
+
+/// <summary>
+/// 盾同士の当たり判定更新
+/// </summary>
+/// <param name="playershieldleft"></param>
+/// <param name="playershieldright"></param>
+void EnemyManager::UpdateShieldWithShield(VECTOR playershieldleft, VECTOR playershieldright)
+{
+	for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
+	{
+		for (int j = 0; j < EnemyManager::NumberofEnemy - 1; j++)//CPUどうし
+		{
+			//対象キャラ設定
+			int checkenemy = i + j + 1;
+			if (checkenemy > EnemyManager::NumberofEnemy - 1)
+			{
+				checkenemy -= EnemyManager::NumberofEnemy;
+			}
+			
+			enemy[i]->UpdateShieldWithShield(enemy[checkenemy]->GetShieldLeft(), enemy[checkenemy]->GetShieldRight());
+		}
+		//プレイヤーと
+		enemy[i]->UpdateShieldWithShield(playershieldleft, playershieldright);
+	}
+}
+
+/// <summary>
+/// ポジション更新
+/// </summary>
+void EnemyManager::ReflectPosition()
+{
+	for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
+	{
+		enemy[i]->UpdatePosition();
 	}
 }
 

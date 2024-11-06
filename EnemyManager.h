@@ -16,7 +16,6 @@ private:
 	const VECTOR InitialTargetDir2 = VGet(-1.0f, 0.0f, 1.0f);
 
 	bool playerhit;//プレイヤーに攻撃が当たっているか
-	
 
 public:
 	//コンストラクタ
@@ -26,7 +25,15 @@ public:
 	//初期化
 	void Initialize();
 	//更新
-	void Update(VECTOR playerpos, VECTOR playerTop, VECTOR playerBottom, VECTOR playershieldLeft, VECTOR playershieldRight, bool playeroutflg, std::vector<int> outchara);
+	void Update(std::vector<int> outchara);
+	//拳と盾当たり判定の更新
+	void UpdateFistWithShield(VECTOR playershieldleft, VECTOR playershieldright);
+	//キャラと拳当たり判定の更新
+	void UpdateFistWithCharacter(VECTOR playerTop, VECTOR playerBottom, bool playerout);
+	//盾同士の当たり判定更新
+	void UpdateShieldWithShield(VECTOR playershieldleft, VECTOR playershiledright);
+	//ポジション更新
+	void ReflectPosition();
 	//終了後、脱落後も続く更新
 	void ForeverUpdate();
 	//描画

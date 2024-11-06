@@ -25,6 +25,9 @@ void Camera::Initialize()
 	SetCameraPositionAndTarget_UpVecY(pos, lookpos);
 }
 
+/// <summary>
+/// ƒQ[ƒ€ŠJn‰Šú‰»
+/// </summary>
 void Camera::GamestartInitialize()
 {
 	SetCameraNearFar(10.0f, 6000.0f);

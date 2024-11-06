@@ -33,6 +33,9 @@ void Shield::Initialize(VECTOR charaposition,float characterangle)
 	position.x += sin(characterangle) * DistanceWithCharacter;
 	position.z += cos(characterangle) * DistanceWithCharacter;
 
+	capRight = VAdd(position, VGet(-sin(characterangle - 1.5f) * 150, 200, -cos(characterangle - 1.5f) * 150));
+	capLeft = VAdd(position, VGet(sin(characterangle - 1.5f) * 150, 200, cos(characterangle - 1.5f) * 150));
+
 	//角度設定
 	angle = characterangle;
 
@@ -64,13 +67,18 @@ void Shield::Update(VECTOR characterPosition,float characterangle)
 	MV1SetPosition(model, position);
 }
 
+void Shield::ReflectPosition(VECTOR newposition)
+{
+	MV1SetPosition(model, newposition);
+}
+
 /// <summary>
 /// 描画
 /// </summary>
 void Shield::Draw()
 {
 	//当たり判定カプセル
-	//DrawCapsule3D(capLeft, capRight, CapsuleRadius, 20, GetColor(127, 255, 0), GetColor(0, 255, 255), FALSE);
+	DrawCapsule3D(capLeft, capRight, CapsuleRadius, 20, GetColor(127, 255, 0), GetColor(0, 255, 255), FALSE);
 	MV1DrawModel(model);
 }
 

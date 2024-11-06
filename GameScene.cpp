@@ -98,21 +98,37 @@ SceneBase* GameScene::Update()
 		//エフェクトカメラ同期
 		Effekseer_Sync3DSetting();
 
+		//更新
 		bgmmanager->PlayBGM(BGMManager::BGMKind::GameBGM);
 		camera->UpdateForGame();
 		if (player->GetOutflg() == false)
 		{
 			player->Update(input->GetInputState());
 		}
-		enemy->Update(player->GetPosition(), player->GetPositioncapsuleTop(), player->GetPositioncapsuleBotoom(), player->GetShieldLeft(), player->GetShieldRight(), player->GetOutflg(), outchara);
+		enemy->Update(outchara);
 
-		//盾との当たり判定
+		//盾どうしの当たり判定
+		for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
+		{
+			//当たっていたら
+			if (player->ShieldWithShield(player->GetShieldLeft(), player->GetShieldRight(), enemy->GetShieldLeft(i), enemy->GetShieldRight(i)))
+			{
+				player->RemoveShield(enemy->GetShieldLeft(i), enemy->GetShieldRight(i));
+			}
+		}
+		enemy->UpdateShieldWithShield(player->GetShieldLeft(), player->GetShieldRight());
+
+		//ポジション反映
+		player->ReflectPosition();
+		enemy->ReflectPosition();
+
+		//拳と盾の当たり判定
 		if (player->GetOutflg() == false)
 		{
 			for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
 			{
 				playerattackshieldhit = false;
-				if (player->FistWithShield(enemy->GetShieldLeft(i), enemy->GetShieldRight(i), 20.0f))
+				if (player->FistWithShield(enemy->GetShieldLeft(i), enemy->GetShieldRight(i)))
 				{
 					playerattackshieldhit = true;
 					break;
@@ -121,17 +137,19 @@ SceneBase* GameScene::Update()
 			player->SetShieldHit(playerattackshieldhit);
 			player->PlayShieldHitSE(playerattackshieldhit);
 		}
+		enemy->UpdateFistWithShield(player->GetShieldLeft(), player->GetShieldRight());
 
-		//攻撃当たり判定
+		//拳とキャラクター当たり判定
 		if (player->GetOutflg() == false)
 		{
 			for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
 			{
 				bool characterhit;
-				characterhit = player->FistWithCharacter(enemy->GetCapsuleTop(i), enemy->GetCapsuleBottom(i), 120.0f, enemy->GetOutflg(i));
+				characterhit = player->FistWithCharacter(enemy->GetCapsuleTop(i), enemy->GetCapsuleBottom(i), enemy->GetOutflg(i));
 				enemy->CheckOut(i, characterhit);
 			}
 		}
+		enemy->UpdateFistWithCharacter(player->GetPositioncapsuleTop(), player->GetPositioncapsuleBotoom(), player->GetOutflg());
 
 		//敵からのフラグ
 		player->CheckOut(enemy->GetPlayerhit());

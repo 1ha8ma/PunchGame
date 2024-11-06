@@ -13,8 +13,6 @@ private:
 	VECTOR targetPosition;//追いかける目標のポジション
 	int moveflame;//移動開始からのフレーム
 	float moveangle;//動く方向
-	//移動速度
-	VECTOR velocity;
 
 	//キャラ追い関係
 	int target;//追いかける目標
@@ -48,8 +46,14 @@ public:
 	void Initialize(VECTOR position, VECTOR targetDir);
 	//更新
 	void Update(std::vector<int> outchara);
+	//盾と盾の当たり判定の更新
+	void UpdateShieldWithShield(VECTOR shieldleft, VECTOR shieldright);
+	//ポジションの更新
+	void UpdatePosition();
+	//終了後も更新
 	void ForeverUpdate();
 
+	//Get,Set
 	VECTOR GetPosition() { return position; }
 	int GetTarGetNumber() { return target; }
 	void SetTargetPosition(VECTOR targetpos) { targetPosition = targetpos; }

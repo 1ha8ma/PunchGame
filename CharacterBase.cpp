@@ -1,6 +1,5 @@
 #include<math.h>
 #include"DxLib.h"
-#include"EffekseerForDXLib.h"
 #include"Utility.h"
 #include"Shield.h"
 #include"Fist.h"
@@ -199,7 +198,7 @@ void CharacterBase::PlayAnimation()
 void CharacterBase::Attack()
 {
 	//攻撃モーションに変更
-	if (attackflg == false)
+	if (!attackflg)
 	{
 		ChangeAnimation(AnimKind::Punch);
 		attackflg = true;
@@ -211,7 +210,7 @@ void CharacterBase::Attack()
 /// </summary>
 void CharacterBase::OtherClassInitialize()
 {
-	if (outflg == false)
+	if (!outflg)
 	{
 		fist->Initialize();
 	}
@@ -226,7 +225,7 @@ void CharacterBase::UpdateEffect()
 	effect->Update();
 
 	//エフェクトフラグを戻す
-	if (Playshieldhiteffectflg && shieldhit == false)
+	if (Playshieldhiteffectflg && !shieldhit)
 	{
 		Playshieldhiteffectflg = false;
 	}
@@ -262,7 +261,7 @@ void CharacterBase::CheckAttackOnCollision()
 /// <param name="charatop">判定対象キャラ上</param>
 /// <param name="charabottom">判定対象キャラ下</param>
 /// <param name="charaR">キャラ半径</param>
-bool CharacterBase::FistWithCharacter(VECTOR charatop, VECTOR charabottom, float charaR,bool charaout)
+bool CharacterBase::FistWithCharacter(VECTOR charatop, VECTOR charabottom,bool charaout)
 {
 	float len;//2カプセルの距離
 	bool hit = false;//攻撃が当たった
@@ -270,7 +269,7 @@ bool CharacterBase::FistWithCharacter(VECTOR charatop, VECTOR charabottom, float
 	//2つの線分の最短距離を求める
 	len = Segment_Segment_MinLength(fist->GetcapFront(), fist->GetcapBack(), charatop, charabottom);
 
-	if (len < Fist::FistCapsuleRadius + charaR && attackOnCollision)
+	if (len < fist->FistCapsuleRadius + CharacterCapsuleRadius && attackOnCollision)
 	{
 		hit = true;
 	}
@@ -289,7 +288,7 @@ bool CharacterBase::FistWithCharacter(VECTOR charatop, VECTOR charabottom, float
 /// <param name="ShieldRight">判定対象キャラの盾右</param>
 /// <param name="shieldR">盾半径</param>
 /// <returns>当たっているか</returns>
-bool CharacterBase::FistWithShield(VECTOR ShieldLeft, VECTOR ShieldRight, float shieldR)
+bool CharacterBase::FistWithShield(VECTOR ShieldLeft, VECTOR ShieldRight)
 {
 	float len;//2カプセルの距離
 	bool hit = false;//盾に当たった
@@ -297,12 +296,12 @@ bool CharacterBase::FistWithShield(VECTOR ShieldLeft, VECTOR ShieldRight, float 
 	//2つの線分の最短距離を求める
 	len = Segment_Segment_MinLength(fist->GetcapFront(), fist->GetcapBack(), ShieldLeft, ShieldRight);
 
-	if (len < Fist::FistCapsuleRadius + shieldR && attackOnCollision)
+	if (len < fist->FistCapsuleRadius + shield->ShieldCapsuleRadius && attackOnCollision)
 	{
 		hit = true;
 
 		//エフェクト再生
-		if (Playshieldhiteffectflg == false)
+		if (!Playshieldhiteffectflg)
 		{
 			effect->PlayEffect(Effect::EffectKind::ShieldHit, fist->GetcapFront(), VGet(1.0f, 1.0f, 1.0f), angle, 0.7f);
 			Playshieldhiteffectflg = true;
@@ -317,16 +316,71 @@ bool CharacterBase::FistWithShield(VECTOR ShieldLeft, VECTOR ShieldRight, float 
 }
 
 /// <summary>
+/// 盾どうしの当たり判定
+/// </summary>
+/// <param name="shieldleft">対象キャラの盾</param>
+/// <param name="shieldright">対象キャラの盾</param>
+/// <param name="shieldR">盾半径</param>
+/// <returns>当たっているか</returns>
+bool CharacterBase::ShieldWithShield(VECTOR myshieldleft,VECTOR myshieldright,VECTOR shieldleft, VECTOR shieldright)
+{
+	float len;//2カプセルの距離
+	bool hit = false;//盾に当たった
+
+	//2つの線分の最短距離を求める
+	len = Segment_Segment_MinLength(myshieldleft, myshieldright, shieldleft, shieldright);
+
+	if (len < shield->ShieldCapsuleRadius + shield->ShieldCapsuleRadius)
+	{
+		hit = true;
+	}
+	else
+	{
+		hit = false;
+	}
+
+	return hit;
+}
+
+/// <summary>
+/// 盾と盾の当たらない位置までmovevecを戻す
+/// </summary>
+/// <param name="shieldleft">対象キャラの盾</param>
+/// <param name="shieldright">対象キャラの盾</param>
+void CharacterBase::RemoveShield(VECTOR shieldleft, VECTOR shieldright)
+{
+	//仮盾ポジション
+	VECTOR tentativeshieldposition = shield->GetPosition();
+	VECTOR tentativeshieldleft;
+	VECTOR tentativeshieldright;
+
+	//当たらなくなるまでmoveVecを調整して外す
+	while (1)
+	{
+		moveVec = VSub(moveVec, VGet(1.0f, 0.0f, 1.0f));
+		tentativeshieldposition = VAdd(tentativeshieldposition, moveVec);
+		tentativeshieldleft = VAdd(tentativeshieldposition, VGet(-sin(angle - 1.5f) * 150, 200, -cos(angle - 1.5f) * 150));
+		tentativeshieldright = VAdd(tentativeshieldposition, VGet(sin(angle - 1.5f) * 150, 200, cos(angle - 1.5f) * 150));
+
+		//外れたら終了
+		if (!ShieldWithShield(tentativeshieldleft, tentativeshieldright, shieldleft, shieldright) || (moveVec.x <= 0.0f && moveVec.z <= 0.0f))
+		{
+			break;
+		}
+	}
+}
+
+/// <summary>
 /// 脱落になったか
 /// </summary>
 /// <param name="hit">当たったか</param>
 void CharacterBase::CheckOut(bool hit)
 {
 	//脱落時
-	if (outflg == false && hit)
+	if (!outflg && hit)
 	{
 		//エフェクト再生
-		effect->PlayEffect(Effect::EffectKind::CharacterHit, position, VGet(1.0f, 1.0f, 1.0f), angle, 0.7f);
+		effect->PlayEffect(Effect::EffectKind::CharacterHit, position, VGet(3.0f, 3.0f, 3.0f), angle, 0.7f);
 		Playplayerhiteffectflg = true;
 
 		//se再生
@@ -356,15 +410,28 @@ void CharacterBase::Blow()
 /// <param name="hit">衝突したか</param>
 void CharacterBase::PlayShieldHitSE(bool hit)
 {
-	if (hit && shieldhitseflg == false)
+	if (hit && !shieldhitseflg)
 	{
 		semanager->PlaySE(SEManager::SEKind::ShieldhitSE);
 		shieldhitseflg = true;
 	}
-	if (hit == false && shieldhitseflg)
+	if (!hit && shieldhitseflg)
 	{
 		shieldhitseflg = false;
 	}
+}
+
+/// <summary>
+/// ポジション反映
+/// </summary>
+void CharacterBase::ReflectPosition()
+{
+	//ポジションにmoveVecを加算
+	position = VAdd(position, moveVec);
+	//カプセル更新
+	UpdateCapsule();
+	//他クラス更新
+	OtherClassUpdate();
 }
 
 /// <summary>
@@ -375,6 +442,11 @@ void CharacterBase::UpdateCapsule()
 	//当たり判定カプセル
 	capsuleTop = VAdd(position, VGet(0, 600, 0));
 	capsuleBottom = VAdd(position, VGet(0, 0, 0));
+}
+
+VECTOR CharacterBase::GetShieldPosition()
+{
+	return shield->GetPosition();
 }
 
 VECTOR CharacterBase::GetShieldLeft()
@@ -397,9 +469,9 @@ void CharacterBase::SetShieldHit(bool hit)
 /// </summary>
 void CharacterBase::Draw()
 {
-	//DrawCapsule3D(capsuleTop, capsuleBottom, CharacterR, 8, GetColor(127, 255, 0), GetColor(0, 255, 255), FALSE);
+	DrawCapsule3D(capsuleTop, capsuleBottom, CharacterCapsuleRadius, 8, GetColor(127, 255, 0), GetColor(0, 255, 255), FALSE);
 	MV1DrawModel(model);
-	if (outflg == false)
+	if (!outflg)
 	{
 		fist->Draw();
 	}

@@ -1,13 +1,10 @@
 #include<math.h>
 #include"DxLib.h"
-#include"EffekseerForDXLib.h"
 #include"Utility.h"
 #include"Loader.h"
 #include"Effect.h"
 #include"SEManager.h"
 #include"Fist.h"
-
-const float Fist::FistCapsuleRadius = 120.0f;
 
 /// <summary>
 /// コンストラクタ
@@ -66,7 +63,7 @@ void Fist::Draw()
 {
 	if (punchingflg)
 	{
-		//DrawCapsule3D(capFront, capBack, FistCapsuleRadius, 8, GetColor(127, 255, 0), GetColor(0, 255, 255), FALSE);
+		DrawCapsule3D(capFront, capBack, FistCapsuleRadius, 8, GetColor(127, 255, 0), GetColor(0, 255, 255), FALSE);
 		MV1DrawModel(model);
 		effect->Draw();
 	}

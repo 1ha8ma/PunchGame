@@ -23,10 +23,7 @@ Effect::Effect()
 Effect::~Effect()
 {
 	//エフェクト終了
-	for (int i = 0; i < PlayingEffecthandle.size(); i++)
-	{
-		StopEffekseer3DEffect(PlayingEffecthandle[i]);
-	}
+	DrawEffekseer3D_End();
 }
 
 /// <summary>
@@ -81,7 +78,7 @@ void Effect::Update()
 		//サイズ適用
 		SetScalePlayingEffekseer3DEffect(PlayingEffecthandle[i], PlayingEffectSize[i].x, PlayingEffectSize[i].y, PlayingEffectSize[i].z);
 
-		//もし再生終了していたらvectorから削除
+		//再生終了していたら再生中から削除
 		if (IsEffekseer3DEffectPlaying(PlayingEffecthandle[i]) == -1)
 		{
 			PlayingEffectKind.erase(PlayingEffectKind.begin() + i);
@@ -96,10 +93,5 @@ void Effect::Update()
 /// </summary>
 void Effect::Draw()
 {
-	//for (int i = 0; i < PlayingEffecthandle.size(); i++)
-	//{
-	//	//DrawEffekseer3D_Draw(PlayingEffecthandle[i]);
-	//}
-
 	DrawEffekseer3D();
 }

@@ -28,9 +28,13 @@ public:
 	void Initialize(VECTOR charaposition, float characterangle);
 	//更新
 	void Update(VECTOR characterPosition,float characterangle);
+	//ポジション反映
+	void ReflectPosition(VECTOR newposition);
 	//描画
 	void Draw();
 
+	const float ShieldCapsuleRadius = 20.0f;
+	VECTOR GetPosition() { return position; }
 	VECTOR GetcapLeft() { return capLeft; }
 	VECTOR GetcapRight() { return capRight; }
 };
