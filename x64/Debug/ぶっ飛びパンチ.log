@@ -1,10 +1,10 @@
-﻿  Enemy.cpp
+﻿  CharacterBase.cpp
 C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-C:\Users\hamar\Desktop\PunchGame\Enemy.cpp(135,14): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\hamar\Desktop\PunchGame\Enemy.cpp(136,24): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\hamar\Desktop\PunchGame\Enemy.cpp(204,14): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\hamar\Desktop\PunchGame\Enemy.cpp(205,24): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\hamar\Desktop\PunchGame\Enemy.cpp(241,19): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\hamar\Desktop\PunchGame\Enemy.cpp(244,29): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\hamar\Desktop\PunchGame\Enemy.cpp(246,29): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\CharacterBase.cpp(46,43): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\CharacterBase.cpp(73,8): warning C4101: 'difference': ローカル変数は 1 度も使われていません。
+C:\Users\hamar\Desktop\PunchGame\CharacterBase.cpp(149,43): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\CharacterBase.cpp(362,110): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\CharacterBase.cpp(362,79): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\CharacterBase.cpp(363,109): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\CharacterBase.cpp(363,79): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
   ぶっ飛びパンチ.vcxproj -> C:\Users\hamar\Desktop\PunchGame\x64\Debug\ぶっ飛びパンチ.exe

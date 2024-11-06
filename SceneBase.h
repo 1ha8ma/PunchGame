@@ -2,7 +2,6 @@
 
 class SceneBase
 {
-private:
 public:
 	//コンストラクタ
 	SceneBase();

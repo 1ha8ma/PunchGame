@@ -4,14 +4,6 @@ class SceneBase;
 
 class GameManager
 {
-private:
-	//シーン
-	SceneBase* nowscene;
-	SceneBase* nextscene;
-
-	//シーン切り替え
-	void ChangeScene();
-
 public:
 	//コンストラクタ
 	GameManager();
@@ -19,4 +11,12 @@ public:
 	void Update();
 	//描画
 	void Draw();
+
+private:
+	//シーン
+	SceneBase* nowscene;
+	SceneBase* nextscene;
+
+	//シーン切り替え
+	void ChangeScene();
 };

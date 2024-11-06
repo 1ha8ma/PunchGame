@@ -16,6 +16,18 @@ class SEManager;
 
 class GameScene :public SceneBase
 {
+public:
+	//コンストラクタ
+	GameScene();
+	//デストラクタ
+	~GameScene()override;
+	//初期化
+	void Initialize()override;
+	//更新
+	SceneBase* Update()override;
+	//描画
+	void Draw()override;
+
 private:
 	WoodBoard* wood;
 	Camera* camera;
@@ -39,16 +51,4 @@ private:
 	float winnerangle;//勝者角度
 	bool scenechange;//シーン切り替えフラグ
 	int winnernumber;//勝者のキャラナンバー
-
-public:
-	//コンストラクタ
-	GameScene();
-	//デストラクタ
-	~GameScene()override;
-	//初期化
-	void Initialize()override;
-	//更新
-	SceneBase* Update()override;
-	//描画
-	void Draw()override;
 };

@@ -5,6 +5,19 @@ class Effect;
 
 class Fist
 {
+public:
+	const float FistCapsuleRadius = 120.0f;
+
+	Fist();
+	~Fist();
+	void Initialize();
+	void Update(VECTOR charapos, float charaangle, bool punchflg, bool shieldhit);
+	void Draw();
+
+	VECTOR GetcapFront() { return capFront; }
+	VECTOR GetcapBack() { return capBack; }
+	float GetSize() { return size; }
+
 private:
 	SEManager* semanager;
 	Effect* effect;
@@ -28,18 +41,5 @@ private:
 	bool shieldhitflg;//èÇÇ…ìñÇΩÇ¡ÇΩ
 
 	//ÉpÉìÉ`ÇÃìÆÇ´
-	void PunchMove(bool punchflg,float charaangle,VECTOR charapos,bool shieldhit);
-
-public:
-	const float FistCapsuleRadius = 120.0f;
-
-	Fist();
-	~Fist();
-	void Initialize();
-	void Update(VECTOR charapos, float charaangle,bool punchflg,bool shieldhit);
-	void Draw();
-
-	VECTOR GetcapFront() { return capFront; }
-	VECTOR GetcapBack() { return capBack; }
-	float GetSize(){ return size; }
+	void PunchMove(bool punchflg, float charaangle, VECTOR charapos, bool shieldhit);
 };

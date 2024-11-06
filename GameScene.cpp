@@ -79,7 +79,7 @@ SceneBase* GameScene::Update()
 	////////////////////////////////////////////
 	//スタートシーン更新
 	///////////////////////////////////////////
-	if (gamestartflg == false)
+	if (!gamestartflg)
 	{
 		gamestartflg = startscene->Update();
 		camera->UpdateForStart(startscene->GetCameraPos(), startscene->GetLookPos());
@@ -93,7 +93,7 @@ SceneBase* GameScene::Update()
 	//////////////////////////////////////////
 	//ゲーム中更新
 	//////////////////////////////////////////
-	if (gamestartflg && gameendflg == false)
+	if (gamestartflg && !gameendflg)
 	{
 		//エフェクトカメラ同期
 		Effekseer_Sync3DSetting();
@@ -101,7 +101,7 @@ SceneBase* GameScene::Update()
 		//更新
 		bgmmanager->PlayBGM(BGMManager::BGMKind::GameBGM);
 		camera->UpdateForGame();
-		if (player->GetOutflg() == false)
+		if (!player->GetOutflg())
 		{
 			player->Update(input->GetInputState());
 		}
@@ -123,7 +123,7 @@ SceneBase* GameScene::Update()
 		enemy->ReflectPosition();
 
 		//拳と盾の当たり判定
-		if (player->GetOutflg() == false)
+		if (!player->GetOutflg())
 		{
 			for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
 			{
@@ -140,7 +140,7 @@ SceneBase* GameScene::Update()
 		enemy->UpdateFistWithShield(player->GetShieldLeft(), player->GetShieldRight());
 
 		//拳とキャラクター当たり判定
-		if (player->GetOutflg() == false)
+		if (!player->GetOutflg())
 		{
 			for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
 			{
@@ -155,11 +155,11 @@ SceneBase* GameScene::Update()
 		player->CheckOut(enemy->GetPlayerhit());
 
 		//脱落確認
-		if (player->GetOutflg() && playeroutcheck == false)
+		if (player->GetOutflg() && !playeroutcheck)
 		{
 			outchara.push_back(static_cast<int>(CharaNumber::Player));
 		}
-		if (enemy->GetPlayerhit() == true)
+		if (enemy->GetPlayerhit())
 		{
 			playeroutcheck = true;
 		}
@@ -175,7 +175,7 @@ SceneBase* GameScene::Update()
 						alreadyout = true;
 					}
 				}
-				if (alreadyout == false)
+				if (!alreadyout)
 				{
 					outchara.push_back(i);
 				}
@@ -217,10 +217,10 @@ SceneBase* GameScene::Update()
 	//終了条件を満たしていたらフラグ変更
 	if (outchara.size() == 4)//1人残った場合
 	{
-		if (gameendflg == false)
+		if (!gameendflg)
 		{
 			//勝者の情報を取得
-			if (player->GetOutflg() == false)
+			if (!player->GetOutflg())
 			{
 				winnerpos = player->GetPosition();
 				winnerangle = player->GetAngle();
@@ -228,7 +228,7 @@ SceneBase* GameScene::Update()
 			}
 			for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
 			{
-				if (enemy->GetOutflg(i) == false)
+				if (!enemy->GetOutflg(i))
 				{
 					winnerpos = enemy->GetPosition(i);
 					winnerangle = enemy->GetAngle(i);
@@ -272,11 +272,11 @@ void GameScene::Draw()
 	player->Draw();
 	enemy->Draw();
 
-	if (gamestartflg == false)
+	if (!gamestartflg)
 	{
 		startscene->Draw();
 	}
-	if (gamestartflg && gameendflg == false)
+	if (gamestartflg && !gameendflg)
 	{
 		gameui->Draw();
 	}

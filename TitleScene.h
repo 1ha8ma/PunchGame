@@ -10,6 +10,13 @@ class SEManager;
 
 class TitleScene:public SceneBase
 {
+public:
+	TitleScene();
+	~TitleScene() override;
+	void Initialize()override;
+	SceneBase* Update() override;
+	void Draw()override;
+
 private:
 	InputManager* input;
 	Camera* camera;
@@ -24,11 +31,4 @@ private:
 	int fontsize;//startのフォントサイズ
 	int fontsizechangeflame;
 	bool fontsizechangeflg;
-
-public:
-	TitleScene();
-	~TitleScene() override;
-	void Initialize()override;
-	SceneBase* Update() override;
-	void Draw()override;
 };

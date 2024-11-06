@@ -3,10 +3,6 @@
 
 class Player :public CharacterBase
 {
-private:
-	//入力処理
-	void InputProcess(const int inputstate);
-
 public:
 	//コンストラクタ
 	Player();
@@ -22,4 +18,8 @@ public:
 	VECTOR GetPosition() { return position; }
 	float GetAngle() { return angle; }
 	bool GetAttackflg() { return attackflg; }
+
+private:
+	//入力処理
+	void InputProcess(const int inputstate);
 };

@@ -396,7 +396,7 @@ void CharacterBase::CheckOut(bool hit)
 /// </summary>
 void CharacterBase::Blow()
 {
-	if (outflg && position.y < 2000)
+	if (outflg && position.y < 3000)
 	{
 		position = VAdd(position, VGet(0, 100, 0));
 		//ƒ|ƒWƒVƒ‡ƒ“”½‰f
@@ -469,7 +469,7 @@ void CharacterBase::SetShieldHit(bool hit)
 /// </summary>
 void CharacterBase::Draw()
 {
-	DrawCapsule3D(capsuleTop, capsuleBottom, CharacterCapsuleRadius, 8, GetColor(127, 255, 0), GetColor(0, 255, 255), FALSE);
+	//DrawCapsule3D(capsuleTop, capsuleBottom, CharacterCapsuleRadius, 8, GetColor(127, 255, 0), GetColor(0, 255, 255), FALSE);
 	MV1DrawModel(model);
 	if (!outflg)
 	{

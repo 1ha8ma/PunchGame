@@ -5,6 +5,13 @@ class BGMManager;
 
 class ResultScene
 {
+public:
+	ResultScene();
+	~ResultScene();
+	void Initialize(VECTOR position, float angle);
+	bool Update(Camera*& camera);
+	void Draw();
+
 private:
 	InputManager* input;
 	Camera* camera;
@@ -19,11 +26,4 @@ private:
 	VECTOR targetposition;//ƒJƒƒ‰‚ÌˆÚ“®‚·‚éêŠ
 
 	float t;//Lerp—p•ªŠ„Š„‡
-
-public:
-	ResultScene();
-	~ResultScene();
-	void Initialize(VECTOR position,float angle);
-	bool Update(Camera*& camera);
-	void Draw();
 };

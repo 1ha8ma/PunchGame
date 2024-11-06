@@ -27,7 +27,7 @@ Fist::Fist()
 /// </summary>
 Fist::~Fist()
 {
-
+	delete effect;
 }
 	
 /// <summary>
@@ -63,7 +63,7 @@ void Fist::Draw()
 {
 	if (punchingflg)
 	{
-		DrawCapsule3D(capFront, capBack, FistCapsuleRadius, 8, GetColor(127, 255, 0), GetColor(0, 255, 255), FALSE);
+		//DrawCapsule3D(capFront, capBack, FistCapsuleRadius, 8, GetColor(127, 255, 0), GetColor(0, 255, 255), FALSE);
 		MV1DrawModel(model);
 		effect->Draw();
 	}
@@ -75,7 +75,7 @@ void Fist::Draw()
 void Fist::PunchMove(bool attackflg,float charaangle,VECTOR charapos,bool shieldhit)
 {
 	//パンチしたとき
-	if (attackflg && punchingflg == false)
+	if (attackflg && !punchingflg)
 	{
 		//プレイヤーからポジション等のコピー
 		position = charapos;
@@ -145,7 +145,7 @@ void Fist::PunchMove(bool attackflg,float charaangle,VECTOR charapos,bool shield
 		}
 
 		//モーションが終わるとフラグ変更
-		if (attackflg == false)
+		if (!attackflg)
 		{
 			punchingflg = false;
 		}

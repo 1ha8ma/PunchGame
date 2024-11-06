@@ -74,7 +74,7 @@ bool StartScene::Update()
 	if (countflg)
 	{
 		cameraangle = 0.0f;
-		camerapos = VGet(0, 2000, -1500);
+		camerapos = VGet(0, 2500, -2000);
 		lookpos = VGet(0, 0, 0);
 
 		countflame++;
@@ -123,7 +123,7 @@ void StartScene::Draw()
 		}
 
 		//数字のサイズ変更
-		if (sizechangeflg == false)
+		if (!sizechangeflg)
 		{
 			numberlx -= 1;
 			numberly -= 1;
@@ -147,7 +147,7 @@ void StartScene::Draw()
 		//スタート
 		if (300 < countflame && countflame <= 350)
 		{
-			if (startseflg == false)
+			if (!startseflg)
 			{
 				semanager->PlaySE(SEManager::SEKind::StartSE);
 				startseflg = true;

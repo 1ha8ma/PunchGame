@@ -18,7 +18,8 @@ void Camera::Initialize()
 {
 	SetCameraNearFar(10.0f, 6000.0f);
 
-	pos = VGet(0, 2000, -1500);
+	//pos = VGet(0, 2000, -1500);
+	pos = VGet(0.0f, 2500.0f, -2000.0f);
 	lookpos = VGet(0, 0, 0);
 
 	angle = initangle;

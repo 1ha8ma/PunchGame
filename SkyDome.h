@@ -2,9 +2,6 @@
 
 class SkyDome
 {
-private:
-	int model;
-
 public:
 	//コンストラクタ
 	SkyDome();
@@ -12,4 +9,7 @@ public:
 	~SkyDome();
 	//描画
 	void Draw();
+
+private:
+	int model;
 };

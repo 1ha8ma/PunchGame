@@ -5,18 +5,6 @@ class Enemy;
 
 class EnemyManager
 {
-private:
-	std::vector<Enemy*> enemy;
-	const float ModelSize = 4.5f;
-	const VECTOR InitialPosition0 = VGet(-1000.0f, 100.0f, 1000.0f);
-	const VECTOR InitialTargetDir0 = VGet(1.0f, 0.0f, -1.0f);
-	const VECTOR InitialPosition1 = VGet(1000.f, 100.0f, 1000.0f);
-	const VECTOR InitialTargetDir1 = VGet(-1.0f, 0.0f, -1.0f);
-	const VECTOR InitialPosition2 = VGet(1000.0f, 100.0f, -700.0f);
-	const VECTOR InitialTargetDir2 = VGet(-1.0f, 0.0f, 1.0f);
-
-	bool playerhit;//プレイヤーに攻撃が当たっているか
-
 public:
 	//コンストラクタ
 	EnemyManager();
@@ -55,4 +43,16 @@ public:
 	float GetAngle(int i);
 	bool GetPlayerhit() { return playerhit; }
 	int GetNowMoveKind(int i);
+
+private:
+	std::vector<Enemy*> enemy;
+	const float ModelSize = 4.5f;
+	const VECTOR InitialPosition0 = VGet(-1000.0f, 100.0f, 1000.0f);
+	const VECTOR InitialTargetDir0 = VGet(1.0f, 0.0f, -1.0f);
+	const VECTOR InitialPosition1 = VGet(1000.f, 100.0f, 1000.0f);
+	const VECTOR InitialTargetDir1 = VGet(-1.0f, 0.0f, -1.0f);
+	const VECTOR InitialPosition2 = VGet(1000.0f, 100.0f, -700.0f);
+	const VECTOR InitialTargetDir2 = VGet(-1.0f, 0.0f, 1.0f);
+
+	bool playerhit;//プレイヤーに攻撃が当たっているか
 };

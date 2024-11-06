@@ -78,7 +78,7 @@ void Shield::ReflectPosition(VECTOR newposition)
 void Shield::Draw()
 {
 	//“–‚½‚è”»’èƒJƒvƒZƒ‹
-	DrawCapsule3D(capLeft, capRight, CapsuleRadius, 20, GetColor(127, 255, 0), GetColor(0, 255, 255), FALSE);
+	//DrawCapsule3D(capLeft, capRight, CapsuleRadius, 20, GetColor(127, 255, 0), GetColor(0, 255, 255), FALSE);
 	MV1DrawModel(model);
 }
 

@@ -51,7 +51,7 @@ void EnemyManager::Update(std::vector<int> outchara)
 	//更新
 	for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
 	{
-		if (enemy[i]->GetOutflg() == false)
+		if (!enemy[i]->GetOutflg())
 		{
 			enemy[i]->Update(outchara);
 		}
@@ -106,7 +106,7 @@ void EnemyManager::UpdateFistWithCharacter(VECTOR playerTop,VECTOR playerBottom,
 	//プレイヤーとの当たり判定
 	for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
 	{
-		if (enemy[i]->GetOutflg() == false)
+		if (!enemy[i]->GetOutflg())
 		{
 			playerhit = enemy[i]->FistWithCharacter(playerTop, playerBottom, playerout);
 			if (playerhit)
@@ -120,7 +120,7 @@ void EnemyManager::UpdateFistWithCharacter(VECTOR playerTop,VECTOR playerBottom,
 	{
 		for (int j = 0; j < EnemyManager::NumberofEnemy - 1; j++)
 		{
-			if (enemy[i]->GetOutflg() == false)//脱落していなかったら
+			if (!enemy[i]->GetOutflg())//脱落していなかったら
 			{
 				//確認するCPUを設定
 				int checkenemy = i + j + 1;

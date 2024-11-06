@@ -40,7 +40,7 @@ void GameManager::Draw()
 void GameManager::ChangeScene()
 {
 	//現在のシーンを削除
-	delete(nowscene);
+	delete nowscene;
 
 	//シーン切り替え
 	nowscene = nextscene;

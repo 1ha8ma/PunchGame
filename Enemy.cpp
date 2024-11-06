@@ -136,7 +136,7 @@ void Enemy::Move(std::vector<int> outchara)
 		targetdistance = sqrt(calc);
 
 		//角度設定
-		if (attackflg == false)
+		if (!attackflg)
 		{
 			targetLookDirection.x = targetPosition.x;
 			targetLookDirection.z = targetPosition.z;
@@ -147,7 +147,7 @@ void Enemy::Move(std::vector<int> outchara)
 		{
 			cooltimeflg = true;
 			cooltimeflame = 0;
-			//Attack();
+			Attack();
 		}
 		//射程範囲外であれば進める
 		if (targetdistance > 1000)
@@ -189,7 +189,7 @@ void Enemy::Move(std::vector<int> outchara)
 	case(MoveKind::randomwalk):
 	{
 		//目的地設定
-		if (SetWalkTargetPositionflg == false)
+		if (!SetWalkTargetPositionflg)
 		{
 			targetPosition.x = (rand() % static_cast<int>((StageRight - StageLeft))) + StageLeft;
 			targetPosition.z = (rand() % static_cast<int>((StageTop - StageBottom))) + StageBottom;
@@ -246,7 +246,7 @@ void Enemy::Move(std::vector<int> outchara)
 	moveVec.z = sin(moveangle) * Speed;
 
 	//進ませる
-	if (moveonflg && attackflg == false)
+	if (moveonflg && !attackflg)
 	{
 		isanimflg = true;
 	}

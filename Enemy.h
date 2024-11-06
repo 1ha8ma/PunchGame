@@ -4,6 +4,37 @@
 
 class Enemy :public CharacterBase
 {
+public:
+	//cpuの動きの種類
+	enum MoveKind
+	{
+		charachase,//キャラを追う
+		randomwalk,//ランダムに歩く
+	};
+
+	//コンストラクタ
+	Enemy(int handle, float modelsize, VECTOR position, VECTOR targetDir, int cpunumber);
+	//デストラクタ
+	~Enemy();
+	//初期化
+	void Initialize(VECTOR position, VECTOR targetDir);
+	//更新
+	void Update(std::vector<int> outchara);
+	//盾と盾の当たり判定の更新
+	void UpdateShieldWithShield(VECTOR shieldleft, VECTOR shieldright);
+	//ポジションの更新
+	void UpdatePosition();
+	//終了後も更新
+	void ForeverUpdate();
+
+	//Get,Set
+	VECTOR GetPosition() { return position; }
+	int GetTarGetNumber() { return target; }
+	void SetTargetPosition(VECTOR targetpos) { targetPosition = targetpos; }
+	bool GetOutflg() { return outflg; }
+	bool GetAttackflg() { return attackflg; }
+	int GetNowMoveKind() { return NowMoveKind; }
+
 private:
 	int mynumber;//自分のCPU番号
 
@@ -29,35 +60,4 @@ private:
 	void SetTargetChara(std::vector<int> outchara);
 	//移動処理
 	void Move(std::vector<int> outchara);
-
-public:
-	//cpuの動きの種類
-	enum MoveKind
-	{
-		charachase,//キャラを追う
-		randomwalk,//ランダムに歩く
-	};
-	
-	//コンストラクタ
-	Enemy(int handle,float modelsize,VECTOR position,VECTOR targetDir,int cpunumber);
-	//デストラクタ
-	~Enemy();
-	//初期化
-	void Initialize(VECTOR position, VECTOR targetDir);
-	//更新
-	void Update(std::vector<int> outchara);
-	//盾と盾の当たり判定の更新
-	void UpdateShieldWithShield(VECTOR shieldleft, VECTOR shieldright);
-	//ポジションの更新
-	void UpdatePosition();
-	//終了後も更新
-	void ForeverUpdate();
-
-	//Get,Set
-	VECTOR GetPosition() { return position; }
-	int GetTarGetNumber() { return target; }
-	void SetTargetPosition(VECTOR targetpos) { targetPosition = targetpos; }
-	bool GetOutflg() { return outflg; }
-	bool GetAttackflg() { return attackflg; }
-	int GetNowMoveKind() { return NowMoveKind; }
 };

@@ -4,7 +4,6 @@
 class SEManager
 {
 public:
-
 	enum SEKind
 	{
 		CharahitSE,//ƒLƒƒƒ‰‚ÉUŒ‚‚ª“–‚½‚Á‚½
@@ -25,6 +24,5 @@ public:
 
 private:
 	std::map<SEKind, int> handle;
-
 
 };

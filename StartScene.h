@@ -5,6 +5,19 @@ class SEManager;
 
 class StartScene
 {
+public:
+	//コンストラクタ
+	StartScene();
+	//初期化
+	void Initialize();
+	//更新
+	bool Update();
+	//描画
+	void Draw();
+
+	VECTOR GetLookPos() { return lookpos; }
+	VECTOR GetCameraPos() { return camerapos; }
+
 private:
 	SEManager* semanager;
 
@@ -33,17 +46,4 @@ private:
 	float numberly;
 	float numberrx;
 	float numberry;
-
-public:
-	//コンストラクタ
-	StartScene();
-	//初期化
-	void Initialize();
-	//更新
-	bool Update();
-	//描画
-	void Draw();
-
-	VECTOR GetLookPos() { return lookpos; }
-	VECTOR GetCameraPos() { return camerapos; }
 };

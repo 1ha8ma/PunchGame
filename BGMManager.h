@@ -21,7 +21,6 @@ public:
 	void StopBGM();
 
 private:
-
 	std::map<BGMKind, int> handle;
 
 	int PlayingBGM;//Ä¶’†‚ÌBGM
