@@ -154,7 +154,7 @@
     <ClCompile Include="SkyDome.cpp" />
     <ClCompile Include="StartScene.cpp" />
     <ClCompile Include="TitleScene.cpp" />
-    <ClCompile Include="WoodBoard.cpp" />
+    <ClCompile Include="Stage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BGMManager.h" />
@@ -178,7 +178,7 @@
     <ClInclude Include="StartScene.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="Utility.h" />
-    <ClInclude Include="WoodBoard.h" />
+    <ClInclude Include="Stage.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

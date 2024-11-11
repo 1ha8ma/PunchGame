@@ -4,7 +4,7 @@
 class InputManager;
 class Camera;
 class SkyDome;
-class WoodBoard;
+class Stage;
 class BGMManager;
 class SEManager;
 
@@ -21,7 +21,7 @@ private:
 	InputManager* input;
 	Camera* camera;
 	SkyDome* skydome;
-	WoodBoard* woodboard;
+	Stage* stage;
 	BGMManager* bgmmanager;
 	SEManager* semanager;
 

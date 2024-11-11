@@ -3,6 +3,7 @@
 #include<time.h>
 #include"DxLib.h"
 #include"Utility.h"
+#include"Stage.h"
 #include"Enemy.h"
 
 /// <summary>
@@ -191,8 +192,8 @@ void Enemy::Move(std::vector<int> outchara)
 		//ñ⁄ìIínê›íË
 		if (!SetWalkTargetPositionflg)
 		{
-			targetPosition.x = (rand() % static_cast<int>((StageRight - StageLeft))) + StageLeft;
-			targetPosition.z = (rand() % static_cast<int>((StageTop - StageBottom))) + StageBottom;
+			targetPosition.x = (rand() % static_cast<int>((Stage::StageRight - Stage::StageLeft))) + Stage::StageLeft;
+			targetPosition.z = (rand() % static_cast<int>((Stage::StageTop - Stage::StageBottom))) + Stage::StageBottom;
 
 			targetLookDirection.x = targetPosition.x;
 			targetLookDirection.z = targetPosition.z;

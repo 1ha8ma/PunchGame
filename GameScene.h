@@ -4,7 +4,7 @@
 
 class Camera;
 class Player;
-class WoodBoard;
+class Stage;
 class SkyDome;
 class InputManager;
 class EnemyManager;
@@ -29,7 +29,7 @@ public:
 	void Draw()override;
 
 private:
-	WoodBoard* wood;
+	Stage* stage;
 	Camera* camera;
 	Player* player;
 	SkyDome* skydome;

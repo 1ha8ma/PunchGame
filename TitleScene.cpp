@@ -2,7 +2,7 @@
 #include"InputManager.h"
 #include"Camera.h"
 #include"SkyDome.h"
-#include"WoodBoard.h"
+#include"Stage.h"
 #include"GameScene.h"
 #include"Loader.h"
 #include"BGMManager.h"
@@ -18,7 +18,7 @@ TitleScene::TitleScene()
 	input = new InputManager();
 	camera = new Camera();
 	skydome = new SkyDome();
-	woodboard = new WoodBoard();
+	stage = new Stage();
 	bgmmanager = new BGMManager();
 	semanager = new SEManager();
 
@@ -110,7 +110,7 @@ void TitleScene::Draw()
 {
 	//モデル
 	skydome->Draw();
-	woodboard->Draw();
+	stage->Draw();
 
 	//タイトルロゴ
 	DrawExtendGraph(470, 0,1100,600, titlelogo, TRUE);
@@ -118,5 +118,5 @@ void TitleScene::Draw()
 	//スタート
 	SetFontSize(fontsize);
 	ChangeFont("851テガキカクット",DX_CHARSET_DEFAULT);
-	DrawString(600, 700, "スタート", GetColor(127, 255, 0));
+	DrawString(600, 700, "A スタート", GetColor(127, 255, 0));
 }

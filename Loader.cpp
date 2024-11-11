@@ -33,7 +33,7 @@ void Loader::LoadModel()
 	handle[ShieldModel] = MV1LoadModel("3D/Shield.mv1");
 	handle[FistModel] = MV1LoadModel("3D/fist.mv1");
 	handle[DomeModel] = MV1LoadModel("3D/Dome_X501.x");
-	handle[WoodBoardModel] = MV1LoadModel("3D/woodboard.mv1");
+	handle[StageModel] = MV1LoadModel("3D/stage.mv1");
 
 	//2D
 	handle[TitleLogo] = LoadGraph("2D/titlelogo.png");

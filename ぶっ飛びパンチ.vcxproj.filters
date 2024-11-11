@@ -45,7 +45,7 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Camera</Filter>
     </ClCompile>
-    <ClCompile Include="WoodBoard.cpp">
+    <ClCompile Include="Stage.cpp">
       <Filter>Stage</Filter>
     </ClCompile>
     <ClCompile Include="SkyDome.cpp">
@@ -113,7 +113,7 @@
     <ClInclude Include="Camera.h">
       <Filter>Camera</Filter>
     </ClInclude>
-    <ClInclude Include="WoodBoard.h">
+    <ClInclude Include="Stage.h">
       <Filter>Stage</Filter>
     </ClInclude>
     <ClInclude Include="SkyDome.h">

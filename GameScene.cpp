@@ -3,7 +3,7 @@
 #include"Utility.h"
 #include"Camera.h"
 #include"Player.h"
-#include"WoodBoard.h"
+#include"Stage.h"
 #include"SkyDome.h"
 #include"InputManager.h"
 #include"Enemy.h"
@@ -25,7 +25,7 @@ GameScene::GameScene()
 	camera = new Camera();
 	input = new InputManager();
 	skydome = new SkyDome();
-	wood = new WoodBoard();
+	stage = new Stage();
 	player = new Player();
 	enemy = new EnemyManager();
 	gameui = new GameUI();
@@ -45,7 +45,7 @@ GameScene::~GameScene()
 	delete camera;
 	delete input;
 	delete skydome;
-	delete wood;
+	delete stage;
 	delete player;
 	delete enemy;
 	delete resultscene;
@@ -268,7 +268,7 @@ SceneBase* GameScene::Update()
 void GameScene::Draw()
 {
 	skydome->Draw();
-	wood->Draw();
+	stage->Draw();
 	player->Draw();
 	enemy->Draw();
 

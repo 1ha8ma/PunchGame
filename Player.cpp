@@ -1,6 +1,6 @@
 #include<math.h>
 #include"DxLib.h"
-#include"Utility.h"
+#include"Stage.h"
 #include"Player.h"
 #include"Loader.h"
 
@@ -103,19 +103,19 @@ void Player::InputProcess(const int inputstate)
 	//à⁄ìÆ
 	if (attackflg == false)
 	{
-		if (position.x <= StageRight && (4 & inputstate) == 4)//âE
+		if (position.x <= Stage::StageRight && (4 & inputstate) == 4)//âE
 		{
 			moveVec = VAdd(moveVec, VGet(1.0f, 0.0f, 0.0f));
 		}
-		if (position.x >= StageLeft && (2 & inputstate) == 2)//ç∂
+		if (position.x >= Stage::StageLeft && (2 & inputstate) == 2)//ç∂
 		{
 			moveVec = VAdd(moveVec, VGet(-1.0f, 0.0f, 0.0f));
 		}
-		if (position.z <= StageTop && (8 & inputstate) == 8)//è„
+		if (position.z <= Stage::StageTop && (8 & inputstate) == 8)//è„
 		{
 			moveVec = VAdd(moveVec, VGet(0.0f, 0.0f, 1.0f));
 		}
-		if (position.z >= StageBottom && (1 & inputstate) == 1)//â∫
+		if (position.z >= Stage::StageBottom && (1 & inputstate) == 1)//â∫
 		{
 			moveVec = VAdd(moveVec, VGet(0.0f, 0.0f, -1.0f));
 		}

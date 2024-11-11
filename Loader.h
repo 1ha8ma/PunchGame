@@ -18,7 +18,7 @@ public:
 		Enemy3Model,//3
 		ShieldModel,//盾モデル
 		FistModel,//拳モデル
-		WoodBoardModel,//木の板モデル
+		StageModel,//ステージモデル
 		DomeModel,//スカイドームモデル
 
 		//2D
