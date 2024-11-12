@@ -5,6 +5,7 @@
 #include"Fist.h"
 #include"Effect.h"
 #include"SEManager.h"
+#include"Collision.h"
 #include"CharacterBase.h"
 
 /// <summary>
@@ -17,6 +18,7 @@ CharacterBase::CharacterBase()
 	fist = new Fist();
 	semanager = new SEManager();
 	effect = new Effect();
+	collision = new Collision();
 }
 
 /// <summary>
@@ -261,21 +263,13 @@ void CharacterBase::CheckAttackOnCollision()
 /// <param name="charatop">判定対象キャラ上</param>
 /// <param name="charabottom">判定対象キャラ下</param>
 /// <param name="charaR">キャラ半径</param>
-bool CharacterBase::FistWithCharacter(VECTOR charatop, VECTOR charabottom,bool charaout)
+bool CharacterBase::FistWithCharacter(VECTOR charatop, VECTOR charabottom, bool charaout)
 {
-	float len;//2カプセルの距離
 	bool hit = false;//攻撃が当たった
 
-	//2つの線分の最短距離を求める
-	len = Segment_Segment_MinLength(fist->GetcapFront(), fist->GetcapBack(), charatop, charabottom);
-
-	if (len < fist->FistCapsuleRadius + CharacterCapsuleRadius && attackOnCollision)
+	if (collision->CapsuleWithCapsule(fist->GetcapFront(), fist->GetcapBack(), charatop, charabottom, fist->FistCapsuleRadius, CharacterCapsuleRadius) && attackOnCollision)
 	{
 		hit = true;
-	}
-	else
-	{
-		hit = false;
 	}
 
 	return hit;
@@ -290,13 +284,10 @@ bool CharacterBase::FistWithCharacter(VECTOR charatop, VECTOR charabottom,bool c
 /// <returns>当たっているか</returns>
 bool CharacterBase::FistWithShield(VECTOR ShieldLeft, VECTOR ShieldRight)
 {
-	float len;//2カプセルの距離
 	bool hit = false;//盾に当たった
 
-	//2つの線分の最短距離を求める
-	len = Segment_Segment_MinLength(fist->GetcapFront(), fist->GetcapBack(), ShieldLeft, ShieldRight);
-
-	if (len < fist->FistCapsuleRadius + shield->ShieldCapsuleRadius && attackOnCollision)
+	//当たり判定
+	if (collision->CapsuleWithCapsule(fist->GetcapFront(), fist->GetcapBack(), ShieldLeft, ShieldRight, fist->FistCapsuleRadius, shield->ShieldCapsuleRadius) && attackOnCollision)
 	{
 		hit = true;
 
@@ -306,10 +297,6 @@ bool CharacterBase::FistWithShield(VECTOR ShieldLeft, VECTOR ShieldRight)
 			effect->PlayEffect(Effect::EffectKind::ShieldHit, fist->GetcapFront(), VGet(1.0f, 1.0f, 1.0f), angle, 0.7f);
 			Playshieldhiteffectflg = true;
 		}
-	}
-	else
-	{
-		hit = false;
 	}
 
 	return hit;
@@ -324,26 +311,19 @@ bool CharacterBase::FistWithShield(VECTOR ShieldLeft, VECTOR ShieldRight)
 /// <returns>当たっているか</returns>
 bool CharacterBase::ShieldWithShield(VECTOR myshieldleft,VECTOR myshieldright,VECTOR shieldleft, VECTOR shieldright)
 {
-	float len;//2カプセルの距離
 	bool hit = false;//盾に当たった
 
-	//2つの線分の最短距離を求める
-	len = Segment_Segment_MinLength(myshieldleft, myshieldright, shieldleft, shieldright);
-
-	if (len < shield->ShieldCapsuleRadius + shield->ShieldCapsuleRadius)
+	//当たり判定
+	if (collision->CapsuleWithCapsule(myshieldleft, myshieldright, shieldleft, shieldright, shield->ShieldCapsuleRadius, shield->ShieldCapsuleRadius))
 	{
 		hit = true;
-	}
-	else
-	{
-		hit = false;
 	}
 
 	return hit;
 }
 
 /// <summary>
-/// 盾と盾の当たらない位置までmovevecを戻す
+/// 盾と盾の当たらない位置までmovevecを戻す/
 /// </summary>
 /// <param name="shieldleft">対象キャラの盾</param>
 /// <param name="shieldright">対象キャラの盾</param>

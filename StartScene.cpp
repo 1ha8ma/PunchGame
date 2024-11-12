@@ -62,7 +62,6 @@ bool StartScene::Update()
 		lookpos.z = cos(cameraangle);
 	}
 
-
 	//一周したら
 	if (cameraangle >= DX_PI_F * 2 && countflg == false)
 	{
@@ -95,10 +94,10 @@ void StartScene::Draw()
 {
 	if (countflg)
 	{
-		//キャラの紹介のテキストボックス表示
-		DrawExtendGraph(50, 500, 300, 600, textbox, TRUE);//左下
+		//プレイヤー紹介のテキストボックス表示
+		DrawExtendGraph(150, 450, 400, 550, textbox, TRUE);
 		SetFontSize(40);
-		DrawString(110, 530, "PLAYER", GetColor(0, 191, 255));
+		DrawString(210, 480, "PLAYER", GetColor(0, 191, 255));
 
 		//100フレーム毎に画像切り替え
 		if (countflame != 0 && countflame % 100 == 0)

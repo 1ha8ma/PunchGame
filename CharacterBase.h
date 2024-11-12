@@ -5,6 +5,7 @@ class Shield;
 class Fist;
 class SEManager;
 class Effect;
+class Collision;
 
 class CharacterBase
 {
@@ -68,6 +69,7 @@ protected:
 	Fist* fist;
 	SEManager* semanager;
 	Effect* effect;
+	Collision* collision;
 
 	//モデル・アニメーション
 	int model;//モデル
