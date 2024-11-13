@@ -22,7 +22,7 @@ private:
 	SEManager* semanager;
 	Effect* effect;
 
-	const float PunchSpeed = 10.0f;
+	const float PunchSpeed = 13.0f;
 
 	int model;//ƒ‚ƒfƒ‹
 	float modelangle;//ƒ‚ƒfƒ‹Šp“x

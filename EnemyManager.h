@@ -39,7 +39,8 @@ public:
 	VECTOR GetShieldRight(int i);
 	bool GetOutflg(int i);
 	int GetTargetNumber(int i);
-	void SetTargetPosition(int i, VECTOR targetpos);
+	void SetTargetCharaPosition(int i, VECTOR targetcharapos);
+	void SetTargetCharaAngle(int i, float targetcharaangle);
 	float GetAngle(int i);
 	bool GetPlayerhit() { return playerhit; }
 	int GetNowMoveKind(int i);

@@ -238,9 +238,14 @@ int EnemyManager::GetTargetNumber(int i)
 	return enemy[i]->GetTarGetNumber();
 }
 
-void EnemyManager::SetTargetPosition(int i, VECTOR targetPos)
+void EnemyManager::SetTargetCharaPosition(int i, VECTOR targetcharaPos)
 {
-	enemy[i]->SetTargetPosition(targetPos);
+	enemy[i]->SetTargetCharaPosition(targetcharaPos);
+}
+
+void EnemyManager::SetTargetCharaAngle(int i, float targetcharaAngle)
+{
+	enemy[i]->SetTargetCharaAngle(targetcharaAngle);
 }
 
 float EnemyManager::GetAngle(int i)

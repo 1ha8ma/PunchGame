@@ -193,11 +193,13 @@ SceneBase* GameScene::Update()
 					{
 						if (j == static_cast<int>(CharaNumber::Player))
 						{
-							enemy->SetTargetPosition(i, player->GetPosition());
+							enemy->SetTargetCharaPosition(i, player->GetPosition());
+							enemy->SetTargetCharaAngle(i, player->GetAngle());
 						}
 						else
 						{
-							enemy->SetTargetPosition(i, enemy->GetPosition(j));
+							enemy->SetTargetCharaPosition(i, enemy->GetPosition(j));
+							enemy->SetTargetCharaAngle(i, enemy->GetAngle(j));
 						}
 					}
 				}

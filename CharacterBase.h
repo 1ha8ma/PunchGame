@@ -89,8 +89,8 @@ protected:
 	VECTOR moveVec;//入力があってからの動く方向
 	VECTOR targetLookDirection;//モデルが向くべき方向のベクトル
 	float angle;//現在のキャラクター角度
-	VECTOR capsuleTop;
-	VECTOR capsuleBottom;
+	VECTOR capsuleTop;//カプセル上
+	VECTOR capsuleBottom;//カプセル下
 
 	//攻撃
 	bool attackflg;//攻撃開始フラグ

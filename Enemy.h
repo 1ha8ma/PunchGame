@@ -30,18 +30,23 @@ public:
 	//Get,Set
 	VECTOR GetPosition() { return position; }
 	int GetTarGetNumber() { return target; }
-	void SetTargetPosition(VECTOR targetpos) { targetPosition = targetpos; }
+	void SetTargetCharaPosition(VECTOR targetcharapos) { targetCharaPosition = targetcharapos; }
+	void SetTargetCharaAngle(float targetcharaangle) { targetCharaAngle = targetcharaangle; }
 	bool GetOutflg() { return outflg; }
 	bool GetAttackflg() { return attackflg; }
 	int GetNowMoveKind() { return NowMoveKind; }
 
 private:
+	const int Range = 1000;//射程範囲
+
 	int mynumber;//自分のCPU番号
 
 	//移動関係
 	int NowMoveKind;//現在の動きかた
 	bool moveonflg;//動くかどうかフラグ
-	VECTOR targetPosition;//追いかける目標のポジション
+	VECTOR targetPosition;
+	VECTOR targetCharaPosition;//追いかける目標のポジション
+	float targetCharaAngle;//追いかける目標の角度
 	int moveflame;//移動開始からのフレーム
 	float moveangle;//動く方向
 

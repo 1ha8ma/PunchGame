@@ -54,9 +54,6 @@
     <ClCompile Include="SkyDome.cpp">
       <Filter>Stage</Filter>
     </ClCompile>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>GameSystem</Filter>
-    </ClCompile>
     <ClCompile Include="Shield.cpp">
       <Filter>Object</Filter>
     </ClCompile>
@@ -99,6 +96,12 @@
     <ClCompile Include="Collision.cpp">
       <Filter>Utility</Filter>
     </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="FPS.cpp">
+      <Filter>GameSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneBase.h">
@@ -121,9 +124,6 @@
     </ClInclude>
     <ClInclude Include="SkyDome.h">
       <Filter>Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="InputManager.h">
-      <Filter>GameSystem</Filter>
     </ClInclude>
     <ClInclude Include="Shield.h">
       <Filter>Object</Filter>
@@ -169,6 +169,12 @@
     </ClInclude>
     <ClInclude Include="Collision.h">
       <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="FPS.h">
+      <Filter>GameSystem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -323,7 +323,7 @@ bool CharacterBase::ShieldWithShield(VECTOR myshieldleft,VECTOR myshieldright,VE
 }
 
 /// <summary>
-/// 盾と盾の当たらない位置までmovevecを戻す/
+/// 盾と盾の当たらない位置までmovevecを戻す     　　FIXME : movevecを-1にしていって0以下になって左下に移動する事がある
 /// </summary>
 /// <param name="shieldleft">対象キャラの盾</param>
 /// <param name="shieldright">対象キャラの盾</param>

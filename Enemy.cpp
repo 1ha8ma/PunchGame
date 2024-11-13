@@ -132,6 +132,14 @@ void Enemy::Move(std::vector<int> outchara)
 		//ターゲット設定
 		SetTargetChara(outchara);
 
+		//ターゲットポジションを目標キャラの後ろで射程範囲の半分の位置に設定する
+		targetPosition = targetCharaPosition;
+		targetPosition.x += cos(targetCharaAngle + DX_PI_F) * Range / 2;
+		targetPosition.z += sin(targetCharaAngle + DX_PI_F) * Range / 2;
+
+		//ターゲットの方向にキャラの向きを近づける
+		
+
 		//ターゲットとの距離を取る
 		float calc = pow(targetPosition.x - position.x, 2) + pow(targetPosition.z - position.z, 2);
 		targetdistance = sqrt(calc);
@@ -144,14 +152,14 @@ void Enemy::Move(std::vector<int> outchara)
 		}
 
 		//射程に入り、フラグが良ければ攻撃
-		if (targetdistance < 1000 && !attackflg && !cooltimeflg)
+		if (targetdistance < Range && !attackflg && !cooltimeflg)
 		{
 			cooltimeflg = true;
 			cooltimeflame = 0;
 			Attack();
 		}
 		//射程範囲外であれば進める
-		if (targetdistance > 1000)
+		if (targetdistance > Range)
 		{
 			moveonflg = true;
 		}

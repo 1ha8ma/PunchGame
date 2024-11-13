@@ -2,6 +2,7 @@
 #include"EffekseerForDXLib.h"
 #include"Utility.h"
 #include"Loader.h"
+#include"FPS.h"
 #include"GameManager.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -11,6 +12,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	/////////////////////////
 	//ウィンドウモード
 	SetGraphMode(SCREEN_W, SCREEN_H, 32);
+	SetWaitVSyncFlag(FALSE);//垂直同期設定 TRUE : あり FALSE : ない
 	ChangeWindowMode(TRUE);//小画面：TRUE 全画面：FALSE
 	//ライブラリ初期化
 	SetUseDirect3DVersion(DX_DIRECT3D_11);
@@ -31,7 +33,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Loader* loader = Loader::GetInstance();
 	loader->LoadModel();
 
-	//ゲームマネージャーインスタンス化
+	FPS* fps = new FPS();
 	GameManager* game = new GameManager();
 
 	////////////////////////
@@ -39,24 +41,21 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	////////////////////////
 	while (ScreenFlip() == 0 && ProcessMessage() == 0 && ClearDrawScreen() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{
-		//auto prevTime = GetNowHiPerformanceCount();//処理が始まる前の時間
-
 		//画面クリア
 		ClearDrawScreen();
 
+		//FPS更新
+		fps->Update();
+
 		//更新
 		game->Update();
-		//描画
+		//描画処理
 		game->Draw();
-
+		//描画
 		ScreenFlip();
 
-		//FPS固定
-		//auto afterTime = GetNowHiPerformanceCount(); // 処理が終わった後の時間
-		//while (afterTime - prevTime < 16667)
-		//{
-		//	afterTime = GetNowHiPerformanceCount();
-		//}
+		//FPS待機
+		fps->Wait();
 	}
 
 	//ゲーム終了
