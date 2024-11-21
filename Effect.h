@@ -25,9 +25,10 @@ private:
 	std::vector<VECTOR> PlayingEffectSize;//エフェクトサイズ
 	std::map<EffectKind, int> Effecthandle;//エフェクトハンドル
 
+	//ハンドル
 	int attackeffecthandle;
 	int characterhiteffecthandle;
 	int shieldhiteffecthandle;
 
-	const float ExpansionSpeed = 0.01f;//盾衝突エフェクト拡大速度
+	const float ExpansionSpeed = 0.02f;//盾衝突エフェクト拡大速度
 };

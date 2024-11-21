@@ -8,7 +8,7 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-StartScene::StartScene()
+StartScene::StartScene(VECTOR playerpos)
 {
 	Loader* loader = loader->GetInstance();
 
@@ -17,18 +17,18 @@ StartScene::StartScene()
 	image.push_back(loader->GetHandle(Loader::Kind::NumImage2));
 	image.push_back(loader->GetHandle(Loader::Kind::NumImage3));
 	startimage = loader->GetHandle(Loader::Kind::StartImage);
-	textbox = loader->GetHandle(Loader::Kind::TextBoxImage);
+	playerarrow = loader->GetHandle(Loader::Kind::PlayerArrowImage);
 
 	semanager = new SEManager();
 	semanager->PlaySE(SEManager::SEKind::StartSceneSE);
 
-	Initialize();
+	Initialize(playerpos);
 }
 
 /// <summary>
 /// 初期化
 /// </summary>
-void StartScene::Initialize()
+void StartScene::Initialize(VECTOR playerpos)
 {
 	countflg = false;
 	countflame = 0;
@@ -44,6 +44,9 @@ void StartScene::Initialize()
 	numberly = 400;
 	numberrx = 859;
 	numberry = 480;
+
+	//矢印ポジション
+	playerarrowpos = VAdd(playerpos, VGet(0.0f, 900.0f, 0.0f));
 }
 
 /// <summary>
@@ -66,16 +69,20 @@ bool StartScene::Update()
 	if (cameraangle >= DX_PI_F * 2 && countflg == false)
 	{
 		semanager->PlaySE(SEManager::SEKind::StartCountSE);
+
+		//カメラ
+		cameraangle = 0.0f;
+		camerapos = VGet(0, 2500, -2000);
+		lookpos = VGet(0, 0, 0);
+
+		playerarrowpos = VAdd(playerarrowpos, VGet(210, 200, 0));
+
 		countflg = true;
 	}
 
 	//カウントに入ったら
 	if (countflg)
 	{
-		cameraangle = 0.0f;
-		camerapos = VGet(0, 2500, -2000);
-		lookpos = VGet(0, 0, 0);
-
 		countflame++;
 	}
 
@@ -94,11 +101,6 @@ void StartScene::Draw()
 {
 	if (countflg)
 	{
-		//プレイヤー紹介のテキストボックス表示
-		DrawExtendGraph(150, 450, 400, 550, textbox, TRUE);
-		SetFontSize(40);
-		DrawString(210, 480, "PLAYER", GetColor(0, 191, 255));
-
 		//100フレーム毎に画像切り替え
 		if (countflame != 0 && countflame % 100 == 0)
 		{
@@ -124,17 +126,17 @@ void StartScene::Draw()
 		//数字のサイズ変更
 		if (!sizechangeflg)
 		{
-			numberlx -= 1;
-			numberly -= 1;
-			numberrx += 1;
-			numberry += 1;
+			numberlx -= ScalingSpeed;
+			numberly -= ScalingSpeed;
+			numberrx += ScalingSpeed;
+			numberry += ScalingSpeed;
 		}
 		else
 		{
-			numberlx += 1;
-			numberly += 1;
-			numberrx -= 1;
-			numberry -= 1;
+			numberlx += ScalingSpeed;
+			numberly += ScalingSpeed;
+			numberrx -= ScalingSpeed;
+			numberry -= ScalingSpeed;
 		}	
 
 		//数字カウント
@@ -156,4 +158,6 @@ void StartScene::Draw()
 
 		sizechangeflame++;
 	}
+
+	DrawBillboard3D(playerarrowpos, 0.5f, 0.5f, 500.0f, 0.0f, playerarrow, TRUE);
 }

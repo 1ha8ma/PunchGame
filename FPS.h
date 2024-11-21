@@ -5,7 +5,6 @@ class FPS
 public:
 	FPS();
 	void Update();//更新
-	void Draw();
 	void Wait();//待機
 
 	static const int N;//平均を取るサンプル数

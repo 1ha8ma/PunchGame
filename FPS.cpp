@@ -39,14 +39,6 @@ void FPS::Update()
 }
 
 /// <summary>
-/// FPS•`‰æ
-/// </summary>
-void FPS::Draw()
-{
-	DrawFormatString(100, 0, GetColor(255, 255, 255), "%.1f", mFps);
-}
-
-/// <summary>
 /// ‘Ò‹@
 /// </summary>
 void FPS::Wait()

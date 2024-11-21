@@ -6,7 +6,7 @@ class Effect;
 class Fist
 {
 public:
-	const float FistCapsuleRadius = 120.0f;
+	const float FistCapsuleRadius = 120.0f;//カプセル半径
 
 	Fist();
 	~Fist();
@@ -22,7 +22,10 @@ private:
 	SEManager* semanager;
 	Effect* effect;
 
-	const float PunchSpeed = 13.0f;
+	const float PunchSpeed = 13.0f;//パンチスピード
+	const float DistanceWithCharacter = 250.0f;//パンチをしたときの拳とキャラクターの距離
+	const float CapsuleFrontLength = 200.0f;//カプセルの前の長さ
+	const float CapsuleBackLength = 100.0f;//カプセルの後ろの長さ
 
 	int model;//モデル
 	float modelangle;//モデル角度

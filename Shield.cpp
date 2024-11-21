@@ -29,18 +29,18 @@ void Shield::Initialize(VECTOR charaposition,float characterangle)
 	//ポジションコピー
 	position = charaposition;
 
-	//ポジション設定
-	position.x += sin(characterangle) * DistanceWithCharacter;
-	position.z += cos(characterangle) * DistanceWithCharacter;
-
-	capRight = VAdd(position, VGet(-sin(characterangle - 1.5f) * 150, 200, -cos(characterangle - 1.5f) * 150));
-	capLeft = VAdd(position, VGet(sin(characterangle - 1.5f) * 150, 200, cos(characterangle - 1.5f) * 150));
-
 	//角度設定
 	angle = characterangle;
 
+	//ポジション設定
+	position.x += sin(angle) * DistanceWithCharacter;
+	position.z += cos(angle) * DistanceWithCharacter;
+
+	capRight = VAdd(position, VGet(-sin(angle + AngleCorrection) * HalfWidthSize, DistanceWithCharacter, -cos(angle + AngleCorrection) * HalfWidthSize));
+	capLeft = VAdd(position, VGet(sin(angle + AngleCorrection) * HalfWidthSize, DistanceWithCharacter, cos(angle + AngleCorrection) * HalfWidthSize));
+
 	//角度、ポジション反映
-	MV1SetRotationXYZ(model, VGet(0.0f, angle - 1.5f + DX_PI_F, 0.0f));
+	MV1SetRotationXYZ(model, VGet(0.0f, angle + AngleCorrection, 0.0f));
 	MV1SetPosition(model, position);
 }
 
@@ -51,16 +51,16 @@ void Shield::Update(VECTOR characterPosition,float characterangle)
 {
 	VECTOR tentativepos = characterPosition;
 
-	//向きに追従
-	tentativepos.x += sin(characterangle) * DistanceWithCharacter;
-	tentativepos.z += cos(characterangle) * DistanceWithCharacter;
-
 	//モデル角度更新
 	UpdateAngle(characterangle);
 
+	//向きに追従
+	tentativepos.x += sin(angle) * DistanceWithCharacter;
+	tentativepos.z += cos(angle) * DistanceWithCharacter;
+
 	//カプセル角度更新
-	capRight = VAdd(position, VGet(-sin(characterangle - 1.5f) * 150, 200, -cos(characterangle - 1.5f) * 150));
-	capLeft = VAdd(position, VGet(sin(characterangle - 1.5f) * 150, 200, cos(characterangle - 1.5f) * 150));
+	capRight = VAdd(position, VGet(-sin(angle  + AngleCorrection) * HalfWidthSize, DisttanceWithGround, -cos(angle + AngleCorrection) * HalfWidthSize));
+	capLeft = VAdd(position, VGet(sin(angle + AngleCorrection) * HalfWidthSize, DisttanceWithGround, cos(angle + AngleCorrection) * HalfWidthSize));
 
 	//ポジションに反映
 	position = tentativepos;
@@ -78,13 +78,8 @@ void Shield::ReflectPosition(VECTOR newposition)
 void Shield::Draw()
 {
 	//当たり判定カプセル
-	//DrawCapsule3D(capLeft, capRight, CapsuleRadius, 20, GetColor(127, 255, 0), GetColor(0, 255, 255), FALSE);
+	//DrawCapsule3D(capLeft, capRight, ShieldCapsuleRadius, 20, GetColor(127, 255, 0), GetColor(0, 255, 255), FALSE);
 	MV1DrawModel(model);
-}
-
-void Shield::InitializeAngle(float charaangle)
-{
-	
 }
 
 /// <summary>
@@ -128,5 +123,5 @@ void Shield::UpdateAngle(float characterangle)
 	//モデルの角度を更新
 	angle = characterangle - difference;
 
-	MV1SetRotationXYZ(model, VGet(0.0f, angle - 1.5f + DX_PI_F, 0.0f));
+	MV1SetRotationXYZ(model, VGet(0.0f, angle + AngleCorrection, 0.0f));
 }

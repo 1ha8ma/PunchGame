@@ -102,6 +102,9 @@
     <ClCompile Include="FPS.cpp">
       <Filter>GameSystem</Filter>
     </ClCompile>
+    <ClCompile Include="Pause.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneBase.h">
@@ -175,6 +178,9 @@
     </ClInclude>
     <ClInclude Include="FPS.h">
       <Filter>GameSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Pause.h">
+      <Filter>Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

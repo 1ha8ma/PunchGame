@@ -11,6 +11,7 @@
 #include"GameUI.h"
 #include"BGMManager.h"
 #include"SEManager.h"
+#include"Pause.h"
 #include"ResultScene.h"
 #include"TitleScene.h"
 #include"StartScene.h"
@@ -29,8 +30,9 @@ GameScene::GameScene()
 	player = new Player();
 	enemy = new EnemyManager();
 	gameui = new GameUI();
+	pausescene = new Pause();
 	resultscene = new ResultScene();
-	startscene = new StartScene();
+	startscene = new StartScene(player->GetPosition());
 	bgmmanager = new BGMManager();
 	semanager = new SEManager();
 
@@ -51,6 +53,7 @@ GameScene::~GameScene()
 	delete resultscene;
 	delete startscene;
 	delete gameui;
+	delete pausescene;
 
 	bgmmanager->StopBGM();
 }
@@ -61,13 +64,12 @@ GameScene::~GameScene()
 void GameScene::Initialize()
 {
 	camera->GamestartInitialize();
-	gamestartflg = false;
-	gameendflg = false;
 	playeroutcheck = false;
-	playerattackshieldhit = false;
 	scenechange = false;
 	outchara.clear();
 	outchara.push_back(-1);
+
+	nowstate = GameSceneState::start;
 }
 
 /// <summary>
@@ -76,24 +78,21 @@ void GameScene::Initialize()
 /// <returns>次のシーン</returns>
 SceneBase* GameScene::Update()
 {
-	////////////////////////////////////////////
-	//スタートシーン更新
-	///////////////////////////////////////////
-	if (!gamestartflg)
+	switch (nowstate)
 	{
-		gamestartflg = startscene->Update();
+	case (GameSceneState::start):
+	{
+		bool gamestartflg = startscene->Update();
 		camera->UpdateForStart(startscene->GetCameraPos(), startscene->GetLookPos());
 
 		if (gamestartflg)
 		{
 			camera->Initialize();
+			nowstate = GameSceneState::game;
 		}
 	}
-	
-	//////////////////////////////////////////
-	//ゲーム中更新
-	//////////////////////////////////////////
-	if (gamestartflg && !gameendflg)
+	break;
+	case (GameSceneState::game):
 	{
 		//エフェクトカメラ同期
 		Effekseer_Sync3DSetting();
@@ -125,6 +124,8 @@ SceneBase* GameScene::Update()
 		//拳と盾の当たり判定
 		if (!player->GetOutflg())
 		{
+			bool playerattackshieldhit;
+
 			for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
 			{
 				playerattackshieldhit = false;
@@ -205,21 +206,14 @@ SceneBase* GameScene::Update()
 				}
 			}
 		}
-	}
 
-	//ゲーム中とリザルト更新
-	if (gamestartflg)
-	{
-		player->ForeverUpdate();
-		enemy->ForeverUpdate();
-
+		//ゲーム中とリザルト更新
+		player->ForeverUpdate(false);
+		enemy->ForeverUpdate(false);
 		UpdateEffekseer3D();
-	}
 
-	//終了条件を満たしていたらフラグ変更
-	if (outchara.size() == 4)//1人残った場合
-	{
-		if (!gameendflg)
+		//終了条件を満たしていたらフラグ変更
+		if (outchara.size() == 4)//1人残った場合
 		{
 			//勝者の情報を取得
 			if (!player->GetOutflg())
@@ -241,23 +235,57 @@ SceneBase* GameScene::Update()
 			//ゲームBGMストップ
 			bgmmanager->StopBGM();
 			resultscene->Initialize(winnerpos, winnerangle);
-			gameendflg = true;
+
+			//ステート変更
+			nowstate = GameSceneState::result;
+		}
+		//一時停止
+		if (can&&(32 & input->GetInputState()) == 32)
+		{
+			pausescene->Initialize();
+			nowstate = GameSceneState::pause;
+		}
+		if (!((32 & input->GetInputState()) == 32))
+		{
+			can = true;
+		}
+		else
+		{
+			can = false;
+		}
+		
+	}
+	break;
+	case(GameSceneState::pause):
+	{
+		bool out = pausescene->Update();
+
+		if (out)
+		{
+			nowstate = GameSceneState::game;
 		}
 	}
+	break;
 
-	/////////////////////////////////////////
-	//リザルト
-	////////////////////////////////////////
-	if (gameendflg)
+	case(GameSceneState::result):
 	{
 		camera->UpdateForResult(winnerpos, winnernumber);
 		scenechange = resultscene->Update(camera);
+
+		player->ForeverUpdate(true);
+		enemy->ForeverUpdate(true);
+		UpdateEffekseer3D();
 
 		if (scenechange)
 		{
 			semanager->PlaySE(SEManager::SEKind::CrickSE);
 			return new TitleScene();
 		}
+	}
+	break;
+
+	default:
+		break;
 	}
 
 	//もし終了条件を満たしていなかったら
@@ -274,16 +302,30 @@ void GameScene::Draw()
 	player->Draw();
 	enemy->Draw();
 
-	if (!gamestartflg)
+	switch (nowstate)
+	{
+	case(GameSceneState::start):
 	{
 		startscene->Draw();
 	}
-	if (gamestartflg && !gameendflg)
+	break;
+	case(GameSceneState::game):
 	{
 		gameui->Draw();
 	}
-	if (gameendflg)
+	break;
+	case(GameSceneState::pause):
+	{
+		pausescene->Draw();
+	}
+	break;
+	case(GameSceneState::result):
 	{
 		resultscene->Draw();
+	}
+	break;
+
+	default:
+		break;
 	}
 }

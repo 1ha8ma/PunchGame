@@ -16,14 +16,19 @@ public:
 	//描画
 	void Draw();
 
-	const float ShieldCapsuleRadius = 20.0f;
+	const float ShieldCapsuleRadius = 70.0f;//カプセル半径
+	const float DisttanceWithGround = 200.0f;//地面からの距離(ステージからの距離)
+	const float HalfWidthSize = 100.0f;//横幅の半分のサイズ
+	const float AngleCorrection = DX_PI_F / 2;//角度補正値
+
+	//Get.Set
+
 	VECTOR GetPosition() { return position; }
 	VECTOR GetcapLeft() { return capLeft; }
 	VECTOR GetcapRight() { return capRight; }
 
 private:
 	const float DistanceWithCharacter = 330.0f;//キャラクターと盾の距離
-	const float CapsuleRadius = 50.0f;//カプセル半径
 
 	int model;//モデルハンドル
 	VECTOR position;//ポジション
@@ -35,6 +40,4 @@ private:
 
 	//角度更新
 	void UpdateAngle(float characterAngle);
-	//角度初期化
-	void InitializeAngle(float charaangle);
 };

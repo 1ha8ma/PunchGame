@@ -23,7 +23,7 @@ public:
 	//ポジション更新
 	void ReflectPosition();
 	//終了後、脱落後も続く更新
-	void ForeverUpdate();
+	void ForeverUpdate(bool Settlement);
 	//描画
 	void Draw();
 

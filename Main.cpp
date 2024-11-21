@@ -12,7 +12,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	/////////////////////////
 	//ウィンドウモード
 	SetGraphMode(SCREEN_W, SCREEN_H, 32);
-	SetWaitVSyncFlag(FALSE);//垂直同期設定 TRUE : あり FALSE : ない
+	SetWaitVSyncFlag(FALSE);//垂直同期設定 TRUE : あり FALSE : なし
 	ChangeWindowMode(TRUE);//小画面：TRUE 全画面：FALSE
 	//ライブラリ初期化
 	SetUseDirect3DVersion(DX_DIRECT3D_11);
@@ -30,9 +30,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	////////////////////////
 	// ゲーム初期化
 	////////////////////////
+	//フォント設定
+	ChangeFont("851テガキカクット", DX_CHARSET_DEFAULT);
+
+	//モデル等ロード
 	Loader* loader = Loader::GetInstance();
 	loader->LoadModel();
 
+	//インスタンス化
 	FPS* fps = new FPS();
 	GameManager* game = new GameManager();
 
@@ -51,6 +56,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		game->Update();
 		//描画処理
 		game->Draw();
+		
 		//描画
 		ScreenFlip();
 

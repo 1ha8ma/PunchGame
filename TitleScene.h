@@ -25,10 +25,14 @@ private:
 	BGMManager* bgmmanager;
 	SEManager* semanager;
 
+	const float FontScalingSpeed = 1.0f;//拡大縮小スピード
+
 	int gamepadimage;//ゲームパッド画像
 	int titlelogo;//タイトルロゴ
 	bool inputpossibleflg;//入力可能
-	int fontsize;//startのフォントサイズ
-	int fontsizechangeflame;
-	bool fontsizechangeflg;
+
+	int fontsize;//フォントサイズ
+	int fontsizechangeflame;//フォント拡大縮小フレーム
+	bool fontsizechangeflg;//フォント拡大縮小フラグ
+	VECTOR startpos;//スタート表記のポジション
 };

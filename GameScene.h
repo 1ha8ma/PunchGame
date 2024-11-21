@@ -9,6 +9,7 @@ class SkyDome;
 class InputManager;
 class EnemyManager;
 class GameUI;
+class Pause;
 class ResultScene;
 class StartScene;
 class BGMManager;
@@ -36,15 +37,25 @@ private:
 	InputManager* input;
 	EnemyManager* enemy;
 	GameUI* gameui;
+	Pause* pausescene;
 	ResultScene* resultscene;
 	StartScene* startscene;
 	BGMManager* bgmmanager;
 	SEManager* semanager;
+
+	//ゲームシーン内のステート
+	int nowstate;
+	enum GameSceneState
+	{
+		start,//スタートシーン
+		game,//ゲームシーン
+		pause,//一時停止
+		result,//リザルトシーン
+	};
+
+	bool can;
 	
-	bool gamestartflg;//ゲーム開始フラグ
-	bool gameendflg;//ゲーム決着フラグ
 	bool playeroutcheck;//プレイヤーが攻撃に当たった
-	bool playerattackshieldhit;//盾に当たっているか
 	std::vector<int> outchara;//脱落したキャラ
 
 	VECTOR winnerpos;//勝者ポジション

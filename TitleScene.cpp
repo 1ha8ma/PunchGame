@@ -47,6 +47,8 @@ void TitleScene::Initialize()
 	fontsizechangeflame = 0;
 	fontsizechangeflg = false;
 	inputpossibleflg = false;
+
+	startpos = VGet(550.0f, 700.0f, 0.0f);
 }
 
 /// <summary>
@@ -79,6 +81,7 @@ SceneBase* TitleScene::Update()
 
 	if (fontsizechangeflame != 0 && fontsizechangeflame % 30 == 0)
 	{
+		//拡大縮小交代
 		if (fontsizechangeflg)
 		{
 			fontsizechangeflg = false;
@@ -91,13 +94,17 @@ SceneBase* TitleScene::Update()
 		fontsizechangeflame = 0;
 	}
 
-	if (fontsizechangeflg)
+	if (fontsizechangeflg)//縮小
 	{
-		fontsize -= 1;
+		fontsize -= FontScalingSpeed;
+		startpos.x += FontScalingSpeed;
+		startpos.y += FontScalingSpeed;
 	}
-	else
+	else//拡大
 	{
-		fontsize += 1;
+		fontsize += FontScalingSpeed;
+		startpos.x -= FontScalingSpeed;
+		startpos.y -= FontScalingSpeed;
 	}
 
 	return this;
@@ -113,10 +120,9 @@ void TitleScene::Draw()
 	stage->Draw();
 
 	//タイトルロゴ
-	DrawExtendGraph(470, 0,1100,600, titlelogo, TRUE);
+	DrawExtendGraph(470, 0, 1100, 600, titlelogo, TRUE);
 
 	//スタート
 	SetFontSize(fontsize);
-	ChangeFont("851テガキカクット",DX_CHARSET_DEFAULT);
-	DrawString(600, 700, "A スタート", GetColor(127, 255, 0));
+	DrawString(startpos.x, startpos.y, "A スタート", GetColor(127, 255, 0));
 }

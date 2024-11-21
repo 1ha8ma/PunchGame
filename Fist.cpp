@@ -85,14 +85,14 @@ void Fist::PunchMove(bool attackflg,float charaangle,VECTOR charapos,bool shield
 		velocity.x = sin(punchangle) * PunchSpeed;
 		velocity.y = 0.0f;
 		velocity.z = cos(punchangle) * PunchSpeed;
-		position.x += sin(punchangle) * 250.0f;
-		position.z += cos(punchangle) * 250.0f;
+		position.x += sin(punchangle) * DistanceWithCharacter;
+		position.z += cos(punchangle) * DistanceWithCharacter;
 		modelangle = charaangle;
 		MV1SetRotationXYZ(model, VGet(0.0f, modelangle + DX_PI_F, 0.0f));
 		//サイズ設定
 		size = 0.1f;
 		//エフェクト設定
-		effect->PlayEffect(Effect::EffectKind::Attack, VGet(charapos.x + sin(punchangle) * 250.0f, 400.0f, charapos.z + cos(punchangle) * 250.0f), VGet(1, 1, 1), modelangle, 0.5f);
+		effect->PlayEffect(Effect::EffectKind::Attack, VGet(charapos.x + sin(punchangle) * DistanceWithCharacter, 400.0f, charapos.z + cos(punchangle) * 250.0f), VGet(1.5f, 1.5f, 1.5f), modelangle, 0.5f);
 		//SE再生
 		semanager->PlaySE(SEManager::SEKind::AttackSE);
 
@@ -107,8 +107,8 @@ void Fist::PunchMove(bool attackflg,float charaangle,VECTOR charapos,bool shield
 	if (punchingflg)
 	{
 		//当たり判定カプセルの角度設定
-		capFront = VAdd(position, VGet(sin(punchangle) * 200, 0, cos(punchangle) * 200));
-		capBack = VAdd(position, VGet(-sin(punchangle) * 100, 0, -cos(punchangle) * 100));
+		capFront = VAdd(position, VGet(sin(punchangle) * CapsuleFrontLength, 0, cos(punchangle) * CapsuleFrontLength));
+		capBack = VAdd(position, VGet(-sin(punchangle) * CapsuleBackLength, 0, -cos(punchangle) * CapsuleBackLength));
 
 		//進ませる
 		if (shieldhitflg == false)

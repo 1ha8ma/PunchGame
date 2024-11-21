@@ -44,6 +44,7 @@ void Loader::LoadModel()
 	handle[StartImage] = LoadGraph("2D/startimage.png");
 	handle[GamePadImage] = LoadGraph("2D/gamepadimage.png");
 	handle[TextBoxImage] = LoadGraph("2D/textbox.png");
+	handle[PlayerArrowImage] = LoadGraph("2D/PlayerArrow.png");
 
 	//エフェクト
 	handle[PlayerhitEffect] = LoadEffekseerEffect("Effect/playerhit.efkefc", 30.0f);

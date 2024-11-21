@@ -48,7 +48,7 @@ void Enemy::Initialize(VECTOR position, VECTOR targetDirection)
 	capsuleTop = VAdd(this->position, VGet(0, 600, 0));
 	capsuleBottom = VAdd(this->position, VGet(0, 0, 0));
 	this->targetLookDirection = targetDirection;
-
+	
 	//攻撃クールタイム
 	cooltimeflg = false;
 	cooltimeflame = 0;
@@ -127,7 +127,7 @@ void Enemy::Move(std::vector<int> outchara)
 {
 	switch (NowMoveKind)
 	{
-	case(MoveKind::charachase):
+	case(MoveKind::charachase)://目標を決めて移動
 	{
 		//ターゲット設定
 		SetTargetChara(outchara);
@@ -137,26 +137,41 @@ void Enemy::Move(std::vector<int> outchara)
 		targetPosition.x += cos(targetCharaAngle + DX_PI_F) * Range / 2;
 		targetPosition.z += sin(targetCharaAngle + DX_PI_F) * Range / 2;
 
-		//ターゲットの方向にキャラの向きを近づける
-		
-
 		//ターゲットとの距離を取る
 		float calc = pow(targetPosition.x - position.x, 2) + pow(targetPosition.z - position.z, 2);
 		targetdistance = sqrt(calc);
 
-		//角度設定
+		//目標角度設定
 		if (!attackflg)
 		{
-			targetLookDirection.x = targetPosition.x;
-			targetLookDirection.z = targetPosition.z;
+			targetLookDirection.x = targetCharaPosition.x;
+			targetLookDirection.z = targetCharaPosition.z;
 		}
 
 		//射程に入り、フラグが良ければ攻撃
 		if (targetdistance < Range && !attackflg && !cooltimeflg)
 		{
+			//目標と自分のポジションの角度を取る
+			float characterWithcharacterAngle = atan2(targetCharaPosition.x-position.x, targetCharaPosition.z-position.z);
+			//角度を目標のポジションに向ける
+			angle = characterWithcharacterAngle;
+			//モデル回転
+			MV1SetRotationXYZ(model, VGet(0.0f, angle + DX_PI_F, 0.0f));
+			//クールタイム設定
 			cooltimeflg = true;
 			cooltimeflame = 0;
+			//攻撃
 			Attack();
+		}
+		else
+		{
+			//角度設定
+			moveangle = atan2(targetPosition.z - position.z, targetPosition.x - position.x);
+			if (!attackflg)
+			{
+				//角度更新
+				UpdateAngle();
+			}
 		}
 		//射程範囲外であれば進める
 		if (targetdistance > Range)
@@ -193,9 +208,10 @@ void Enemy::Move(std::vector<int> outchara)
 
 			moveflame = 0;
 		}
+
 	}
 	break;
-	case(MoveKind::randomwalk):
+	case(MoveKind::randomwalk)://ランダムな場所に移動
 	{
 		//目的地設定
 		if (!SetWalkTargetPositionflg)
@@ -225,6 +241,11 @@ void Enemy::Move(std::vector<int> outchara)
 			moveonflg = true;
 		}
 
+		//角度設定
+		moveangle = atan2(targetPosition.z - position.z, targetPosition.x - position.x);
+		//角度更新
+		UpdateAngle();
+
 		//一定時間で追い方の再抽選
 		if (moveflame >= 70)
 		{
@@ -241,13 +262,11 @@ void Enemy::Move(std::vector<int> outchara)
 			SetWalkTargetPositionflg = false;
 			moveflame = 0;
 		}
+
 	}
 	break;
 
 	}
-
-	//角度設定
-	moveangle = atan2(targetPosition.z - position.z, targetPosition.x - position.x);
 
 	//速度設定
 	moveVec.x = cos(moveangle) * Speed;
@@ -280,9 +299,6 @@ void Enemy::Update(std::vector<int> outchara)
 	//アニメーション再生
 	PlayAnimation();
 
-	//角度更新
-	UpdateAngle();
-
 	//ポジション反映
 	MV1SetPosition(model, position);
 
@@ -310,23 +326,4 @@ void Enemy::UpdateShieldWithShield(VECTOR shieldleft, VECTOR shieldright)
 void Enemy::UpdatePosition()
 {
 	ReflectPosition();
-}
-
-/// <summary>
-/// 永遠更新
-/// </summary>
-void Enemy::ForeverUpdate()
-{
-	if (outflg)
-	{
-		//他クラス更新
-		OtherClassUpdate();
-		//カプセル更新
-		UpdateCapsule();
-	}
-
-	//エフェクト更新
-	UpdateEffect();
-	//吹っ飛び
-	Blow();
 }

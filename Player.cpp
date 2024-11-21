@@ -64,30 +64,8 @@ void Player::Update(int inputstate)
 	//向き設定
 	UpdateAngle();
 
-
 	//モデルポジション更新
 	MV1SetPosition(model, position);
-}
-
-/// <summary>
-/// 終了、脱落後も続く更新
-/// </summary>
-void Player::ForeverUpdate()
-{
-	if (outflg)
-	{
-		//他クラスの処理
-		OtherClassUpdate();
-
-		//カプセル更新
-		UpdateCapsule();
-	}
-
-	//エフェクト更新
-	UpdateEffect();
-
-	//吹っ飛び
-	Blow();
 }
 
 /// <summary>

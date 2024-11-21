@@ -148,6 +148,7 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Loader.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Pause.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ResultScene.cpp" />
     <ClCompile Include="SceneBase.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="GameUI.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Loader.h" />
+    <ClInclude Include="Pause.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ResultScene.h" />
     <ClInclude Include="SceneBase.h" />

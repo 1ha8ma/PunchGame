@@ -29,6 +29,10 @@ int InputManager::GetInputState()
 	{
 		inputstate |= 16;//10000
 	}
+	if (GetJoypadInputState(DX_INPUT_PAD1) & PAD_INPUT_12||(CheckHitKey(KEY_INPUT_P)))//startボタン
+	{
+		inputstate |= 32;//100000
+	}
 
 	return inputstate;
 }

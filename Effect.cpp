@@ -40,8 +40,8 @@ void Effect::Initialize()
 /// エフェクト再生指示
 /// </summary>
 /// <param name="kind">エフェクトの種類</param>
-/// <param name="playposition">再生位置</param>
-/// <param name="initsize">最初のサイズ</param>
+/// <param name="playposition">初期再生位置</param>
+/// <param name="initsize">初期サイズ</param>
 /// <param name="playangle">再生角度</param>
 /// <param name="playspeed">再生速度</param>
 void Effect::PlayEffect(EffectKind kind, VECTOR playposition,VECTOR initsize, float playangle,float playspeed)

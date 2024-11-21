@@ -9,39 +9,31 @@ class Collision;
 
 class CharacterBase
 {
-public:
-	//攻撃に当たり判定を付けるか判断
-	void CheckAttackOnCollision();
-	//当たり判定
-	bool FistWithCharacter(VECTOR charatop, VECTOR charabottom,bool charaout);
-	bool FistWithShield(VECTOR Shieldleft, VECTOR Shieldright);
-	bool ShieldWithShield(VECTOR myshieldleft, VECTOR myshieldright, VECTOR shieldleft, VECTOR shieldright);
-	void RemoveShield(VECTOR shieldleft, VECTOR shieldright);
+public:	
 	//コンストラクタ
 	CharacterBase();
 	//デストラクタ
 	~CharacterBase();
-	//初期化
-	void BaseInitialize();
-	//角度初期化
-	void InitializeAngle();
-	//カプセルの更新
-	void UpdateCapsule();
-	//他クラスの更新
-	void OtherClassUpdate();
-	//エフェクト更新
-	void UpdateEffect();
-	//吹っ飛ぶ
-	void Blow();
-	//アウト確認
-	void CheckOut(bool hit);
 	//盾衝突se再生
 	void PlayShieldHitSE(bool hit);
+	//アウト確認
+	void CheckOut(bool hit);
 	//ポジション反映
 	void ReflectPosition();
+	//終了後も更新
+	void ForeverUpdate(bool settlement);
 	//描画
 	void Draw();
 
+	//攻撃に当たり判定を付けるか判断
+	void CheckAttackOnCollision();
+	//当たり判定
+	bool FistWithCharacter(VECTOR charatop, VECTOR charabottom, bool charaout);
+	bool FistWithShield(VECTOR Shieldleft, VECTOR Shieldright);
+	bool ShieldWithShield(VECTOR myshieldleft, VECTOR myshieldright, VECTOR shieldleft, VECTOR shieldright);
+	void RemoveShield(VECTOR shieldleft, VECTOR shieldright);
+
+	//Get・Set
 	VECTOR GetPositioncapsuleTop() { return capsuleTop; }
 	VECTOR GetPositioncapsuleBotoom() { return capsuleBottom; }
 	VECTOR GetShieldPosition();
@@ -71,6 +63,19 @@ protected:
 	Effect* effect;
 	Collision* collision;
 
+	//初期化
+	void BaseInitialize();
+	//角度初期化
+	void InitializeAngle();
+	//カプセルの更新
+	void UpdateCapsule();
+	//他クラスの更新
+	void OtherClassUpdate();
+	//エフェクト更新
+	void UpdateEffect();
+	//吹っ飛ぶ
+	void Blow();
+
 	//モデル・アニメーション
 	int model;//モデル
 	int animtotaltime;//総アニメーション時間
@@ -93,7 +98,7 @@ protected:
 	VECTOR capsuleBottom;//カプセル下
 
 	//攻撃
-	bool attackflg;//攻撃開始フラグ
+	bool attackflg;//攻撃中フラグ
 	bool attackOnCollision;//攻撃に当たり判定を付けるフラグ
 
 	bool outflg;//脱落

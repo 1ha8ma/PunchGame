@@ -24,8 +24,6 @@ public:
 	void UpdateShieldWithShield(VECTOR shieldleft, VECTOR shieldright);
 	//ポジションの更新
 	void UpdatePosition();
-	//終了後も更新
-	void ForeverUpdate();
 
 	//Get,Set
 	VECTOR GetPosition() { return position; }
@@ -37,7 +35,7 @@ public:
 	int GetNowMoveKind() { return NowMoveKind; }
 
 private:
-	const int Range = 1000;//射程範囲
+	const int Range = 800;//射程範囲
 
 	int mynumber;//自分のCPU番号
 

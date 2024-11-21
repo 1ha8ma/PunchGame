@@ -13,8 +13,6 @@ public:
 	//XV
 	void Update(int inputstate);
 
-	void ForeverUpdate();
-
 	VECTOR GetPosition() { return position; }
 	float GetAngle() { return angle; }
 	bool GetAttackflg() { return attackflg; }

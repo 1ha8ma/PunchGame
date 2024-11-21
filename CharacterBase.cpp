@@ -294,7 +294,7 @@ bool CharacterBase::FistWithShield(VECTOR ShieldLeft, VECTOR ShieldRight)
 		//エフェクト再生
 		if (!Playshieldhiteffectflg)
 		{
-			effect->PlayEffect(Effect::EffectKind::ShieldHit, fist->GetcapFront(), VGet(1.0f, 1.0f, 1.0f), angle, 0.7f);
+			effect->PlayEffect(Effect::EffectKind::ShieldHit, fist->GetcapFront(), VGet(1.0f, 1.0f, 1.0f), angle, 0.9f);
 			Playshieldhiteffectflg = true;
 		}
 	}
@@ -303,11 +303,12 @@ bool CharacterBase::FistWithShield(VECTOR ShieldLeft, VECTOR ShieldRight)
 }
 
 /// <summary>
-/// 盾どうしの当たり判定
+/// 盾同士の当たり判定
 /// </summary>
-/// <param name="shieldleft">対象キャラの盾</param>
-/// <param name="shieldright">対象キャラの盾</param>
-/// <param name="shieldR">盾半径</param>
+/// <param name="myshieldleft">自分の盾</param>
+/// <param name="myshieldright">自分の盾</param>
+/// <param name="shieldleft">対象の盾</param>
+/// <param name="shieldright">対象の盾</param>
 /// <returns>当たっているか</returns>
 bool CharacterBase::ShieldWithShield(VECTOR myshieldleft,VECTOR myshieldright,VECTOR shieldleft, VECTOR shieldright)
 {
@@ -323,7 +324,7 @@ bool CharacterBase::ShieldWithShield(VECTOR myshieldleft,VECTOR myshieldright,VE
 }
 
 /// <summary>
-/// 盾と盾の当たらない位置までmovevecを戻す     　　FIXME : movevecを-1にしていって0以下になって左下に移動する事がある
+/// 盾と盾の当たらない位置までmovevecを戻す
 /// </summary>
 /// <param name="shieldleft">対象キャラの盾</param>
 /// <param name="shieldright">対象キャラの盾</param>
@@ -339,12 +340,18 @@ void CharacterBase::RemoveShield(VECTOR shieldleft, VECTOR shieldright)
 	{
 		moveVec = VSub(moveVec, VGet(1.0f, 0.0f, 1.0f));
 		tentativeshieldposition = VAdd(tentativeshieldposition, moveVec);
-		tentativeshieldleft = VAdd(tentativeshieldposition, VGet(-sin(angle - 1.5f) * 150, 200, -cos(angle - 1.5f) * 150));
-		tentativeshieldright = VAdd(tentativeshieldposition, VGet(sin(angle - 1.5f) * 150, 200, cos(angle - 1.5f) * 150));
+		tentativeshieldleft = VAdd(tentativeshieldposition, VGet(-sin(angle + shield->AngleCorrection) * shield->HalfWidthSize, shield->DisttanceWithGround, -cos(angle + shield->AngleCorrection) * shield->HalfWidthSize));
+		tentativeshieldright = VAdd(tentativeshieldposition, VGet(sin(angle + shield->AngleCorrection) * shield->HalfWidthSize, shield->DisttanceWithGround, cos(angle + shield->AngleCorrection) * shield->HalfWidthSize));
 
 		//外れたら終了
-		if (!ShieldWithShield(tentativeshieldleft, tentativeshieldright, shieldleft, shieldright) || (moveVec.x <= 0.0f && moveVec.z <= 0.0f))
+		if (!ShieldWithShield(tentativeshieldleft, tentativeshieldright, shieldleft, shieldright))
 		{
+			if (moveVec.x <= 0.0f && moveVec.z <= 0.0f)
+			{
+				moveVec.x = 0.0f;
+				moveVec.z = 0.0f;
+			}
+
 			break;
 		}
 	}
@@ -422,6 +429,28 @@ void CharacterBase::UpdateCapsule()
 	//当たり判定カプセル
 	capsuleTop = VAdd(position, VGet(0, 600, 0));
 	capsuleBottom = VAdd(position, VGet(0, 0, 0));
+}
+
+/// <summary>
+/// 終了後、脱落後も続く更新
+/// </summary>
+/// <param name="Settlement">ゲーム決着</param>
+void CharacterBase::ForeverUpdate(bool Settlement)
+{
+	if (outflg || Settlement)
+	{
+		//他クラスの処理
+		OtherClassUpdate();
+
+		//カプセル更新
+		UpdateCapsule();
+	}
+
+	//エフェクト更新
+	UpdateEffect();
+
+	//吹っ飛び
+	Blow();
 }
 
 VECTOR CharacterBase::GetShieldPosition()

@@ -42,6 +42,11 @@ void ResultScene::Initialize(VECTOR position, float angle)
 	targetposition.x = winnerposition.x + sin(winnerangle) * 1000;
 	targetposition.z = winnerposition.z + cos(winnerangle) * 1000;
 	targetposition.y = winnerposition.y + 500;
+
+	fontsize = 64;
+	fontsizechangeflame = 0;
+	fontsizechangeflg = false;
+	explanationpos = VGet(1100, 750, 0);
 }
 
 /// <summary>
@@ -72,6 +77,40 @@ bool ResultScene::Update(Camera*& camera)
 	//Lerpの分割の割合を目標に近づける
 	t += 0.005;
 
+	if (t >= 1)
+	{
+		//フォントサイズ更新
+		fontsizechangeflame++;
+
+		if (fontsizechangeflame != 0 && fontsizechangeflame % 30 == 0)
+		{
+			//拡大縮小交代
+			if (fontsizechangeflg)
+			{
+				fontsizechangeflg = false;
+			}
+			else
+			{
+				fontsizechangeflg = true;
+			}
+
+			fontsizechangeflame = 0;
+		}
+
+		if (fontsizechangeflg)//縮小
+		{
+			fontsize -= FontScalingSpeed;
+			explanationpos.x += FontScalingSpeed;
+			explanationpos.y += FontScalingSpeed;
+		}
+		else//拡大
+		{
+			fontsize += FontScalingSpeed;
+			explanationpos.x -= FontScalingSpeed;
+			explanationpos.y -= FontScalingSpeed;
+		}
+	}
+
 	//決定でシーン変更
 	if (t >= 1 && inputpossibleflg && inputstate && (16 & inputstate) == 16)
 	{
@@ -89,4 +128,10 @@ void ResultScene::Draw()
 	DrawGraph(0, -100, ribbonimage, TRUE);
 	SetFontSize(64);
 	DrawString(150, 110, "WINNER", GetColor(255, 215, 0));
+
+	if (t >= 1)
+	{
+		SetFontSize(fontsize);
+		DrawString(explanationpos.x, explanationpos.y, "A タイトル", GetColor(127, 255, 0));
+	}
 }

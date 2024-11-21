@@ -173,12 +173,12 @@ void EnemyManager::ReflectPosition()
 /// <summary>
 /// 終了後、脱落後も続く更新
 /// </summary>
-void EnemyManager::ForeverUpdate()
+void EnemyManager::ForeverUpdate(bool Settlement)
 {
 	//脱落後も必要な更新
 	for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
 	{
-		enemy[i]->ForeverUpdate();
+		enemy[i]->ForeverUpdate(Settlement);
 	}
 }
 
