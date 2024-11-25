@@ -45,6 +45,8 @@ void Loader::LoadModel()
 	handle[GamePadImage] = LoadGraph("2D/gamepadimage.png");
 	handle[TextBoxImage] = LoadGraph("2D/textbox.png");
 	handle[PlayerArrowImage] = LoadGraph("2D/PlayerArrow.png");
+	handle[ButtonImage] = LoadGraph("2D/button.png");
+	handle[BUttonHoverImage] = LoadGraph("2D/button_hover.png");
 
 	//エフェクト
 	handle[PlayerhitEffect] = LoadEffekseerEffect("Effect/playerhit.efkefc", 30.0f);
@@ -64,4 +66,7 @@ void Loader::LoadModel()
 	handle[ShieldHitSE] = LoadSoundMem("sound/ShieldHitSE.mp3");
 	handle[CharacterHitSE] = LoadSoundMem("sound/CharacterHitSE.mp3");
 	handle[AttackSE] = LoadSoundMem("sound/AttackSE.mp3");
+	handle[CursorMoveSE] = LoadSoundMem("sound/cursormoveSE.mp3");
+	handle[CursorSelectSE] = LoadSoundMem("sound/cursorselectSE.mp3");
+	handle[OpenPauseSE] = LoadSoundMem("sound/OpenPauseSE.mp3");
 }

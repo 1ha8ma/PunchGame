@@ -53,7 +53,8 @@ private:
 		result,//リザルトシーン
 	};
 
-	bool can;
+	bool pauseinputpossible;
+	bool outpauseinputflg;//一時停止解除後の入力が無くなった
 	
 	bool playeroutcheck;//プレイヤーが攻撃に当たった
 	std::vector<int> outchara;//脱落したキャラ

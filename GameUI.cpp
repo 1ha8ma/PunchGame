@@ -32,4 +32,7 @@ void GameUI::Draw()
 	DrawLineAA(1433, 80, 1500, 150, GetColor(255, 165, 0));
 	SetFontSize(40);
 	DrawString(1450, 150, "çUåÇ", GetColor(255, 165, 0));
+	SetFontSize(40);
+	DrawString(1420, 10, "àÍéûí‚é~", GetColor(255, 165, 0));
+	DrawLineAA(1375, 67, 1470, 50, GetColor(255, 165, 0));
 }

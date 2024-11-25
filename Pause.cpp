@@ -1,6 +1,7 @@
 #include"DxLib.h"
 #include"Loader.h"
 #include"InputManager.h"
+#include"SEManager.h"
 #include"Pause.h"
 
 /// <summary>
@@ -10,8 +11,11 @@ Pause::Pause()
 {
 	Loader* loader = loader->GetInstance();
 	input = new InputManager();
+	semanager = new SEManager();
 
 	textboximage = loader->GetHandle(Loader::Kind::TextBoxImage);
+	button = loader->GetHandle(Loader::Kind::ButtonImage);
+	button_hover = loader->GetHandle(Loader::Kind::BUttonHoverImage);
 
 	Initialize();
 }
@@ -28,21 +32,36 @@ void Pause::Initialize()
 /// çXêV
 /// </summary>
 /// <returns>àÍéûí‚é~èIóπ</returns>
-bool Pause::Update()
+int Pause::Update()
 {
-	bool out = false;
+	int outcursor = CursorPoint::None;
 
-	if (input->GetInputState() == 0)
+	//òAë±ì¸óÕñhé~
+	if (!((InputManager::InputNumber::Start & input->GetInputState()) == InputManager::InputNumber::Start))
 	{
 		inputpossibleflg = true;
 	}
 
-	if (inputpossibleflg && (32 & input->GetInputState()) == 32)
+	//ÉJÅ[É\Éãà⁄ìÆ
+	if (cursor != CursorPoint::TitleReturn && (InputManager::InputNumber::Down & input->GetInputState()) == InputManager::InputNumber::Down)
 	{
-		out = true;
+		cursor = CursorPoint::TitleReturn;
+		semanager->PlaySE(SEManager::SEKind::CursorMoveSE);
+	}
+	if (cursor != CursorPoint::GameReturn && (InputManager::InputNumber::Up & input->GetInputState()) == InputManager::InputNumber::Up)
+	{
+		cursor = CursorPoint::GameReturn;
+		semanager->PlaySE(SEManager::SEKind::CursorMoveSE);
 	}
 
-	return out;
+	//àÍéûí‚é~âèú
+	if (cursor != CursorPoint::None && (InputManager::InputNumber::Decision & input->GetInputState()) == InputManager::InputNumber::Decision)
+	{
+		outcursor = cursor;
+		semanager->PlaySE(SEManager::SEKind::CursorSelectSE);
+	}
+
+	return outcursor;
 }
 
 /// <summary>
@@ -50,5 +69,28 @@ bool Pause::Update()
 /// </summary>
 void Pause::Draw()
 {
-	DrawExtendGraph(400, 100,1200,600, textboximage, TRUE);
+	//îwåi
+	DrawExtendGraph(350, 100,1250,700, textboximage, TRUE);
+	//àÍéûí‚é~ï∂éö
+	SetFontSize(100);
+	DrawString(590, 270, "àÍéûí‚é~", GetColor(255, 20, 147));
+	//É{É^Éì
+	switch (cursor)
+	{
+	case(CursorPoint::GameReturn):
+	{
+		DrawExtendGraph(ButtonPos1.x, ButtonPos1.y, ButtonPos1.x + ButtonWidth, ButtonPos1.y + ButtonHeight, button_hover, TRUE);
+		DrawExtendGraph(ButtonPos2.x, ButtonPos2.y, ButtonPos2.x + ButtonWidth, ButtonPos2.y + ButtonHeight, button, TRUE);
+	}
+	break;
+	case(CursorPoint::TitleReturn):
+	{
+		DrawExtendGraph(ButtonPos1.x, ButtonPos1.y, ButtonPos1.x + ButtonWidth, ButtonPos1.y + ButtonHeight, button, TRUE);
+		DrawExtendGraph(ButtonPos2.x, ButtonPos2.y, ButtonPos2.x + ButtonWidth, ButtonPos2.y + ButtonHeight, button_hover, TRUE);
+	}
+	break;
+	}
+	SetFontSize(40);
+	DrawString(ButtonPos1.x + 220, ButtonPos1.y + 5, "ÉQÅ[ÉÄÇ…ñﬂÇÈ", GetColor(255, 51, 51));
+	DrawString(ButtonPos2.x + 200, ButtonPos2.y + 5, "É^ÉCÉgÉãÇ…ñﬂÇÈ", GetColor(255, 51, 51));
 }

@@ -16,6 +16,9 @@ SEManager::SEManager()
 	handle[CrickSE] = loader->GetHandle(Loader::Kind::CrickSE);
 	handle[AttackSE] = loader->GetHandle(Loader::Kind::AttackSE);
 	handle[CharahitSE] = loader->GetHandle(Loader::Kind::CharacterHitSE);
+	handle[CursorMoveSE] = loader->GetHandle(Loader::Kind::CursorMoveSE);
+	handle[CursorSelectSE] = loader->GetHandle(Loader::Kind::CursorSelectSE);
+	handle[OpenPauseSE] = loader->GetHandle(Loader::Kind::OpenPauseSE);
 
 	ChangeVolumeSoundMem(255 * 300 / 100, handle[CharahitSE]);//‰¹—Ê•ÏX
 }

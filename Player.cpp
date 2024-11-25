@@ -1,8 +1,9 @@
 #include<math.h>
 #include"DxLib.h"
 #include"Stage.h"
-#include"Player.h"
+#include"InputManager.h"
 #include"Loader.h"
+#include"Player.h"
 
 /// <summary>
 /// コンストラクタ
@@ -41,6 +42,8 @@ void Player::Initialize()
 	moveVec = VGet(0, 0, 0);
 	targetLookDirection = VGet(1.0f, 0.0f, 1.0f);
 
+	attackinputpossible = false;
+
 	InitializeAngle();
 	OtherClassInitialize();
 
@@ -50,10 +53,10 @@ void Player::Initialize()
 /// <summary>
 /// 更新
 /// </summary>
-void Player::Update(int inputstate)
+void Player::Update(int inputstate,bool outpauseinputflg)
 {
 	//入力処理
-	InputProcess(inputstate);
+	InputProcess(inputstate, outpauseinputflg);
 	
 	//当たり判定を付けるか判断
 	CheckAttackOnCollision();
@@ -73,46 +76,50 @@ void Player::Update(int inputstate)
 /// </summary>
 /// <param name="inputstate">入力状態</param>
 /// <param name="wallhit">どこかの壁に当たっているか</param>
-void Player::InputProcess(const int inputstate)
+void Player::InputProcess(const int inputstate,bool outpauseinputflg)
 {
 	//moveVec初期化
 	moveVec = VGet(0, 0, 0);
+	isanimflg = false;
 
 	//移動
 	if (attackflg == false)
 	{
-		if (position.x <= Stage::StageRight && (4 & inputstate) == 4)//右
+		if (position.x <= Stage::StageRight && (InputManager::InputNumber::Right & inputstate) == InputManager::InputNumber::Right)//右
 		{
 			moveVec = VAdd(moveVec, VGet(1.0f, 0.0f, 0.0f));
+			isanimflg = true;
 		}
-		if (position.x >= Stage::StageLeft && (2 & inputstate) == 2)//左
+		if (position.x >= Stage::StageLeft && (InputManager::InputNumber::Left & inputstate) == InputManager::InputNumber::Left)//左
 		{
 			moveVec = VAdd(moveVec, VGet(-1.0f, 0.0f, 0.0f));
+			isanimflg = true;
 		}
-		if (position.z <= Stage::StageTop && (8 & inputstate) == 8)//上
+		if (position.z <= Stage::StageTop && (InputManager::InputNumber::Up & inputstate) == InputManager::InputNumber::Up)//上
 		{
 			moveVec = VAdd(moveVec, VGet(0.0f, 0.0f, 1.0f));
+			isanimflg = true;
 		}
-		if (position.z >= Stage::StageBottom && (1 & inputstate) == 1)//下
+		if (position.z >= Stage::StageBottom && (InputManager::InputNumber::Down & inputstate) == InputManager::InputNumber::Down)//下
 		{
 			moveVec = VAdd(moveVec, VGet(0.0f, 0.0f, -1.0f));
+			isanimflg = true;
 		}
-	}
-
-	//アニメーションフラグ変更
-	if (inputstate != 0)
-	{
-		isanimflg = true;
-	}
-	else
-	{
-		isanimflg = false;
 	}
 
 	//攻撃
-	if ((16 & inputstate) == 16)//Bボタン
+	if ((InputManager::InputNumber::Decision & inputstate) == InputManager::InputNumber::Decision)//Bボタン
 	{
-		Attack();
+		if (attackinputpossible && !outpauseinputflg)
+		{
+			Attack();
+		}
+
+		attackinputpossible = false;
+	}
+	else
+	{
+		attackinputpossible = true;
 	}
 
 	if (inputstate != 0 && attackflg == false)

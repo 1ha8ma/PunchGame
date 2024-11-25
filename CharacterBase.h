@@ -70,11 +70,11 @@ protected:
 	//カプセルの更新
 	void UpdateCapsule();
 	//他クラスの更新
-	void OtherClassUpdate();
+	void OtherClassUpdate(bool Settlement);
 	//エフェクト更新
 	void UpdateEffect();
 	//吹っ飛ぶ
-	void Blow();
+	void Blow(bool Settlement);
 
 	//モデル・アニメーション
 	int model;//モデル

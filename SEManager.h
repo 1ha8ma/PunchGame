@@ -14,6 +14,9 @@ public:
 		StartSE,//スタート表示のse
 		CrickSE,//決定ボタンを押したとき
 		WinnerSE,//リザルトでの勝者が出てきた時のSE
+		CursorMoveSE,//カーソル移動SE
+		CursorSelectSE,//カーソル決定SE
+		OpenPauseSE,//一時停止を開いたときのSE
 	};
 
 	//コンストラクタ

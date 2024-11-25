@@ -69,6 +69,8 @@ void GameScene::Initialize()
 	outchara.clear();
 	outchara.push_back(-1);
 
+	outpauseinputflg = false;
+
 	nowstate = GameSceneState::start;
 }
 
@@ -97,12 +99,18 @@ SceneBase* GameScene::Update()
 		//エフェクトカメラ同期
 		Effekseer_Sync3DSetting();
 
+		//一時停止解除後の連続入力防止
+		if (outpauseinputflg && !((InputManager::InputNumber::Decision & input->GetInputState()) == InputManager::InputNumber::Decision))
+		{
+			outpauseinputflg = false;
+		}
+
 		//更新
 		bgmmanager->PlayBGM(BGMManager::BGMKind::GameBGM);
 		camera->UpdateForGame();
 		if (!player->GetOutflg())
 		{
-			player->Update(input->GetInputState());
+			player->Update(input->GetInputState(),outpauseinputflg);
 		}
 		enemy->Update(outchara);
 
@@ -240,29 +248,35 @@ SceneBase* GameScene::Update()
 			nowstate = GameSceneState::result;
 		}
 		//一時停止
-		if (can&&(32 & input->GetInputState()) == 32)
+		if (pauseinputpossible && (InputManager::InputNumber::Start & input->GetInputState()) == InputManager::InputNumber::Start)
 		{
+			semanager->PlaySE(SEManager::SEKind::OpenPauseSE);
 			pausescene->Initialize();
 			nowstate = GameSceneState::pause;
 		}
-		if (!((32 & input->GetInputState()) == 32))
+		if (!((InputManager::InputNumber::Start & input->GetInputState()) == InputManager::InputNumber::Start))
 		{
-			can = true;
+			pauseinputpossible = true;
 		}
 		else
 		{
-			can = false;
+			pauseinputpossible = false;
 		}
 		
 	}
 	break;
 	case(GameSceneState::pause):
 	{
-		bool out = pausescene->Update();
+		int out = pausescene->Update();
 
-		if (out)
+		if (out == Pause::CursorPoint::GameReturn)
 		{
 			nowstate = GameSceneState::game;
+			outpauseinputflg = true;
+		}
+		if (out == Pause::CursorPoint::TitleReturn)
+		{
+			return new TitleScene();
 		}
 	}
 	break;

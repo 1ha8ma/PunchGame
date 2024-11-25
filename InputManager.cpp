@@ -11,27 +11,27 @@ int InputManager::GetInputState()
 
 	if ((GetJoypadInputState(DX_INPUT_PAD1) & PAD_INPUT_RIGHT) || (CheckHitKey(KEY_INPUT_RIGHT)))//右
 	{
-		inputstate |= 4;//0100
+		inputstate |= InputNumber::Right;//0100
 	}
 	if (GetJoypadInputState(DX_INPUT_PAD1) & PAD_INPUT_LEFT || (CheckHitKey(KEY_INPUT_LEFT)))//左
 	{
-		inputstate |= 2;//00010
+		inputstate |= InputNumber::Left;//00010
 	}
 	if (GetJoypadInputState(DX_INPUT_PAD1) & PAD_INPUT_UP || (CheckHitKey(KEY_INPUT_UP)))//上
 	{
-		inputstate |= 8;//01000
+		inputstate |= InputNumber::Up;//01000
 	}
 	if (GetJoypadInputState(DX_INPUT_PAD1) & PAD_INPUT_DOWN || (CheckHitKey(KEY_INPUT_DOWN)))//下
 	{
-		inputstate |= 1;//00001
+		inputstate |= InputNumber::Down;//00001
 	}
 	if (GetJoypadInputState(DX_INPUT_PAD1) & PAD_INPUT_4 || (CheckHitKey(KEY_INPUT_SPACE)))//Bボタン
 	{
-		inputstate |= 16;//10000
+		inputstate |= InputNumber::Decision;//10000
 	}
 	if (GetJoypadInputState(DX_INPUT_PAD1) & PAD_INPUT_12||(CheckHitKey(KEY_INPUT_P)))//startボタン
 	{
-		inputstate |= 32;//100000
+		inputstate |= InputNumber::Start;//100000
 	}
 
 	return inputstate;

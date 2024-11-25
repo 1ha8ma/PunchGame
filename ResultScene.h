@@ -29,6 +29,8 @@ private:
 
 	float t;//Lerp用分割割合
 
+	int flame;
+
 	int fontsize;//フォントサイズ
 	int fontsizechangeflame;//フォント拡大縮小フレーム
 	bool fontsizechangeflg;//フォント拡大縮小フラグ

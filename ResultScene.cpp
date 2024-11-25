@@ -43,6 +43,8 @@ void ResultScene::Initialize(VECTOR position, float angle)
 	targetposition.z = winnerposition.z + cos(winnerangle) * 1000;
 	targetposition.y = winnerposition.y + 500;
 
+	flame = 0;
+
 	fontsize = 64;
 	fontsizechangeflame = 0;
 	fontsizechangeflg = false;
@@ -67,16 +69,33 @@ bool ResultScene::Update(Camera*& camera)
 
 	//ポジションを取る
 	VECTOR copypos = camera->GetPosition();
-
-	//Lerp計算
-	copypos = VAdd(copypos, VScale((VSub(targetposition, copypos)), t));
+	if (flame < 130)
+	{
+		copypos.x = winnerposition.x + sin(winnerangle + DX_PI_F / 2) * 1400;
+		copypos.z = winnerposition.z + cos(winnerangle + DX_PI_F / 2) * 1400;
+		copypos.y = winnerposition.y + 1200;
+	}
+	else if (130 <= flame && flame <= 260)
+	{
+		copypos.x = winnerposition.x + sin(winnerangle - DX_PI_F / 2) * 1400;
+		copypos.z = winnerposition.z + cos(winnerangle - DX_PI_F / 2) * 1400;
+		copypos.y = winnerposition.y + 1200;
+	}
+	else
+	{
+		//Lerp計算
+		copypos = VAdd(copypos, VScale((VSub(targetposition, copypos)), t));
+		//Lerpの分割の割合を目標に近づける
+		t += 0.005;
+	}
 
 	//ポジションをセット
 	camera->SetPosition(copypos);
 
-	//Lerpの分割の割合を目標に近づける
-	t += 0.005;
+	//フレーム加算
+	flame++;
 
+	//目的地にカメラが到着したら
 	if (t >= 1)
 	{
 		//フォントサイズ更新
@@ -112,7 +131,7 @@ bool ResultScene::Update(Camera*& camera)
 	}
 
 	//決定でシーン変更
-	if (t >= 1 && inputpossibleflg && inputstate && (16 & inputstate) == 16)
+	if (t >= 1 && inputpossibleflg && inputstate && (InputManager::InputNumber::Decision & inputstate) == InputManager::InputNumber::Decision)
 	{
 		scenechange = true;
 	}

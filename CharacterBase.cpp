@@ -236,9 +236,17 @@ void CharacterBase::UpdateEffect()
 /// <summary>
 /// 他クラスの更新
 /// </summary>
-void CharacterBase::OtherClassUpdate()
+void CharacterBase::OtherClassUpdate(bool Settlement)
 {
-	fist->Update(position, angle, attackflg,shieldhit);
+	if (!Settlement)
+	{
+		fist->Update(1.0f,position, angle, attackflg, shieldhit);
+
+	}
+	else
+	{
+		fist->Update(SlowMultiply, position, angle, attackflg, shieldhit);
+	}
 	shield->Update(position, angle);
 }
 
@@ -381,11 +389,19 @@ void CharacterBase::CheckOut(bool hit)
 /// <summary>
 /// キャラの吹っ飛び動作
 /// </summary>
-void CharacterBase::Blow()
+void CharacterBase::Blow(bool Settlement)
 {
+	const float BlowSpeed = 100;
 	if (outflg && position.y < 3000)
 	{
-		position = VAdd(position, VGet(0, 100, 0));
+		if (!Settlement)
+		{
+			position = VAdd(position, VGet(0, BlowSpeed, 0));
+		}
+		else
+		{
+			position = VAdd(position, VGet(0, BlowSpeed * SlowMultiply, 0));
+		}
 		//ポジション反映
 		MV1SetPosition(model, position);
 	}
@@ -418,7 +434,7 @@ void CharacterBase::ReflectPosition()
 	//カプセル更新
 	UpdateCapsule();
 	//他クラス更新
-	OtherClassUpdate();
+	OtherClassUpdate(false);
 }
 
 /// <summary>
@@ -440,7 +456,7 @@ void CharacterBase::ForeverUpdate(bool Settlement)
 	if (outflg || Settlement)
 	{
 		//他クラスの処理
-		OtherClassUpdate();
+		OtherClassUpdate(Settlement);
 
 		//カプセル更新
 		UpdateCapsule();
@@ -450,7 +466,7 @@ void CharacterBase::ForeverUpdate(bool Settlement)
 	UpdateEffect();
 
 	//吹っ飛び
-	Blow();
+	Blow(Settlement);
 }
 
 VECTOR CharacterBase::GetShieldPosition()

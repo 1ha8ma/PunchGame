@@ -11,7 +11,7 @@ public:
 	Fist();
 	~Fist();
 	void Initialize();
-	void Update(VECTOR charapos, float charaangle, bool punchflg, bool shieldhit);
+	void Update(float multiply,VECTOR charapos, float charaangle, bool punchflg, bool shieldhit);
 	void Draw();
 
 	VECTOR GetcapFront() { return capFront; }
@@ -44,5 +44,5 @@ private:
 	bool shieldhitflg;//‚‚É“–‚½‚Á‚½
 
 	//ƒpƒ“ƒ`‚Ì“®‚«
-	void PunchMove(bool punchflg, float charaangle, VECTOR charapos, bool shieldhit);
+	void PunchMove(bool punchflg,float multiply, float charaangle, VECTOR charapos, bool shieldhit);
 };

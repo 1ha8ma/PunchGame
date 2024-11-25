@@ -11,7 +11,7 @@ public:
 	//‰Šú‰»
 	void Initialize();
 	//XV
-	void Update(int inputstate);
+	void Update(int inputstate,bool outpauseinputflg);
 
 	VECTOR GetPosition() { return position; }
 	float GetAngle() { return angle; }
@@ -19,5 +19,7 @@ public:
 
 private:
 	//“ü—Íˆ—
-	void InputProcess(const int inputstate);
+	void InputProcess(const int inputstate,bool outpauseinputflg);
+
+	bool attackinputpossible;//UŒ‚‚Ì˜A‘±“ü—Í–h~
 };

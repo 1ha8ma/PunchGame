@@ -31,6 +31,8 @@ public:
 		NumImage3,//3
 		TextBoxImage,//テキストボックス
 		PlayerArrowImage,//プレイヤー矢印画像
+		ButtonImage,//ボタン(未選択)
+		BUttonHoverImage,//ボタン(選択)
 
 		//エフェクト
 		PlayerhitEffect,//プレイヤー衝突エフェクト
@@ -50,6 +52,9 @@ public:
 		CharacterHitSE,//キャラクターに当たった時のSE
 		AttackSE,//攻撃時SE
 		CrickSE,//決定SE
+		CursorMoveSE,//カーソル移動SE
+		CursorSelectSE,//カーソル決定SE
+		OpenPauseSE,//一時停止を開いたときのSE
 	};
 
 	//ハンドルマップゲット

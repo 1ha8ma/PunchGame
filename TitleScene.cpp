@@ -64,7 +64,7 @@ SceneBase* TitleScene::Update()
 		inputpossibleflg = true;
 	}
 
-	if (inputpossibleflg && (16 & inputstate) == 16)//Bボタン
+	if (inputpossibleflg && (InputManager::InputNumber::Decision & inputstate) == InputManager::InputNumber::Decision)//Bボタン
 	{
 		semanager->PlaySE(SEManager::SEKind::CrickSE);
 		return new GameScene();

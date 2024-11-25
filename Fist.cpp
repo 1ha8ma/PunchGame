@@ -47,10 +47,10 @@ void Fist::Initialize()
 /// <summary>
 /// 更新
 /// </summary>
-void Fist::Update(VECTOR charapos,float charaangle,bool attackflg,bool shieldhit)
+void Fist::Update(float multiplyspeed,VECTOR charapos,float charaangle,bool attackflg,bool shieldhit)
 {
 	//パンチの動き
-	PunchMove(attackflg, charaangle, charapos,shieldhit);
+	PunchMove(attackflg, multiplyspeed, charaangle, charapos,shieldhit);
 
 	//ポジション反映
 	MV1SetPosition(model, position);
@@ -72,7 +72,7 @@ void Fist::Draw()
 /// <summary>
 /// パンチの動き
 /// </summary>
-void Fist::PunchMove(bool attackflg,float charaangle,VECTOR charapos,bool shieldhit)
+void Fist::PunchMove(bool attackflg,float multiplyspeed,float charaangle,VECTOR charapos,bool shieldhit)
 {
 	//パンチしたとき
 	if (attackflg && !punchingflg)
@@ -82,9 +82,6 @@ void Fist::PunchMove(bool attackflg,float charaangle,VECTOR charapos,bool shield
 		position.y = 400.0f;
 		punchangle = charaangle;
 		//パンチの角度設定
-		velocity.x = sin(punchangle) * PunchSpeed;
-		velocity.y = 0.0f;
-		velocity.z = cos(punchangle) * PunchSpeed;
 		position.x += sin(punchangle) * DistanceWithCharacter;
 		position.z += cos(punchangle) * DistanceWithCharacter;
 		modelangle = charaangle;
@@ -109,6 +106,11 @@ void Fist::PunchMove(bool attackflg,float charaangle,VECTOR charapos,bool shield
 		//当たり判定カプセルの角度設定
 		capFront = VAdd(position, VGet(sin(punchangle) * CapsuleFrontLength, 0, cos(punchangle) * CapsuleFrontLength));
 		capBack = VAdd(position, VGet(-sin(punchangle) * CapsuleBackLength, 0, -cos(punchangle) * CapsuleBackLength));
+
+		//拳速度設定
+		velocity.x = sin(punchangle) * PunchSpeed * multiplyspeed;
+		velocity.y = 0.0f;
+		velocity.z = cos(punchangle) * PunchSpeed * multiplyspeed;
 
 		//進ませる
 		if (shieldhitflg == false)
