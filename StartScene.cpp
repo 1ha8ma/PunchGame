@@ -2,6 +2,7 @@
 #include"DxLib.h"
 #include"Utility.h"
 #include"Loader.h"
+#include"InputManager.h"
 #include"SEManager.h"
 #include"StartScene.h"
 
@@ -21,6 +22,7 @@ StartScene::StartScene(VECTOR playerpos)
 
 	semanager = new SEManager();
 	semanager->PlaySE(SEManager::SEKind::StartSceneSE);
+	input = new InputManager();
 
 	Initialize(playerpos);
 }
@@ -57,7 +59,7 @@ bool StartScene::Update()
 	bool scenechange = false;
 
 	//見回す
-	if (countflg == false)
+	if (!countflg)
 	{
 		cameraangle += 0.009f;
 		camerapos = VGet(0, 600, 0);
@@ -66,7 +68,7 @@ bool StartScene::Update()
 	}
 
 	//一周したら
-	if (cameraangle >= DX_PI_F * 2 && countflg == false)
+	if ((cameraangle >= DX_PI_F * 2 && !countflg) || !countflg && (InputManager::InputNumber::AButton & input->GetInputState()) == InputManager::InputNumber::AButton)
 	{
 		semanager->PlaySE(SEManager::SEKind::StartCountSE);
 
@@ -157,6 +159,11 @@ void StartScene::Draw()
 		}
 
 		sizechangeflame++;
+	}
+	else
+	{
+		SetFontSize(50);
+		DrawString(1300, 800, "A スキップ", GetColor(127, 255, 0));
 	}
 
 	DrawBillboard3D(playerarrowpos, 0.5f, 0.5f, 500.0f, 0.0f, playerarrow, TRUE);

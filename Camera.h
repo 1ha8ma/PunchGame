@@ -16,7 +16,7 @@ public:
 	//タイトル中更新
 	void UpdateForTitle();
 	//リザルト更新
-	void UpdateForResult(VECTOR winnerpos, int winnernumber);
+	void UpdateForResult(VECTOR winnerpos, int winnernumber,int flame);
 
 	VECTOR GetPosition() { return pos; }
 	void SetPosition(VECTOR newpos) { pos = newpos; }

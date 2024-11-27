@@ -69,19 +69,20 @@ bool ResultScene::Update(Camera*& camera)
 
 	//ポジションを取る
 	VECTOR copypos = camera->GetPosition();
-	if (flame < 130)
+
+	if (130 <= flame && flame <= 260)
 	{
 		copypos.x = winnerposition.x + sin(winnerangle + DX_PI_F / 2) * 1400;
 		copypos.z = winnerposition.z + cos(winnerangle + DX_PI_F / 2) * 1400;
 		copypos.y = winnerposition.y + 1200;
 	}
-	else if (130 <= flame && flame <= 260)
+	else if (260 <= flame && flame <= 390)
 	{
 		copypos.x = winnerposition.x + sin(winnerangle - DX_PI_F / 2) * 1400;
 		copypos.z = winnerposition.z + cos(winnerangle - DX_PI_F / 2) * 1400;
 		copypos.y = winnerposition.y + 1200;
 	}
-	else
+	else if (390 < flame)
 	{
 		//Lerp計算
 		copypos = VAdd(copypos, VScale((VSub(targetposition, copypos)), t));
@@ -131,7 +132,7 @@ bool ResultScene::Update(Camera*& camera)
 	}
 
 	//決定でシーン変更
-	if (t >= 1 && inputpossibleflg && inputstate && (InputManager::InputNumber::Decision & inputstate) == InputManager::InputNumber::Decision)
+	if (t >= 1 && inputpossibleflg && inputstate && (InputManager::InputNumber::BButton & inputstate) == InputManager::InputNumber::BButton)
 	{
 		scenechange = true;
 	}
@@ -151,6 +152,11 @@ void ResultScene::Draw()
 	if (t >= 1)
 	{
 		SetFontSize(fontsize);
-		DrawString(explanationpos.x, explanationpos.y, "A タイトル", GetColor(127, 255, 0));
+		DrawString(explanationpos.x, explanationpos.y, "B タイトル", GetColor(127, 255, 0));
 	}
+}
+
+int ResultScene::GetFlame()
+{
+	return flame;
 }

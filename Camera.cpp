@@ -79,9 +79,12 @@ void Camera::UpdateForTitle()
 /// </summary>
 /// <param name="winnerpos">勝者ポジション</param>
 /// <param name="winnernumber">勝者のキャラナンバー</param>
-void Camera::UpdateForResult(VECTOR winnerpos,int winnernumber)
+void Camera::UpdateForResult(VECTOR winnerpos,int winnernumber,int flame)
 {
-	lookpos = winnerpos;
+	if (flame > 130)
+	{
+		lookpos = winnerpos;
+	}
 
 	//身長が違うから高さを変更
 	if (winnernumber == static_cast<int>(CharaNumber::CPU0))

@@ -38,7 +38,7 @@ void Fist::Initialize()
 	//モデル関係
 	modelangle = 0.0f;
 	punchingflg = false;
-	size = 1.0f;
+	size = 0.0f;
 
 	//エフェクト関係
 	playfiringefectflg = false;
@@ -47,6 +47,11 @@ void Fist::Initialize()
 /// <summary>
 /// 更新
 /// </summary>
+/// <param name="multiplyspeed">パンチの速度に掛ける倍率</param>
+/// <param name="charapos">キャラクターポジション</param>
+/// <param name="charaangle">キャラクター角度</param>
+/// <param name="attackflg">攻撃フラグ</param>
+/// <param name="shieldhit"></param>
 void Fist::Update(float multiplyspeed,VECTOR charapos,float charaangle,bool attackflg,bool shieldhit)
 {
 	//パンチの動き
@@ -72,6 +77,11 @@ void Fist::Draw()
 /// <summary>
 /// パンチの動き
 /// </summary>
+/// <param name="attackflg">攻撃開始フラグ</param>
+/// <param name="multiplyspeed">パンチの速度に掛ける倍率</param>
+/// <param name="charaangle">キャラクター角度</param>
+/// <param name="charapos">キャラクターポジション</param>
+/// <param name="shieldhit">盾に当たったか</param>
 void Fist::PunchMove(bool attackflg,float multiplyspeed,float charaangle,VECTOR charapos,bool shieldhit)
 {
 	//パンチしたとき
@@ -108,9 +118,9 @@ void Fist::PunchMove(bool attackflg,float multiplyspeed,float charaangle,VECTOR 
 		capBack = VAdd(position, VGet(-sin(punchangle) * CapsuleBackLength, 0, -cos(punchangle) * CapsuleBackLength));
 
 		//拳速度設定
-		velocity.x = sin(punchangle) * PunchSpeed * multiplyspeed;
+		velocity.x = sin(punchangle) * (PunchSpeed * multiplyspeed);
 		velocity.y = 0.0f;
-		velocity.z = cos(punchangle) * PunchSpeed * multiplyspeed;
+		velocity.z = cos(punchangle) * (PunchSpeed * multiplyspeed);
 
 		//進ませる
 		if (shieldhitflg == false)
@@ -127,7 +137,6 @@ void Fist::PunchMove(bool attackflg,float multiplyspeed,float charaangle,VECTOR 
 				size = 1.0f;
 			}
 		}
-		MV1SetScale(model, VGet(size, size, size));
 
 		//もし盾に当たったらだんだん小さくして消す
 		if (shieldhit)
@@ -149,8 +158,19 @@ void Fist::PunchMove(bool attackflg,float multiplyspeed,float charaangle,VECTOR 
 		//モーションが終わるとフラグ変更
 		if (!attackflg)
 		{
-			punchingflg = false;
+			size -= 0.3f;
+			if (size < 0.0f)
+			{
+				size = 0.0f;
+			}
+
+			if (size == 0.0f)
+			{
+				punchingflg = false;
+			} 
 		}
+
+		MV1SetScale(model, VGet(size, size, size));
 	}
 	//パンチ中でないとき
 	else

@@ -2,6 +2,7 @@
 #include<vector>
 
 class SEManager;
+class InputManager;
 
 class StartScene
 {
@@ -20,6 +21,7 @@ public:
 
 private:
 	SEManager* semanager;
+	InputManager* input;
 
 	const float ScalingSpeed = 1.0f;//•¶šŠg‘åk¬‘¬“x
 

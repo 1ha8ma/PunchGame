@@ -12,6 +12,7 @@ public:
 	bool Update(Camera*& camera);
 	void Draw();
 
+	int GetFlame();
 private:
 	InputManager* input;
 	Camera* camera;

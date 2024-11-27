@@ -108,7 +108,7 @@ void Player::InputProcess(const int inputstate,bool outpauseinputflg)
 	}
 
 	//攻撃
-	if ((InputManager::InputNumber::Decision & inputstate) == InputManager::InputNumber::Decision)//Bボタン
+	if ((InputManager::InputNumber::BButton & inputstate) == InputManager::InputNumber::BButton)//Bボタン
 	{
 		if (attackinputpossible && !outpauseinputflg)
 		{
@@ -128,7 +128,10 @@ void Player::InputProcess(const int inputstate,bool outpauseinputflg)
 		targetLookDirection = moveVec;
 
 		//正規化したベクトルにスピード倍したものを移動ベクトルとする
-		moveVec = VNorm(moveVec);
+		if (VSize(moveVec) > 0)
+		{
+			moveVec = VNorm(moveVec);
+		}
 		moveVec = VScale(targetLookDirection, Speed);
 	}
 }

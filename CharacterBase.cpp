@@ -60,7 +60,6 @@ void CharacterBase::BaseInitialize()
 	shieldhit = false;
 
 	//エフェクト関係
-	Playplayerhiteffectflg = false;
 	Playshieldhiteffectflg = false;
 
 	shieldhitseflg = false;
@@ -200,7 +199,7 @@ void CharacterBase::PlayAnimation()
 void CharacterBase::Attack()
 {
 	//攻撃モーションに変更
-	if (!attackflg)
+	if (!attackflg && fist->GetSize() == 0.0f)
 	{
 		ChangeAnimation(AnimKind::Punch);
 		attackflg = true;
@@ -376,13 +375,12 @@ void CharacterBase::CheckOut(bool hit)
 	{
 		//エフェクト再生
 		effect->PlayEffect(Effect::EffectKind::CharacterHit, position, VGet(3.0f, 3.0f, 3.0f), angle, 0.7f);
-		Playplayerhiteffectflg = true;
 
 		//se再生
 		semanager->PlaySE(SEManager::SEKind::CharahitSE);
 
 		//フラグ変更
- 		outflg = true;
+		outflg = true;
 	}
 }
 

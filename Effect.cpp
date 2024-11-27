@@ -23,6 +23,24 @@ Effect::Effect()
 Effect::~Effect()
 {
 	//エフェクト終了
+	for (int i = 0; i < PlayingEffecthandle.size(); i++)
+	{
+		SetPosPlayingEffekseer3DEffect(PlayingEffecthandle[i], 0, -5000, 0);
+		StopEffekseer3DEffect(PlayingEffecthandle[i]);
+	}
+	DrawEffekseer3D();
+
+	//情報削除
+	PlayingEffecthandle.clear();
+	PlayingEffectKind.clear();
+	PlayingEffectScale.clear();
+	for (int i = 0; i < PlayingEffecthandle.size(); i++)
+	{
+		PlayingEffectKind.erase(PlayingEffectKind.begin() + i);
+		PlayingEffecthandle.erase(PlayingEffecthandle.begin() + i);
+		PlayingEffectScale.erase(PlayingEffectScale.begin() + i);
+	}
+
 	DrawEffekseer3D_End();
 }
 
@@ -33,7 +51,7 @@ void Effect::Initialize()
 {
 	PlayingEffectKind.clear();
 	PlayingEffecthandle.clear();
-	PlayingEffectSize.clear();
+	PlayingEffectScale.clear();
 }
 
 /// <summary>
@@ -52,8 +70,8 @@ void Effect::PlayEffect(EffectKind kind, VECTOR playposition,VECTOR initsize, fl
 	PlayingEffecthandle.push_back(PlayEffekseer3DEffect(Effecthandle[kind]));
 
 	//サイズ設定
-	PlayingEffectSize.push_back(initsize);
-	SetScalePlayingEffekseer3DEffect(PlayingEffecthandle.back(), PlayingEffectSize.back().x, PlayingEffectSize.back().y, PlayingEffectSize.back().z);
+	PlayingEffectScale.push_back(initsize);
+	SetScalePlayingEffekseer3DEffect(PlayingEffecthandle.back(), PlayingEffectScale.back().x, PlayingEffectScale.back().y, PlayingEffectScale.back().z);
 	//エフェクト速度設定
 	SetSpeedPlayingEffekseer3DEffect(PlayingEffecthandle.back(), playspeed);
 	//表示角度設定
@@ -72,18 +90,18 @@ void Effect::Update()
 		//再生中のエフェクトが盾衝突だったらサイズを大きくする
 		if (PlayingEffectKind[i] == Effecthandle[EffectKind::ShieldHit])
 		{
-			PlayingEffectSize[i] = VAdd(PlayingEffectSize[i], VGet(ExpansionSpeed, ExpansionSpeed, ExpansionSpeed));
+			PlayingEffectScale[i] = VAdd(PlayingEffectScale[i], VGet(ExpansionSpeed, ExpansionSpeed, ExpansionSpeed));
 		}
 
 		//サイズ適用
-		SetScalePlayingEffekseer3DEffect(PlayingEffecthandle[i], PlayingEffectSize[i].x, PlayingEffectSize[i].y, PlayingEffectSize[i].z);
+		SetScalePlayingEffekseer3DEffect(PlayingEffecthandle[i], PlayingEffectScale[i].x, PlayingEffectScale[i].y, PlayingEffectScale[i].z);
 
 		//再生終了していたら再生中から削除
 		if (IsEffekseer3DEffectPlaying(PlayingEffecthandle[i]) == -1)
 		{
 			PlayingEffectKind.erase(PlayingEffectKind.begin() + i);
 			PlayingEffecthandle.erase(PlayingEffecthandle.begin() + i);
-			PlayingEffectSize.erase(PlayingEffectSize.begin() + i);
+			PlayingEffectScale.erase(PlayingEffectScale.begin() + i);
 		}
 	}
 }

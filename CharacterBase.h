@@ -86,7 +86,6 @@ protected:
 	int prevPlayAnim;//変更前のアニメーション
 
 	//エフェクト
-	bool Playplayerhiteffectflg;//プレイヤー衝突エフェクト再生フラグ
 	bool Playshieldhiteffectflg;//盾衝突エフェクトフラグ
 
 	//ポジション

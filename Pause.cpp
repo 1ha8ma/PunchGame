@@ -55,7 +55,7 @@ int Pause::Update()
 	}
 
 	//ˆêŽž’âŽ~‰ðœ
-	if (cursor != CursorPoint::None && (InputManager::InputNumber::Decision & input->GetInputState()) == InputManager::InputNumber::Decision)
+	if (cursor != CursorPoint::None && (InputManager::InputNumber::BButton & input->GetInputState()) == InputManager::InputNumber::BButton)
 	{
 		outcursor = cursor;
 		semanager->PlaySE(SEManager::SEKind::CursorSelectSE);

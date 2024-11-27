@@ -100,7 +100,7 @@ SceneBase* GameScene::Update()
 		Effekseer_Sync3DSetting();
 
 		//一時停止解除後の連続入力防止
-		if (outpauseinputflg && !((InputManager::InputNumber::Decision & input->GetInputState()) == InputManager::InputNumber::Decision))
+		if (outpauseinputflg && !((InputManager::InputNumber::BButton & input->GetInputState()) == InputManager::InputNumber::BButton))
 		{
 			outpauseinputflg = false;
 		}
@@ -283,7 +283,10 @@ SceneBase* GameScene::Update()
 
 	case(GameSceneState::result):
 	{
-		camera->UpdateForResult(winnerpos, winnernumber);
+		//エフェクトカメラ同期
+		Effekseer_Sync3DSetting();
+
+		camera->UpdateForResult(winnerpos, winnernumber, resultscene->GetFlame());
 		scenechange = resultscene->Update(camera);
 
 		player->ForeverUpdate(true);

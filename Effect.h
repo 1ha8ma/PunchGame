@@ -22,7 +22,7 @@ public:
 private:
 	std::vector<int> PlayingEffectKind;//再生中のエフェクトの種類
 	std::vector<int> PlayingEffecthandle;//再生中のエフェクトのハンドル
-	std::vector<VECTOR> PlayingEffectSize;//エフェクトサイズ
+	std::vector<VECTOR> PlayingEffectScale;//エフェクトサイズ
 	std::map<EffectKind, int> Effecthandle;//エフェクトハンドル
 
 	//ハンドル

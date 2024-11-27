@@ -48,7 +48,7 @@ void TitleScene::Initialize()
 	fontsizechangeflg = false;
 	inputpossibleflg = false;
 
-	startpos = VGet(550.0f, 700.0f, 0.0f);
+	startpos = VGet(580.0f, 700.0f, 0.0f);
 }
 
 /// <summary>
@@ -64,7 +64,7 @@ SceneBase* TitleScene::Update()
 		inputpossibleflg = true;
 	}
 
-	if (inputpossibleflg && (InputManager::InputNumber::Decision & inputstate) == InputManager::InputNumber::Decision)//Bボタン
+	if (inputpossibleflg && (InputManager::InputNumber::BButton & inputstate) == InputManager::InputNumber::BButton)//Bボタン
 	{
 		semanager->PlaySE(SEManager::SEKind::CrickSE);
 		return new GameScene();
@@ -124,5 +124,5 @@ void TitleScene::Draw()
 
 	//スタート
 	SetFontSize(fontsize);
-	DrawString(startpos.x, startpos.y, "A スタート", GetColor(127, 255, 0));
+	DrawString(startpos.x, startpos.y, "B スタート", GetColor(127, 255, 0));
 }
