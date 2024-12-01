@@ -31,3 +31,15 @@ void SEManager::PlaySE(SEKind kind)
 {
 	PlaySoundMem(handle[kind], DX_PLAYTYPE_BACK, true);
 }
+
+/// <summary>
+/// “Á’è‚ÌSE‚ğI—¹
+/// </summary>
+/// <param name="kind">I—¹‚µ‚½‚¢SE</param>
+void SEManager::StopSE(SEKind kind)
+{
+	if (CheckSoundMem(handle[kind]))
+	{
+		StopSoundMem(handle[kind]);
+	}
+}

@@ -84,7 +84,7 @@
     <ClCompile Include="SEManager.cpp">
       <Filter>Sound</Filter>
     </ClCompile>
-    <ClCompile Include="GameUI.cpp">
+    <ClCompile Include="UI.cpp">
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="Effect.cpp">
@@ -158,7 +158,7 @@
     <ClInclude Include="SEManager.h">
       <Filter>Sound</Filter>
     </ClInclude>
-    <ClInclude Include="GameUI.h">
+    <ClInclude Include="UI.h">
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="Effect.h">

@@ -3,6 +3,7 @@
 #include"Camera.h"
 #include"SkyDome.h"
 #include"Stage.h"
+#include"UI.h"
 #include"GameScene.h"
 #include"Loader.h"
 #include"BGMManager.h"
@@ -21,6 +22,7 @@ TitleScene::TitleScene()
 	stage = new Stage();
 	bgmmanager = new BGMManager();
 	semanager = new SEManager();
+	ui = new UI();
 
 	Loader* loader = loader->GetInstance();
 	titlelogo = loader->GetHandle(Loader::Kind::TitleLogo);
@@ -34,6 +36,14 @@ TitleScene::TitleScene()
 TitleScene::~TitleScene()
 {
 	bgmmanager->StopBGM();
+
+	delete input;
+	delete camera;
+	delete skydome;
+	delete stage;
+	delete bgmmanager;
+	delete semanager;
+	delete ui;
 }
 
 /// <summary>
@@ -42,13 +52,9 @@ TitleScene::~TitleScene()
 void TitleScene::Initialize()
 {
 	camera->Initialize();
-
-	fontsize = 80;
-	fontsizechangeflame = 0;
-	fontsizechangeflg = false;
-	inputpossibleflg = false;
-
-	startpos = VGet(580.0f, 700.0f, 0.0f);
+	
+	blinkingflg = true;
+	blinkingflame = 0;
 }
 
 /// <summary>
@@ -70,42 +76,26 @@ SceneBase* TitleScene::Update()
 		return new GameScene();
 	}
 
+	//点滅
+	if (blinkingflame % 15 == 0 && blinkingflame != 0)
+	{
+		if (blinkingflg)
+		{
+			blinkingflg = false;
+		}
+		else
+		{
+			blinkingflg = true;
+		}
+		blinkingflame = 0;
+	}
+	blinkingflame++;
+
 	//BGM再生
 	bgmmanager->PlayBGM(BGMManager::TitleBGM);
 
 	//カメラ更新
 	camera->UpdateForTitle();
-
-	//フォントサイズ更新
-	fontsizechangeflame++;
-
-	if (fontsizechangeflame != 0 && fontsizechangeflame % 30 == 0)
-	{
-		//拡大縮小交代
-		if (fontsizechangeflg)
-		{
-			fontsizechangeflg = false;
-		}
-		else
-		{
-			fontsizechangeflg = true;
-		}
-
-		fontsizechangeflame = 0;
-	}
-
-	if (fontsizechangeflg)//縮小
-	{
-		fontsize -= FontScalingSpeed;
-		startpos.x += FontScalingSpeed;
-		startpos.y += FontScalingSpeed;
-	}
-	else//拡大
-	{
-		fontsize += FontScalingSpeed;
-		startpos.x -= FontScalingSpeed;
-		startpos.y -= FontScalingSpeed;
-	}
 
 	return this;
 }
@@ -123,6 +113,12 @@ void TitleScene::Draw()
 	DrawExtendGraph(470, 0, 1100, 600, titlelogo, TRUE);
 
 	//スタート
-	SetFontSize(fontsize);
-	DrawString(startpos.x, startpos.y, "B スタート", GetColor(127, 255, 0));
+	if (blinkingflg)
+	{
+		SetFontSize(80);
+		DrawString(580, 700, "B スタート", GetColor(127, 255, 0));
+	}
+
+	//操作説明
+	ui->DrawOperationExplanation();
 }

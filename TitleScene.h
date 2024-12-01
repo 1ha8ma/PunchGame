@@ -7,6 +7,7 @@ class SkyDome;
 class Stage;
 class BGMManager;
 class SEManager;
+class UI;
 
 class TitleScene:public SceneBase
 {
@@ -24,6 +25,7 @@ private:
 	Stage* stage;
 	BGMManager* bgmmanager;
 	SEManager* semanager;
+	UI* ui;
 
 	const float FontScalingSpeed = 1.0f;//拡大縮小スピード
 
@@ -31,8 +33,7 @@ private:
 	int titlelogo;//タイトルロゴ
 	bool inputpossibleflg;//入力可能
 
-	int fontsize;//フォントサイズ
-	int fontsizechangeflame;//フォント拡大縮小フレーム
-	bool fontsizechangeflg;//フォント拡大縮小フラグ
-	VECTOR startpos;//スタート表記のポジション
+	//点滅
+	bool blinkingflg;
+	int blinkingflame;
 };

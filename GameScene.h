@@ -8,7 +8,7 @@ class Stage;
 class SkyDome;
 class InputManager;
 class EnemyManager;
-class GameUI;
+class UI;
 class Pause;
 class ResultScene;
 class StartScene;
@@ -36,7 +36,7 @@ private:
 	SkyDome* skydome;
 	InputManager* input;
 	EnemyManager* enemy;
-	GameUI* gameui;
+	UI* ui;
 	Pause* pausescene;
 	ResultScene* resultscene;
 	StartScene* startscene;

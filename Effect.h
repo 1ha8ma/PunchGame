@@ -8,8 +8,9 @@ public:
 	enum EffectKind
 	{
 		Attack,
-		CharacterHit,
+		LastCharacterHit,
 		ShieldHit,
+		Blow,
 	};
 
 	Effect();

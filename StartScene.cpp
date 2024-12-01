@@ -70,6 +70,7 @@ bool StartScene::Update()
 	//ˆêü‚µ‚½‚ç
 	if ((cameraangle >= DX_PI_F * 2 && !countflg) || !countflg && (InputManager::InputNumber::AButton & input->GetInputState()) == InputManager::InputNumber::AButton)
 	{
+		semanager->StopSE(SEManager::SEKind::StartSceneSE);
 		semanager->PlaySE(SEManager::SEKind::StartCountSE);
 
 		//ƒJƒƒ‰

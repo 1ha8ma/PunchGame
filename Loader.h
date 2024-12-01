@@ -35,9 +35,10 @@ public:
 		BUttonHoverImage,//ボタン(選択)
 
 		//エフェクト
-		PlayerhitEffect,//プレイヤー衝突エフェクト
+		LasthitEffect,//プレイヤー衝突エフェクト
 		PunchfiringEffect,//パンチしたときのエフェクト
 		ShieldhitEffect,//盾衝突時のエフェクト
+		BlowEffect,//キャラ吹っ飛びエフェクト
 
 		//BGM
 		TitleBGM,//タイトルBGM

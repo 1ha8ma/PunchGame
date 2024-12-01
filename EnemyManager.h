@@ -17,7 +17,7 @@ public:
 	//拳と盾当たり判定の更新
 	void UpdateFistWithShield(VECTOR playershieldleft, VECTOR playershieldright);
 	//キャラと拳当たり判定の更新
-	void UpdateFistWithCharacter(VECTOR playerTop, VECTOR playerBottom, bool playerout);
+	void UpdateFistWithCharacter(VECTOR playerTop, VECTOR playerBottom, bool playerout,bool lastchara);
 	//盾同士の当たり判定更新
 	void UpdateShieldWithShield(VECTOR playershieldleft, VECTOR playershiledright);
 	//ポジション更新
@@ -27,7 +27,7 @@ public:
 	//描画
 	void Draw();
 
-	void CheckOut(int i, bool hit);
+	void CheckOut(int i, bool hit, bool lastchara);
 
 	//敵の数
 	static const int NumberofEnemy;

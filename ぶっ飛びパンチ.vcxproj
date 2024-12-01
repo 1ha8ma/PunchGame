@@ -144,7 +144,7 @@
     <ClCompile Include="FPS.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameScene.cpp" />
-    <ClCompile Include="GameUI.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Loader.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -171,7 +171,7 @@
     <ClInclude Include="FPS.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameScene.h" />
-    <ClInclude Include="GameUI.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Loader.h" />
     <ClInclude Include="Pause.h" />

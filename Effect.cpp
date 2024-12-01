@@ -11,8 +11,9 @@ Effect::Effect()
 	Loader* loader = loader->GetInstance();
 
 	Effecthandle[EffectKind::Attack] = loader->GetHandle(Loader::Kind::PunchfiringEffect);
-	Effecthandle[EffectKind::CharacterHit] = loader->GetHandle(Loader::Kind::PlayerhitEffect);
+	Effecthandle[EffectKind::LastCharacterHit] = loader->GetHandle(Loader::Kind::LasthitEffect);
 	Effecthandle[EffectKind::ShieldHit] = loader->GetHandle(Loader::Kind::ShieldhitEffect);
+	Effecthandle[EffectKind::Blow] = loader->GetHandle(Loader::Kind::BlowEffect);
 
 	Initialize();
 }
@@ -25,10 +26,10 @@ Effect::~Effect()
 	//エフェクト終了
 	for (int i = 0; i < PlayingEffecthandle.size(); i++)
 	{
-		SetPosPlayingEffekseer3DEffect(PlayingEffecthandle[i], 0, -5000, 0);
+		SetPosPlayingEffekseer3DEffect(PlayingEffecthandle[i], 0, -5000, 0);//Effekseerでは再生を止める事ができても描画を消す事が出来なかったため下に飛ばしている
 		StopEffekseer3DEffect(PlayingEffecthandle[i]);
 	}
-	DrawEffekseer3D();
+	UpdateEffekseer3D();
 
 	//情報削除
 	PlayingEffecthandle.clear();
@@ -78,6 +79,11 @@ void Effect::PlayEffect(EffectKind kind, VECTOR playposition,VECTOR initsize, fl
 	SetRotationPlayingEffekseer3DEffect(PlayingEffecthandle.back(), 0.0f, playangle, 0.0f);
 	//ポジション反映
 	SetPosPlayingEffekseer3DEffect(PlayingEffecthandle.back(), playposition.x, playposition.y, playposition.z);
+	//色変更
+	if (kind == EffectKind::Blow)
+	{
+		SetColorPlayingEffekseer3DEffect(PlayingEffecthandle.back(), 124, 252, 0, 100);
+	}
 }
 
 /// <summary>
@@ -92,6 +98,7 @@ void Effect::Update()
 		{
 			PlayingEffectScale[i] = VAdd(PlayingEffectScale[i], VGet(ExpansionSpeed, ExpansionSpeed, ExpansionSpeed));
 		}
+		
 
 		//サイズ適用
 		SetScalePlayingEffekseer3DEffect(PlayingEffecthandle[i], PlayingEffectScale[i].x, PlayingEffectScale[i].y, PlayingEffectScale[i].z);

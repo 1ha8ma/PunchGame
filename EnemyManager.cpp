@@ -101,7 +101,7 @@ void EnemyManager::UpdateFistWithShield(VECTOR playershieldleft,VECTOR playershi
 /// <param name="playerTop">プレイヤーカプセル上</param>
 /// <param name="playerBottom">プレイヤーカプセル下</param>
 /// <param name="playerout">プレイヤーが脱落しているか</param>
-void EnemyManager::UpdateFistWithCharacter(VECTOR playerTop,VECTOR playerBottom,bool playerout)
+void EnemyManager::UpdateFistWithCharacter(VECTOR playerTop,VECTOR playerBottom,bool playerout,bool lastchara)
 {
 	//プレイヤーとの当たり判定
 	for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
@@ -128,7 +128,7 @@ void EnemyManager::UpdateFistWithCharacter(VECTOR playerTop,VECTOR playerBottom,
 				{
 					checkenemy -= EnemyManager::NumberofEnemy;
 				}
-				enemy[checkenemy]->CheckOut(enemy[i]->FistWithCharacter(enemy[checkenemy]->GetPositioncapsuleTop(), enemy[checkenemy]->GetPositioncapsuleBotoom(), enemy[checkenemy]->GetOutflg()));
+				enemy[checkenemy]->CheckOut(enemy[i]->FistWithCharacter(enemy[checkenemy]->GetPositioncapsuleTop(), enemy[checkenemy]->GetPositioncapsuleBotoom(), enemy[checkenemy]->GetOutflg()),lastchara);
 			}
 		}
 	}
@@ -187,9 +187,9 @@ void EnemyManager::ForeverUpdate(bool Settlement)
 /// </summary>
 /// <param name="i">CPU番号</param>
 /// <param name="hit">当たったか</param>
-void EnemyManager::CheckOut(int i,bool hit)
+void EnemyManager::CheckOut(int i, bool hit, bool lastchara)
 {
-	enemy[i]->CheckOut(hit);
+	enemy[i]->CheckOut(hit, lastchara);
 }
 
 /// <summary>

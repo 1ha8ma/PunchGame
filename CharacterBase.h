@@ -17,7 +17,7 @@ public:
 	//盾衝突se再生
 	void PlayShieldHitSE(bool hit);
 	//アウト確認
-	void CheckOut(bool hit);
+	void CheckOut(bool hit,bool lastchara);
 	//ポジション反映
 	void ReflectPosition();
 	//終了後も更新

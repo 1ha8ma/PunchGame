@@ -368,13 +368,21 @@ void CharacterBase::RemoveShield(VECTOR shieldleft, VECTOR shieldright)
 /// 脱落になったか
 /// </summary>
 /// <param name="hit">当たったか</param>
-void CharacterBase::CheckOut(bool hit)
+void CharacterBase::CheckOut(bool hit, bool lastchara)
 {
 	//脱落時
 	if (!outflg && hit)
 	{
 		//エフェクト再生
-		effect->PlayEffect(Effect::EffectKind::CharacterHit, position, VGet(3.0f, 3.0f, 3.0f), angle, 0.7f);
+		if (lastchara)
+		{
+			effect->PlayEffect(Effect::EffectKind::LastCharacterHit, position, VGet(10.0f, 10.0f, 10.0f), angle, 0.4f);
+			effect->PlayEffect(Effect::EffectKind::Blow, position, VGet(3.0f, 3.0f, 3.0f), angle, 0.6f);
+		}
+		else
+		{
+			effect->PlayEffect(Effect::EffectKind::Blow, position, VGet(3.0f, 3.0f, 3.0f), angle, 1.3f);
+		}
 
 		//se再生
 		semanager->PlaySE(SEManager::SEKind::CharahitSE);

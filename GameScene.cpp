@@ -8,7 +8,7 @@
 #include"InputManager.h"
 #include"Enemy.h"
 #include"EnemyManager.h"
-#include"GameUI.h"
+#include"UI.h"
 #include"BGMManager.h"
 #include"SEManager.h"
 #include"Pause.h"
@@ -29,7 +29,7 @@ GameScene::GameScene()
 	stage = new Stage();
 	player = new Player();
 	enemy = new EnemyManager();
-	gameui = new GameUI();
+	ui = new UI();
 	pausescene = new Pause();
 	resultscene = new ResultScene();
 	startscene = new StartScene(player->GetPosition());
@@ -52,7 +52,7 @@ GameScene::~GameScene()
 	delete enemy;
 	delete resultscene;
 	delete startscene;
-	delete gameui;
+	delete ui;
 	delete pausescene;
 
 	bgmmanager->StopBGM();
@@ -149,19 +149,25 @@ SceneBase* GameScene::Update()
 		enemy->UpdateFistWithShield(player->GetShieldLeft(), player->GetShieldRight());
 
 		//拳とキャラクター当たり判定
+		bool lastchara = false;
+		if (outchara.size() == OllCharaNum - 1)
+		{
+			lastchara = true;
+		}
+
 		if (!player->GetOutflg())
 		{
 			for (int i = 0; i < EnemyManager::NumberofEnemy; i++)
 			{
 				bool characterhit;
 				characterhit = player->FistWithCharacter(enemy->GetCapsuleTop(i), enemy->GetCapsuleBottom(i), enemy->GetOutflg(i));
-				enemy->CheckOut(i, characterhit);
+				enemy->CheckOut(i, characterhit, lastchara);
 			}
 		}
-		enemy->UpdateFistWithCharacter(player->GetPositioncapsuleTop(), player->GetPositioncapsuleBotoom(), player->GetOutflg());
+		enemy->UpdateFistWithCharacter(player->GetPositioncapsuleTop(), player->GetPositioncapsuleBotoom(), player->GetOutflg(),lastchara);
 
 		//敵からのフラグ
-		player->CheckOut(enemy->GetPlayerhit());
+		player->CheckOut(enemy->GetPlayerhit(),lastchara);
 
 		//脱落確認
 		if (player->GetOutflg() && !playeroutcheck)
@@ -328,11 +334,12 @@ void GameScene::Draw()
 	break;
 	case(GameSceneState::game):
 	{
-		gameui->Draw();
+		ui->DrawOperationExplanation();
 	}
 	break;
 	case(GameSceneState::pause):
 	{
+		ui->DrawOperationExplanation();
 		pausescene->Draw();
 	}
 	break;

@@ -49,9 +49,10 @@ void Loader::LoadModel()
 	handle[BUttonHoverImage] = LoadGraph("2D/button_hover.png");
 
 	//エフェクト
-	handle[PlayerhitEffect] = LoadEffekseerEffect("Effect/playerhit.efkefc", 30.0f);
+	handle[LasthitEffect] = LoadEffekseerEffect("Effect/playerhit.efkefc", 30.0f);
 	handle[ShieldhitEffect] = LoadEffekseerEffect("Effect/shieldhit.efkefc", 30.0f);
 	handle[PunchfiringEffect] = LoadEffekseerEffect("Effect/punchfiring.efkefc", 20.0f);
+	handle[BlowEffect] = LoadEffekseerEffect("Effect/bloweffect.efkefc", 20.0f);
 
 	//BGM
 	handle[TitleBGM] = LoadSoundMem("sound/TitleBGM.mp3");

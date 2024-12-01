@@ -24,6 +24,8 @@ public:
 
 	//Ä¶
 	void PlaySE(SEKind kind);
+	//“Á’è‚ÌSE‚ğI—¹
+	void StopSE(SEKind kind);
 
 private:
 	std::map<SEKind, int> handle;
