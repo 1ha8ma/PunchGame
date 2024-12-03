@@ -1,11 +1,144 @@
-﻿  Main.cpp
+﻿  BGMManager.cpp
+C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  Camera.cpp
+C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\hamar\Desktop\PunchGame\Camera.cpp(65,21): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Camera.cpp(66,21): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Camera.cpp(68,16): warning C4305: '+=': 'double' から 'float' へ切り詰めます。
+  CharacterBase.cpp
+C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\hamar\Desktop\PunchGame\CharacterBase.cpp(48,43): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\CharacterBase.cpp(74,8): warning C4101: 'difference': ローカル変数は 1 度も使われていません。
+C:\Users\hamar\Desktop\PunchGame\CharacterBase.cpp(150,43): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\CharacterBase.cpp(350,190): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\CharacterBase.cpp(350,98): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\CharacterBase.cpp(351,189): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\CharacterBase.cpp(351,98): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+  Collision.cpp
+C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  Effect.cpp
 C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
 C:\Users\hamar\Desktop\Effekseer_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  Enemy.cpp
+C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\hamar\Desktop\PunchGame\Enemy.cpp(137,63): warning C4244: '+=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Enemy.cpp(138,63): warning C4244: '+=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Enemy.cpp(141,14): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Enemy.cpp(142,24): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Enemy.cpp(155,38): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Enemy.cpp(169,21): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Enemy.cpp(229,14): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Enemy.cpp(230,24): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Enemy.cpp(245,20): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Enemy.cpp(272,29): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Enemy.cpp(274,29): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+  EnemyManager.cpp
+C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  Fist.cpp
+C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\hamar\Desktop\PunchGame\Fist.cpp(95,33): warning C4244: '+=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Fist.cpp(96,33): warning C4244: '+=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Fist.cpp(102,128): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Fist.cpp(102,66): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Fist.cpp(117,91): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Fist.cpp(117,50): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Fist.cpp(118,91): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Fist.cpp(118,50): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Fist.cpp(121,32): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Fist.cpp(123,32): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Fist.cpp(150,17): warning C4305: '-=': 'double' から 'float' へ切り詰めます。
+  FPS.cpp
+C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  GameManager.cpp
+C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  GameScene.cpp
+C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\hamar\Desktop\Effekseer_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  UI.cpp
+C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  InputManager.cpp
+C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  Loader.cpp
+C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\hamar\Desktop\Effekseer_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  Main.cpp
+C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\hamar\Desktop\Effekseer_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  Pause.cpp
+C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\hamar\Desktop\PunchGame\Pause.cpp(82,88): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Pause.cpp(82,60): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Pause.cpp(82,43): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Pause.cpp(82,29): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Pause.cpp(83,88): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Pause.cpp(83,60): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Pause.cpp(83,43): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Pause.cpp(83,29): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Pause.cpp(88,88): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Pause.cpp(88,60): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Pause.cpp(88,43): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Pause.cpp(88,29): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Pause.cpp(89,88): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Pause.cpp(89,60): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Pause.cpp(89,43): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Pause.cpp(89,29): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Pause.cpp(94,46): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Pause.cpp(94,26): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Pause.cpp(95,46): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Pause.cpp(95,26): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  Player.cpp
+C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  ResultScene.cpp
+C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\hamar\Desktop\PunchGame\ResultScene.cpp(42,38): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\ResultScene.cpp(43,38): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\ResultScene.cpp(75,32): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\ResultScene.cpp(76,32): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\ResultScene.cpp(81,32): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\ResultScene.cpp(82,32): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\ResultScene.cpp(90,13): warning C4305: '+=': 'double' から 'float' へ切り詰めます。
+C:\Users\hamar\Desktop\PunchGame\ResultScene.cpp(122,16): warning C4244: '-=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\ResultScene.cpp(128,16): warning C4244: '+=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\ResultScene.cpp(155,46): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\ResultScene.cpp(155,28): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  SceneBase.cpp
+C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  SEManager.cpp
+C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  コンパイル中...
+  Shield.cpp
+C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\hamar\Desktop\PunchGame\Shield.cpp(36,27): warning C4244: '+=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Shield.cpp(37,27): warning C4244: '+=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Shield.cpp(39,133): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Shield.cpp(39,63): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Shield.cpp(40,130): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Shield.cpp(40,61): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Shield.cpp(58,31): warning C4244: '+=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Shield.cpp(59,31): warning C4244: '+=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Shield.cpp(62,132): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Shield.cpp(62,64): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Shield.cpp(63,128): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\Shield.cpp(63,61): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+  SkyDome.cpp
+C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  StartScene.cpp
+C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\hamar\Desktop\PunchGame\StartScene.cpp(66,18): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\StartScene.cpp(67,18): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\StartScene.cpp(148,50): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\StartScene.cpp(148,40): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\StartScene.cpp(148,30): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\hamar\Desktop\PunchGame\StartScene.cpp(148,20): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  TitleScene.cpp
+C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  Stage.cpp
+C:\Users\hamar\Desktop\Dxlib_h\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
 EffekseerForDXLib_vs2019_x64_d.lib(EffekseerForDXLib.obj) : warning LNK4075: /EDITANDCONTINUE は /OPT:ICF の指定によって無視されます。
   コード生成しています。
-  1 of 868 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+  443 of 840 functions (52.7%) were compiled, the rest were copied from previous compilation.
+    52 functions were new in current compilation
+    70 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
 EffekseerForDXLib_vs2019_x64_d.lib(EffekseerForDXLib.obj) : warning LNK4099: PDB '' が 'EffekseerForDXLib_vs2019_x64_d.lib(EffekseerForDXLib.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 Effekseer_vs2019_x64_d.lib(Effekseer.Vector3D.obj) : warning LNK4099: PDB '' が 'Effekseer_vs2019_x64_d.lib(Effekseer.Vector3D.obj)' で、または '' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
